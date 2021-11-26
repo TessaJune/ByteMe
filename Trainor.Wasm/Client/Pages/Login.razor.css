@@ -1,0 +1,54 @@
+
+html, body {
+    height: 100%;
+    width: 100%;
+    height: 100vh;
+    width: 100vw;
+}
+
+.container {
+    display: flex;
+    justify-content: flex-start;
+    align-items: stretch;
+    height: 100%;
+    width: 100%;
+}
+
+.loginDiv {
+    flex: 2;
+    width: 100%;
+    height: 100%;
+}
+
+.loginHeader {
+    font-size: 40px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    color: black;
+    text-align: center;
+    padding-top: 145px;
+}
+
+.loginButton {
+    font-size: 20px;
+    text-align: center;
+    border-color: rgb(0, 201, 255);
+    border-style: solid;
+    margin-left: 30%;
+    margin-right: 30%;
+}
+
+.guestUser {
+    text-align: center;
+    margin-top: 35%;
+}
+
+.welcomeDiv {
+    font-size: 40px;
+    font-family: 'IBM Plex Sans', sans-serif;
+    color: white;
+    text-align: center;
+    line-height: 200px;
+    background-color:rgb(0, 201, 255);
+    height: 100vh;
+    flex: 1;
+}

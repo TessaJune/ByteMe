@@ -1,0 +1,28 @@
+﻿@page "/"
+<style>
+@@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap');
+</style>
+
+<!DOCTYPE html>
+<html>
+<body>
+    <div class ="container">
+        <div class="loginDiv">
+            <div class ="loginHeader"> 
+                <p>Log in with Microsoft</p>
+                <p>NEW USER INTERFACE IS ON THE WAY</p>
+            </div>
+            <div class = "loginButton"> 
+                <LoginDisplay/>
+            </div>
+            <div class="guestUser">
+              <button class ="testButton" onclick="searchpage">Login as guest user</button> @*Not working yet*@  @* <p>Login as guest user</p> *@
+            </div>
+        </div>
+
+        <div class="welcomeDiv">
+            <p>Welcome back!</p>
+        </div>
+    </div>
+    </body>
+</html>
