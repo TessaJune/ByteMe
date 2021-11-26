@@ -24,7 +24,6 @@ namespace Trainor.App.Tests
             List<Resource> actualReturnedResources;
 
             //Act
-            actualReturnedResources = Search
 
             //Assert
 
