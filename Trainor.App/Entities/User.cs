@@ -6,6 +6,5 @@ namespace DefaultNamespace
         public string MSID { get; set; }
         public string GivenName { get; set; }
         public string LastName { get; set; }
-
     }
 }

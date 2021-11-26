@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace Trainor.App
 {
-    public interface IStorage
+    public interface ISearch
     {
-        
+        private IEnumerable<T> GetBySearchQuery(IEnumerable<Predicate<T>> predicates){}
+      
     }
 }
