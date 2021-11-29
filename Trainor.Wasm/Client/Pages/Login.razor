@@ -1,4 +1,5 @@
 ﻿@page "/"
+
 <style>
 @@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap');
 </style>
@@ -6,7 +7,12 @@
 <!DOCTYPE html>
 <html>
 <body>
+
+    @* A NEW INTERFACE SHOULD BE MADE. THIS SHOULD NOT BE THE FINAL *@
+
+    @* The container div has a flex display and contains all divs shown below *@
     <div class ="container">
+        @* The center / left side of the page *@
         <div class="loginDiv">
             <div class ="loginHeader"> 
                 <p>Log in with Microsoft</p>
@@ -16,13 +22,25 @@
                 <LoginDisplay/>
             </div>
             <div class="guestUser">
-              <button class ="testButton" onclick="searchpage">Login as guest user</button> @*Not working yet*@  @* <p>Login as guest user</p> *@
+                <button class="guestButton" @onclick="NavigateToSearch">Login as guest user</button>
             </div>
         </div>
 
+        @* This is the right side of the page *@
         <div class="welcomeDiv">
             <p>Welcome back!</p>
         </div>
     </div>
-    </body>
+</body>
 </html>
+
+@code {
+    [Inject]
+    public NavigationManager NavigationManager { get; set; }
+    
+    @* Making it possible to navigate to searchPage *@
+    public void NavigateToSearch()
+    {
+        NavigationManager.NavigateTo("/searchpage");
+    }
+}

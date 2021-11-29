@@ -6,6 +6,7 @@ html, body {
     width: 100vw;
 }
 
+/* This is controlling the dimensions of the page and how divs should be displayed  */
 .container {
     display: flex;
     justify-content: flex-start;
