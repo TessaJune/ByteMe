@@ -1,4 +1,4 @@
-namespace DefaultNamespace
+namespace Trainor.App.Entities
 {
     public class User
     {

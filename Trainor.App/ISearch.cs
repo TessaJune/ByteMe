@@ -7,7 +7,6 @@ namespace Trainor.App
 {
     public interface ISearch
     {
-        private IEnumerable<T> GetBySearchQuery(IEnumerable<Predicate<T>> predicates){}
-      
+
     }
 }
