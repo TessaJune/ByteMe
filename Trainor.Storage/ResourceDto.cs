@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Trainor.App.Entities;
 
 namespace Trainor.Storage
 {
     public record ResourceDto(string? name, IEnumerable<string> authors) { }
-    public record ResourceDetailsDto(string? name, string link, IEnumerable<string> authors, string type, DateTime date) { }
+    public record ResourceDetailsDto(string? name, string link, IEnumerable<string> authors, ResourceType type, DateTime date) { }
     public record ResourceCreateDto()
     {
         [StringLength(50)]
@@ -15,10 +16,14 @@ namespace Trainor.Storage
         const int MAX_URL_LENGTH = 2083;
         [StringLength(MAX_URL_LENGTH)]
         [Required]
-        public string Link { get; init; }
-
+        public string Link
+        {
+            get => Link;
+            init => Link = Link ?? throw new NullReferenceException();
+        }
         public IEnumerable<string>? Authors { get; init; }
-
+        public ResourceType Type { get; init; }
+        public DateTime Date { get; init; }
     }
     public record ResourceUpdateDto()
     {
