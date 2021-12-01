@@ -1,0 +1,38 @@
+html, body {
+    height: 100%;
+    width: 100%;
+    height: 100vh;
+    width: 100vw;
+}
+
+#p {
+    color: aqua;
+}
+
+/* This is controlling the dimensions of the page and how divs should be displayed  */
+.container {
+    display: flex;
+    justify-content: flex-start;
+    height: 100%;
+    width: 100%;
+    background-color: aqua;
+}
+
+.filtersContainer {
+    background-color: magenta;
+    width: 100%;
+    height: 100%;
+    flex: 1;
+    color: aquamarine;
+}
+
+.resourcesContainer {
+    background-color: darkorchid;
+    width: 100%;
+    height: 100%;
+    flex: 2;
+}
+
+.placeHolder {
+    flex: 0;
+}

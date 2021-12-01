@@ -17,6 +17,7 @@
         }
       },
       "Trainor.Wasm.Server": {
+        "hotReloadProfile": "blazorwasm",
         "commandName": "Project",
         "dotnetRunMessages": "true",
         "launchBrowser": true,
