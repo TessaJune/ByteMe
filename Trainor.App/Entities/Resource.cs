@@ -19,4 +19,11 @@ namespace Trainor.App.Entities
         public string Type { get; set; }
         public DateTime Date { get; set; }
     }
+
+    public enum ResourceType
+    {
+        VIDEO,
+        DOCUMENT,
+        OTHER,
+    }
 }
