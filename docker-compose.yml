@@ -11,8 +11,6 @@ services:
       POSTGRES_USER: 'postgres'
       POSTGRES_PASSWORD: 'postgres'
       POSTGRES_DB: 'postgres'
-    networks:
-      - postgres
     # secrets:
     #   - db_password
 
@@ -39,8 +37,5 @@ services:
     # secrets:
     #   db_password:
     #     file: ./db_password.txt
-    # connection_string:
-    #   file: ./.local/connection_string.txt
-networks:
-  postgres:
-    driver: bridge
+    #   connection_string:
+    #     file: ./.local/connection_string.txt
