@@ -22,7 +22,7 @@ html, body {
 
 .loginHeader {
     font-size: 40px;
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: garamond;
     color: black;
     text-align: center;
     padding-top: 50px;
@@ -44,7 +44,7 @@ html, body {
 
 .guestUser {
     font-size: 20px;
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: garamond;
     color: black;
     text-align: center;
     margin-top: 15%;
@@ -62,11 +62,10 @@ html, body {
     margin-right: 30%;
 }
 
+/* RELATED TO WELCOME PART */
 .welcomeDiv {
     font-size: 40px;
-    /* font-family: 'IBM Plex Sans', serif; */
-  /*   font-family: Georgia, 'Times New Roman', Times, serif; */
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-family: garamond; /* Font der ligner bedst logofont */
     color: white;
     text-align: center;
     background-color: rgb(0, 201, 255);
@@ -75,8 +74,10 @@ html, body {
 
 .WelcomeText {
     font-size: 20px;
-    font-family: 'IBM Plex Sans', sans-serif;
+    font-family: garamond;
     color: white;
+    margin-left: 7%;
+    margin-right: 7%;
 }
 
 .WelcomeTitle {
