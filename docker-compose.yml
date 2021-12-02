@@ -9,8 +9,10 @@ services:
       - '5432:5432'
     environment:
       POSTGRES_USER: 'postgres'
-      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
-      POSTGRES_DB: 'TrainorDB'
+      POSTGRES_PASSWORD: 'postgres'
+      POSTGRES_DB: 'postgres'
+    networks:
+      - postgres
     # secrets:
     #   - db_password
 
@@ -34,8 +36,11 @@ services:
     #       target: ConnectionStrings__Trainor
     #   volumes:
     #     - '../../../../.aspnet/https:/https/'
-  secrets:
-    db_password:
-      file: ./db_password.txt
+    # secrets:
+    #   db_password:
+    #     file: ./db_password.txt
     # connection_string:
     #   file: ./.local/connection_string.txt
+networks:
+  postgres:
+    driver: bridge
