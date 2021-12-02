@@ -15,20 +15,23 @@
         @* The center / left side of the page *@
         <div class="loginDiv">
             <div class ="loginHeader"> 
+                <p>LOGO HERE</p>
                 <p>Log in with Microsoft</p>
-                <p>NEW USER INTERFACE IS ON THE WAY</p>
             </div>
             <div class = "loginButton"> 
                 <LoginDisplay/>
             </div>
             <div class="guestUser">
-                <button class="guestButton" @onclick="NavigateToSearch">Login as guest user</button>
+                <p>Not interested in making a user? </p>
+                <button class="guestButton" @onclick="NavigateToSearch">Login as Guest User</button>
             </div>
         </div>
 
         @* This is the right side of the page *@
         <div class="welcomeDiv">
-            <p>Welcome back!</p>
+                <p>WELCOME!</p>
+                <p class = "WelcomeText">Please log in with your Microsoft account</p>
+                <p class = "WelcomeText">or login as guest user below.</p>
         </div>
     </div>
 </body>
