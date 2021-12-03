@@ -1,0 +1,20 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Trainor.Storage
+{
+    public enum TypeTag
+    {
+        VIDEO,
+        DOCUMENT,
+        PICTURE,
+    }
+    public enum SubjectTag
+    {
+        C_SHARP,
+        JAVA,
+    }
+}
