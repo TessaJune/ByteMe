@@ -5,15 +5,15 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Trainor.Wasm", "Trainor.Wasm", "{8B5AA1BB-3D41-4B87-94EE-873D39074F05}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trainor.Wasm.Server", "Trainor.Wasm\Server\Trainor.Wasm.Server.csproj", "{4FB3226C-DD5B-414A-B8CB-F10FE9A143EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Trainor.Wasm.Server", "Trainor.Wasm\Server\Trainor.Wasm.Server.csproj", "{4FB3226C-DD5B-414A-B8CB-F10FE9A143EE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trainor.Wasm.Client", "Trainor.Wasm\Client\Trainor.Wasm.Client.csproj", "{FF8362A0-5A1D-4874-BD0B-4DC03550F257}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Trainor.Wasm.Client", "Trainor.Wasm\Client\Trainor.Wasm.Client.csproj", "{FF8362A0-5A1D-4874-BD0B-4DC03550F257}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trainor.Wasm.Shared", "Trainor.Wasm\Shared\Trainor.Wasm.Shared.csproj", "{8D2386FA-575F-48BD-955F-58437E4E35F4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Trainor.Wasm.Shared", "Trainor.Wasm\Shared\Trainor.Wasm.Shared.csproj", "{8D2386FA-575F-48BD-955F-58437E4E35F4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trainor.Storage", "Trainor.Storage\Trainor.Storage.csproj", "{5F4EB6F6-A37E-4284-987C-13C7E56DF2AA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Trainor.Storage", "Trainor.Storage\Trainor.Storage.csproj", "{5F4EB6F6-A37E-4284-987C-13C7E56DF2AA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Trainor.App", "Trainor.App\Trainor.App.csproj", "{AF9F5BA9-4D5B-4147-A66B-EAF699E81808}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Trainor.App", "Trainor.App\Trainor.App.csproj", "{AF9F5BA9-4D5B-4147-A66B-EAF699E81808}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -23,9 +23,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
-	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{4FB3226C-DD5B-414A-B8CB-F10FE9A143EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -89,9 +86,15 @@ Global
 		{AF9F5BA9-4D5B-4147-A66B-EAF699E81808}.Release|x86.ActiveCfg = Release|Any CPU
 		{AF9F5BA9-4D5B-4147-A66B-EAF699E81808}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{4FB3226C-DD5B-414A-B8CB-F10FE9A143EE} = {8B5AA1BB-3D41-4B87-94EE-873D39074F05}
 		{FF8362A0-5A1D-4874-BD0B-4DC03550F257} = {8B5AA1BB-3D41-4B87-94EE-873D39074F05}
 		{8D2386FA-575F-48BD-955F-58437E4E35F4} = {8B5AA1BB-3D41-4B87-94EE-873D39074F05}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0DEAE20E-49A0-4D0E-8ABC-23DAA92A500B}
 	EndGlobalSection
 EndGlobal

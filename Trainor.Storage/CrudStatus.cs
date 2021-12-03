@@ -1,6 +1,6 @@
 namespace Trainor.Storage
 {
-    public enum Status
+    public enum CrudStatus
     {
         Created,
         Updated,
