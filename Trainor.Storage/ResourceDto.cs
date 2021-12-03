@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Trainor.App.Entities;
-
 namespace Trainor.Storage
 {
     public record ResourceDto(string? name, IEnumerable<string> authors) { }
-    public record ResourceDetailsDto(string? name, string link, IEnumerable<string> authors, ResourceType type, DateTime date) { }
+    public record ResourceDetailsDto(string? name, string link, IEnumerable<string> authors, IEnumerable<SubjectTag> subjects, TypeTag type, DateTime date) { }
     public record ResourceCreateDto()
     {
         [StringLength(50)]
@@ -22,7 +20,8 @@ namespace Trainor.Storage
             init => Link = Link ?? throw new NullReferenceException();
         }
         public IEnumerable<string>? Authors { get; init; }
-        public ResourceType Type { get; init; }
+        public TypeTag Type { get; init; }
+        public IEnumerable<SubjectTag> Subjects { get; init; }
         public DateTime Date { get; init; }
     }
     public record ResourceUpdateDto()
