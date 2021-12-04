@@ -79,13 +79,14 @@ html, body {
     width: 80%;
 }
 
+
 .searchButton {
     background-color: #3EC6FF;
     border-radius: 25px;
     margin-left: 2%;
     width: 40px;
     height: 40px;
-}
+} 
 
 .forstorelsesglas {
     /* background-color: blue; */

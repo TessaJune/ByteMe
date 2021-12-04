@@ -43,7 +43,9 @@
                         <input class="input" type="text">
                     </div>
                 </div>
-                <img class ="searchButton" src="images/searchButton.png" alt="Image is not showing"/>
+                @* <img class ="searchButton" src="images/searchButton.png"/> *@
+                <button @onclick = "NavigateToResult"> <img class ="searchButton" src="images/searchButton.png"/> </button> 
+                @* <button class = "searchButton" @onclick="NavigateToResult"> Navigate to ResultPage, hopefully </button>  *@
             </div> 
         </div> 
 
@@ -55,3 +57,16 @@
     </div>
 </body>
 </html>
+
+
+@* Copied from Login.razor? It this okay? *@
+@code {
+    [Inject]
+    public NavigationManager NavigationManager { get; set; }
+    
+    @* Making it possible to navigate to ResultPage *@
+    public void NavigateToResult()
+    {
+        NavigationManager.NavigateTo("/resultpage");
+    }
+}
