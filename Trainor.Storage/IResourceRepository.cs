@@ -11,7 +11,7 @@ namespace Trainor.Storage
         Task<(CrudStatus, ResourceDetailsDto)> CreateAsync(ResourceCreateDto resource);
         Task<ResourceDto> ReadAsync(int resourceId);
         Task<ResourceDetailsDto> ReadDetailsAsync(int resourceId);
-        Task<IReadOnlyCollection<ResourceDetailsDto>> ReadAsync();
+        Task<IReadOnlyCollection<ResourceDto>> ReadAsync();
         Task<CrudStatus> UpdateAsync(ResourceCreateDto resource);
         Task<CrudStatus> DeleteAsync(int resourceId);
     }
