@@ -1,9 +1,11 @@
 using System;
+using System.Linq;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Threading;
 using Trainor.Storage.Entities;
 using static Trainor.Storage.CrudStatus;
-
+using Microsoft.EntityFrameworkCore;
 namespace Trainor.Storage
 {
     public class UserRepository : IUserRepository
@@ -15,33 +17,93 @@ namespace Trainor.Storage
             _context = context;
         }
 
-        public Task<(CrudStatus, UserDetailsDto)> CreateAsync(UserCreateDto user)
+        public async Task<(CrudStatus, UserDetailsDto)> CreateAsync(UserCreateDto user)
         {
-            throw new NotImplementedException();
+            var entity = new User
+            {
+                Id = user.Id,
+                GivenName = user.GivenName,
+                LastName = user.LastName,
+                Email = user.Email,
+            };
+
+            _context.Users.Add(entity);
+
+            await _context.SaveChangesAsync();
+
+            return (Created, new UserDetailsDto(
+                entity.Id,
+                entity.GivenName,
+                entity.LastName,
+                entity.Email
+                ));
         }
 
-        public Task<UserDto> ReadAsync(int userId) 
+        public async Task<UserDetailsDto> ReadDetailsAsync(int userId)
         {
-            throw new NotImplementedException();
+            var users = from u in _context.Users
+                        where u.Id == userId
+                        select new UserDetailsDto(
+                            u.Id,
+                            u.GivenName,
+                            u.LastName,
+                            u.Email
+                        );
+
+            return await users.FirstOrDefaultAsync();
         }
 
-        public Task<UserDetailsDto> ReadDetailsAsync(int userId) 
+        public async Task<UserDto> ReadAsync(int userId)
         {
-            throw new NotImplementedException();
+            var users = from u in _context.Users
+                        where u.Id == userId
+                        select new UserDto(
+                            u.Id,
+                            u.GivenName,
+                            u.LastName
+                        );
+
+            return await users.FirstOrDefaultAsync();
+        }
+        
+        public async Task<IReadOnlyCollection<UserDto>> ReadAsync() =>
+            (await _context.Users
+                    .Select(u => new UserDto(u.Id, u.GivenName, u.LastName))
+                    .ToListAsync())
+                    .AsReadOnly();
+    
+        public async Task<CrudStatus> UpdateAsync(int id, UserUpdateDto user) // Missing "await" in method body 
+        {
+            var entity = await _context.Users.Include(u => u.Id).FirstOrDefaultAsync(u => u.Id == user.Id);
+            
+            if (entity == null)
+            {
+                return NotFound;
+            }
+
+            entity.Id = user.Id;
+            entity.GivenName = user.GivenName;
+            entity.LastName = user.LastName;
+            entity.Email = user.Email;
+
+            await _context.SaveChangesAsync();
+
+            return Updated;
         }
 
-        public Task<IReadOnlyCollection<UserDto>> ReadAsync() 
+        public async Task<CrudStatus> DeleteAsync(int userId) // Missing "await" in method body
         {
-            throw new NotImplementedException();
-        }
+            var entity = await _context.Users.FindAsync(userId);
 
-        public Task<CrudStatus> UpdateAsync(UserCreateDto user) 
-        {
-            throw new NotImplementedException();
-        }
+            if (entity == null)
+            {
+                return NotFound;
+            }
 
-        public Task<CrudStatus> DeleteAsync(int userId) {
-            throw new NotImplementedException();
+            _context.Users.Remove(entity);
+            await _context.SaveChangesAsync();
+
+            return Deleted;
         }
     }
 }
