@@ -1,7 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-namespace Trainor.Storage
+
+namespace Trainor.Storage.Entities
 {
     public record ResourceDto(string? name, IEnumerable<string> authors) { }
     public record ResourceDetailsDto(string? name, string link, IEnumerable<string> authors, IEnumerable<SubjectTag> subjects, TypeTag type, DateTime date) { }

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Trainor.Storage
+namespace Trainor.Storage.Entities
 {
     public enum TypeTag
     {
