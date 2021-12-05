@@ -7,10 +7,12 @@ namespace Trainor.Storage
 {
     public interface IUserRepository
     {
-        Task<(CrudStatus, UserCreateDto)> CreateAsync(UserCreateDto user);
+        Task<(CrudStatus, UserDetailsDto)> CreateAsync(UserCreateDto user);
         Task<UserDto> ReadAsync(int userId);
+
+        Task<UserDetailsDto> ReadDetailsAsync(int userId);
         Task<IReadOnlyCollection<UserDto>> ReadAsync();
-        Task<CrudStatus> UpdateAsync(UserDto user);
+        Task<CrudStatus> UpdateAsync(UserCreateDto user);
         Task<CrudStatus> DeleteAsync(int userId);
     }
 }

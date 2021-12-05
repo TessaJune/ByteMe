@@ -2,6 +2,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Trainor.Storage.Entities
 {
+    public record UserDetailsDto
+    {
+    }
     public record UserCreateDto()
     {
         [StringLength(50)]

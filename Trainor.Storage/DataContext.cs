@@ -1,36 +1,39 @@
 using System;
-using System.Threading.Tasks;
 using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Trainor.Storage.Entities;
 
-namespace Trainor.Storage {
+namespace Trainor.Storage
+{
     public class DataContext : DbContext, IDataContext
     {
-        public DbSet<UserDto> Users => Set<UserDto>();
-        public DbSet<ResourceDto> Resources => Set<ResourceDto>();
+        public DbSet<User> Users => Set<User>();
+        public DbSet<Resource> Resources => Set<Resource>();
 
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
- 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder
-                .Entity<UserDto>()
+                .Entity<User>()
                 .Property(u => u.GivenName)
                 .HasMaxLength(50);
-                
-            modelBuilder.Entity<UserDto>()
+
+            modelBuilder
+                .Entity<User>()
                 .Property(u => u.LastName)
                 .HasMaxLength(50);
 
             modelBuilder
-                .Entity<ResourceCreateDto>()
+                .Entity<Resource>()
                 .Property(r => r.Name)
                 .HasMaxLength(50);
 
             modelBuilder
-                .Entity<ResourceCreateDto>()
-                .Property(r => r.Link);
+                .Entity<Resource>()
+                .Property(r => r.Link)
+                .IsRequired();
         }
     }
 }

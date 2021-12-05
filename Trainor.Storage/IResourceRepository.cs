@@ -8,10 +8,11 @@ namespace Trainor.Storage
 {
     public interface IResourceRepository
     {
-        Task<(CrudStatus, ResourceCreateDto)> CreateAsync(ResourceCreateDto resource);
+        Task<(CrudStatus, ResourceDetailsDto)> CreateAsync(ResourceCreateDto resource);
         Task<ResourceDto> ReadAsync(int resourceId);
-        Task<IReadOnlyCollection<ResourceDto>> ReadAsync();
-        Task<CrudStatus> UpdateAsync(ResourceDto resource);
+        Task<ResourceDetailsDto> ReadDetailsAsync(int resourceId);
+        Task<IReadOnlyCollection<ResourceDetailsDto>> ReadAsync();
+        Task<CrudStatus> UpdateAsync(ResourceCreateDto resource);
         Task<CrudStatus> DeleteAsync(int resourceId);
     }
 }
