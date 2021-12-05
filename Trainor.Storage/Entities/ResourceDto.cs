@@ -23,7 +23,7 @@ namespace Trainor.Storage.Entities
         public IEnumerable<SubjectTag>? Subjects { get; init; }
         public DateTime Date { get; init; }
     }
-    public record ResourceUpdateDto()
+    public record ResourceUpdateDto() : ResourceCreateDto
     {
         public int Id { get; init; }
     }

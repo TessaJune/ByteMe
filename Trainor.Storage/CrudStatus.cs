@@ -7,6 +7,7 @@ namespace Trainor.Storage
         Deleted,
         NotFound,
         BadRequest,
-        Conflict
+        Conflict,
+        Ok
     }
 }
