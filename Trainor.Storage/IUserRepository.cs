@@ -9,13 +9,13 @@ namespace Trainor.Storage
     {
         Task<(CrudStatus, UserDetailsDto)> CreateAsync(UserCreateDto user);
 
-        Task<UserDetailsDto> ReadDetailsAsync(int userId);
+        Task<(CrudStatus, UserDetailsDto)> ReadDetailsAsync(int userId);
 
-        Task<UserDto> ReadAsync(int userId);
+        Task<(CrudStatus, UserDto)> ReadAsync(int userId);
 
-        Task<IReadOnlyCollection<UserDto>> ReadAsync();
+        Task<(CrudStatus, IReadOnlyCollection<UserDto>)> ReadAsync();
 
-        Task<CrudStatus> UpdateAsync(int id, UserUpdateDto user);
+        Task<CrudStatus> UpdateAsync(UserUpdateDto user);
         
         Task<CrudStatus> DeleteAsync(int userId);
     }

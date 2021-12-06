@@ -21,7 +21,6 @@ namespace Trainor.Storage
         {
             var entity = new User
             {
-                Id = user.Id,
                 GivenName = user.GivenName,
                 LastName = user.LastName,
                 Email = user.Email,
@@ -39,49 +38,54 @@ namespace Trainor.Storage
                 ));
         }
 
-        public async Task<UserDetailsDto> ReadDetailsAsync(int userId)
+        public async Task<(CrudStatus, UserDetailsDto)> ReadDetailsAsync(int userId)
         {
-            var users = from u in _context.Users
-                        where u.Id == userId
-                        select new UserDetailsDto(
-                            u.Id,
-                            u.GivenName,
-                            u.LastName,
-                            u.Email
-                        );
+            var entity = await _context.Users
+                                       .Where(u => u.Id == userId)
+                                       .Select(u => new UserDetailsDto(u.Id, u.GivenName, u.LastName, u.Email))
+                                       .FirstOrDefaultAsync();
 
-            return await users.FirstOrDefaultAsync();
+            if(entity == null) 
+                return (NotFound, null);
+             
+            return (Ok, entity);
         }
 
-        public async Task<UserDto> ReadAsync(int userId)
+        public async Task<(CrudStatus, UserDto)> ReadAsync(int userId)
         {
-            var users = from u in _context.Users
-                        where u.Id == userId
-                        select new UserDto(
-                            u.Id,
-                            u.GivenName,
-                            u.LastName
-                        );
+                   var entity = await _context.Users
+                                              .Where(u => u.Id == userId)
+                                              .Select(u => new UserDto(u.GivenName, u.LastName))
+                                              .FirstOrDefaultAsync();
 
-            return await users.FirstOrDefaultAsync();
+            if (entity == null)
+                return (NotFound, null);
+
+            return (Ok, entity);
         }
         
-        public async Task<IReadOnlyCollection<UserDto>> ReadAsync() =>
-            (await _context.Users
-                    .Select(u => new UserDto(u.Id, u.GivenName, u.LastName))
-                    .ToListAsync())
-                    .AsReadOnly();
-    
-        public async Task<CrudStatus> UpdateAsync(int id, UserUpdateDto user) // Missing "await" in method body 
+        public async Task<(CrudStatus, IReadOnlyCollection<UserDto>)> ReadAsync() 
         {
-            var entity = await _context.Users.Include(u => u.Id).FirstOrDefaultAsync(u => u.Id == user.Id);
-            
-            if (entity == null)
-            {
-                return NotFound;
-            }
+            var entities = (await _context.Users
+                                          .Select(u => new UserDto(u.GivenName, u.LastName))
+                                          .ToListAsync())
+                                          .AsReadOnly();
 
-            entity.Id = user.Id;
+            if (entities == null)
+                return (NotFound, null);
+            
+            return (Ok, entities);
+        }
+    
+        public async Task<CrudStatus> UpdateAsync(UserUpdateDto user)
+        {
+            var entity = (await _context.Users
+                                        .FindAsync(user.Id));
+
+            if (entity == null)
+                return NotFound;
+            
+    
             entity.GivenName = user.GivenName;
             entity.LastName = user.LastName;
             entity.Email = user.Email;
@@ -91,14 +95,15 @@ namespace Trainor.Storage
             return Updated;
         }
 
-        public async Task<CrudStatus> DeleteAsync(int userId) // Missing "await" in method body
+        public async Task<CrudStatus> DeleteAsync(int userId)
         {
-            var entity = await _context.Users.FindAsync(userId);
+            var entity = (await _context.Users
+                                        .FindAsync(userId));
+                        
 
             if (entity == null)
-            {
                 return NotFound;
-            }
+            
 
             _context.Users.Remove(entity);
             await _context.SaveChangesAsync();
