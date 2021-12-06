@@ -12,7 +12,11 @@ namespace Trainor.Storage.Entities
 
         [Required]
         [Url]
-        public string Link { get; set; }
+        public string Link
+        {
+            get => Link;
+            set => Link = Link ?? throw new NullReferenceException();
+        }
         public IEnumerable<string>? Authors { get; set; }
         public TypeTag Type { get; set; }
         public IEnumerable<SubjectTag>? Subjects { get; set; }

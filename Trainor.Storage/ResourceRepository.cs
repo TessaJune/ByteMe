@@ -34,6 +34,7 @@ namespace Trainor.Storage
             await _context.SaveChangesAsync();
 
             return (Created, new ResourceDetailsDto(
+                                 entity.Id,
                                  entity.Name,
                                  entity.Link,
                                  entity.Authors,
@@ -43,20 +44,25 @@ namespace Trainor.Storage
                              ));
         }
 
-        public async Task<IReadOnlyCollection<ResourceDto>> ReadAsync()
+        public async Task<(CrudStatus, IReadOnlyCollection<ResourceDto>)> ReadAsync()
         {
-            return (await _context.Resources
-                                  .Select(r => new ResourceDto(r.Name, r.Authors))
-                                  .ToListAsync())
-                                  .AsReadOnly();
+            var entities = (await _context.Resources
+                                          .Select(r => new ResourceDto(r.Name, r.Authors))
+                                          .ToListAsync())
+                                          .AsReadOnly();
+
+            if (entities == null)
+                return (NotFound, null);
+
+            return (Ok, entities);
         }
 
         public async Task<(CrudStatus, ResourceDto)> ReadAsync(int resourceId)
         {
             var entity = await _context.Resources
-                                    .Where(r => r.Id == resourceId)
-                                    .Select(r => new ResourceDto(r.Name, r.Authors))
-                                    .FirstOrDefaultAsync();
+                                       .Where(r => r.Id == resourceId)
+                                       .Select(r => new ResourceDto(r.Name, r.Authors))
+                                       .FirstOrDefaultAsync();
 
             if (entity == null)
                 return (NotFound, null);
@@ -68,25 +74,22 @@ namespace Trainor.Storage
         public async Task<(CrudStatus, ResourceDetailsDto)> ReadDetailsAsync(int resourceId)
         {
             var entity = await _context.Resources
-                                    .Where(r => r.Id == resourceId)
-                                    .Select(r => new ResourceDetailsDto(r.Name, r.Link, r.Authors, r.Type, r.Subjects, r.Date))
-                                    .FirstOrDefaultAsync();
+                                       .Where(r => r.Id == resourceId)
+                                       .Select(r => new ResourceDetailsDto(r.Id, r.Name, r.Link, r.Authors, r.Type, r.Subjects, r.Date))
+                                       .FirstOrDefaultAsync();
 
             if (entity == null)
                 return (NotFound, null);
 
             return (Ok, entity);
         }
-
-        //TODO: How should this method work? Give ID + UpdateDTO to change ID => new details?
         public async Task<CrudStatus> UpdateAsync(ResourceUpdateDto resource)
         {
-            var entity = await _context.Resources.FindAsync(resource.Id);
+            var entity = await _context.Resources
+                                       .FindAsync(resource.Id);
 
             if (entity == null)
-            {
                 return NotFound;
-            }
 
             entity.Name = resource.Name;
             entity.Link = resource.Link;
@@ -102,13 +105,12 @@ namespace Trainor.Storage
 
         public async Task<CrudStatus> DeleteAsync(int resourceId)
         {
-            var resource = await _context.Resources
-                                         .Include(r => r.Id)
-                                         .FirstOrDefaultAsync(r => r.Id == resourceId);
-            if (resource == null)
+            var entity = await _context.Resources
+                                       .FindAsync(resourceId);
+            if (entity == null)
                 return NotFound;
 
-            _context.Resources.Remove(resource);
+            _context.Resources.Remove(entity);
             await _context.SaveChangesAsync();
 
             return Deleted;

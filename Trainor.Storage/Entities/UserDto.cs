@@ -2,7 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Trainor.Storage.Entities
 {
-    public record UserDetailsDto (int Id, string GivenName, string LastName, string Email){ }
+    public record UserDetailsDto(int Id, string GivenName, string LastName, string Email) { }
     public record UserCreateDto()
     {
         [Required]

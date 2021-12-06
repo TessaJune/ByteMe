@@ -4,8 +4,8 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Trainor.Storage.Entities
 {
-    public record ResourceDto(string? name, IEnumerable<string> authors) { }
-    public record ResourceDetailsDto(string? name, string link, IEnumerable<string> authors, TypeTag type, IEnumerable<SubjectTag> subjects, DateTime date) { }
+    public record ResourceDto(string? name, IEnumerable<string>? authors) { }
+    public record ResourceDetailsDto(int id, string? name, string? link, IEnumerable<string>? authors, TypeTag? type, IEnumerable<SubjectTag>? subjects, DateTime? date) { }
     public record ResourceCreateDto
     {
         [StringLength(50)]
@@ -23,7 +23,7 @@ namespace Trainor.Storage.Entities
         public IEnumerable<SubjectTag>? Subjects { get; init; }
         public DateTime Date { get; init; }
     }
-    public record ResourceUpdateDto() : ResourceCreateDto
+    public record ResourceUpdateDto : ResourceCreateDto
     {
         public int Id { get; init; }
     }
