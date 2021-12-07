@@ -82,10 +82,10 @@ html, body {
 
 .searchButton {
     background-color: #3EC6FF;
-    border-radius: 25px;
+    border-radius: 50%;
     margin-left: 2%;
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
 } 
 
 .forstorelsesglas {

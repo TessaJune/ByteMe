@@ -3,6 +3,7 @@
 <style>
     @@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap');
     @@import url('https://css.gg/push-chevron-down.css');
+    @@import url('https://css.gg/arrow-left.css');
 </style>
 
 <!DOCTYPE html>
@@ -13,19 +14,25 @@
         @* THIS IS THE FILTER PART OF THE SITE *@
         <div class = "filtersContainer">
             <div >
-                <p class = "headerText">Back button??</p>
-                 <p class = "headerText">LOPREM IPSUM</p>
-                 <p class = "filterText"> Filter </p>
-                 <p class = "filterText"> Filter </p>
-                <p class = "filterText"> Filter</p> 
-                <i class="gg-push-chevron-down"></i>
-            </div>
-
-            <div class = "imagePlaceholder">
-                <img class ="imageSignOut" src="images/signout.png" alt="Image is not showing"/>
-                <div class ="imageText">
-                    <p>Sign out</p>
+                <i class="gg-arrow-left"></i>
+                <p class = "headerText">Relevant Filters</p>
+                <p class = "filterText"> Filter #1</p>
+                <p class = "filterText"> Filter #2</p>
+                <div class = "FilterAndIcon"> 
+                    <p class = "filterText"> Filter #3 <span class="gg-push-chevron-down"> </span> </p> 
                 </div>
+
+               
+            @* Everything in this div is related to the signOut div.*@
+                <div class="signOutContainer">
+                    <div class="imagePlaceholder">
+                        <img class ="imageSignOut" src="images/signout.png" alt="Image is not showing"/>
+                        <div class ="imageText">                                
+                        <p>Sign out</p>
+                        </div>
+                    </div>
+                </div>
+               
             </div>
 
         </div>
@@ -33,6 +40,12 @@
         @* THIS IS THE RESOURCE DISPLAY OF THE SITE *@
         <div class = "resourcesContainer">
             <p>resourcesContainer</p>
+            <div class="searchBar">
+                    <img class ="forstorelsesglas" src="images/magnifyingGlass.png" alt="Image is not showing"/>
+                    <div class="searchInput">
+                        <input class="input" type="text">
+                    </div>
+                </div>
             
         </div>
         
