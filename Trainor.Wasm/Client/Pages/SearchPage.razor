@@ -14,7 +14,7 @@
         @* Everything in this div is related to the signOut div.*@
         <div class="signOutContainer">
             <div class="imagePlaceholder">
-                    <img class ="imageSignOut" src="images/signout.png" alt="Image is not showing"/>
+                    <img class ="imageSignOut" src="images/signout.png" alt="Image is not showing" @onclick = "NavigateToLoginPage"/>
                 <div class ="imageText">
                     <p>Sign out</p>
                 </div>
@@ -30,7 +30,7 @@
         <div class="middleContainer">
             @* Title HTML *@
             <div class="middleTitle">
-                <p>Logo is missing</p>
+                <img class = "LogoImage" src="images/Logo.png" alt="Image is not showing" width="300px" /> 
             </div>
             
             @* Searchfield HTML *@
@@ -43,7 +43,10 @@
                         <input class="input" type="text">
                     </div>
                 </div>
-                <img class ="searchButton" src="images/searchButton.png" alt="Image is not showing"/>
+               
+               
+               <input type = "image" src = "images/searchButton.png" @onclick = "NavigateToResult">
+            
             </div> 
         </div> 
 
@@ -55,3 +58,19 @@
     </div>
 </body>
 </html>
+
+
+@code {
+    [Inject]
+    public NavigationManager NavigationManager { get; set; }
+    
+    @* Making it possible to navigate to ResultPage *@
+    public void NavigateToResult()
+    {
+        NavigationManager.NavigateTo("/resultpage");
+    }
+    public void NavigateToLoginPage()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+}
