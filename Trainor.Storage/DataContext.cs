@@ -14,18 +14,6 @@ namespace Trainor.Storage
 
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) 
-        {
-            optionsBuilder.UseSqlServer("Server=.;Database=TrainerDB;Integrated Security=true");
-            base.OnConfiguring(optionsBuilder);
-            // if (!optionsBuilder.IsConfigured)
-            // {
-            //     var connectionString = @"Server=localhost;Database=TrainorDB;User ID=sa;Password=postgres";
-
-            //     optionsBuilder.UseSqlServer(connectionString);
-            // }
-        } 
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder
