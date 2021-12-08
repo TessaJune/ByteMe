@@ -17,11 +17,23 @@
            
             <div class = "filtersNoSignOut">
                 <p class = "headerText">Relevant Filters</p>
-                <p class = "filterText"> Filter #1</p>
-                <p class = "filterText"> Filter #2</p>
-                <p class = "filterText"> Filter #3 <span class="gg-push-chevron-down"> </span> </p> 
-             </div>
+                <ul>
+                    <div class = "ListItem">
+                        <li>C#</li>
+                        <img class = "downArrow" src = "images/downButton.png" alt = "Image is not showing">
+                    </div>
+                    <div class = "ListItem">
+                        <li>Distributed Systems</li>
+                        <img class = "downArrow" src = "images/downButton.png" alt = "Image is not showing">
+                    </div>
+                    <div class = "ListItem">
+                        <li>Introduction to Database</li>
+                        <img class = "downArrow" src = "images/downButton.png" alt = "Image is not showing">
+                    </div>
+                </ul>
+            </div>
 
+            @* sign out part *@
             <div class = "filtersWithSignOut">
                 <img class ="imageSignOut" src="images/signOutWhite.png" alt="Image is not showing" @onclick = "NavigateToLoginPage"/>
                  <div class ="imageSignOutText">                                
@@ -32,17 +44,42 @@
 
         @* THIS IS THE RESOURCE DISPLAY OF THE SITE *@
         <div class = "resourcesContainer">
-            <p>resourcesContainer</p>
-            <div class="searchBar">
+
+            @* Searchbar *@
+            <div class = "searchField">    
+                <div class="searchBar">
                     <img class ="forstorelsesglas" src="images/magnifyingGlass.png" alt="Image is not showing"/>
                     <div class="searchInput">
                         <input class="input" type="text">
                     </div>
                 </div>
+                <input class = "searchButton" type = "image" src = "images/searchButton.png">
+            </div>  
+
+            @* Resources displayed part *@  
+            <div class = "displayAllResources">
+                <div class = "All">
+                    <h2>All</h2>
+                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusamus recusandae aspernatur possimus illum, repellat ad quasi earum, illo voluptatibus minima fugiat saepe magni corporis vero eius accusantium quidem, consectetur nesciunt!</p>
+                </div>
+                <div class = "CResource">
+                    <h2>C #</h2>
+                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusamus recusandae aspernatur possimus illum, repellat ad quasi earum, illo voluptatibus minima fugiat saepe magni corporis vero eius accusantium quidem, consectetur nesciunt!</p>
+                </div>
+                <div class = "Disys">
+                    <h2>DISYS</h2>
+                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusamus recusandae aspernatur possimus illum, repellat ad quasi earum, illo voluptatibus minima fugiat saepe magni corporis vero eius accusantium quidem, consectetur nesciunt!</p>
+                </div>
+                <div class = "Database">
+                    <h2>Database</h2>
+                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusamus recusandae aspernatur possimus illum, repellat ad quasi earum, illo voluptatibus minima fugiat saepe magni corporis vero eius accusantium quidem, consectetur nesciunt!</p>
+                </div>
+            </div>
             
         </div>
         
         <div class = "placeHolderResources"></div>
+
     </div>
 </body>
 </html 
