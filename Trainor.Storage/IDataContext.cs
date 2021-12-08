@@ -10,9 +10,11 @@ namespace Trainor.Storage
     public interface IDataContext : IDisposable
     {
         DbSet<User> Users { get; }
+
         DbSet<Resource> Resources { get; }
 
         int SaveChanges();
+        
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }
