@@ -8,7 +8,10 @@ namespace Trainor.Storage
 {
     public class DataContext : DbContext, IDataContext
     {
-        public DbSet<User> Users => Set<User>(); // { get; set; }
+        public DataContext()
+        {
+        }
+        public DbSet<User> Users => Set<User>();
 
         public DbSet<Resource> Resources => Set<Resource>();
 
@@ -35,6 +38,14 @@ namespace Trainor.Storage
                 .Entity<Resource>()
                 .Property(r => r.Link)
                 .IsRequired();
+        }
+
+        protected override void OnConfiguring(DbContextOptionsBuilder options)
+        {
+            if (!options.IsConfigured)
+            {
+                options.UseSqlServer("Trainor"); // I think this is what makes migrations work
+            }
         }
     }
 }

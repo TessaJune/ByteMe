@@ -39,8 +39,3 @@ services:
     #     file: ./db_password.txt
     #   connection_string:
     #     file: ./.local/connection_string.txt
-
-
-
-    # OUR CONNECTION STRING
-    # Server=localhost;Database=TrainorDB;User ID=sa;Password=postgres

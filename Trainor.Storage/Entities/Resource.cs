@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Trainor.Storage.Entities
 {
@@ -17,8 +18,10 @@ namespace Trainor.Storage.Entities
             get => Link;
             set => Link = Link ?? throw new NullReferenceException();
         }
+        [NotMapped] // This needs fixing
         public IEnumerable<string>? Authors { get; set; }
         public TypeTag Type { get; set; }
+        [NotMapped] // This needs fixing
         public IEnumerable<SubjectTag>? Subjects { get; set; }
         public DateTime Date { get; set; }
     }
