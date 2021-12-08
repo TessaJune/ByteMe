@@ -2,7 +2,6 @@
 
 <style>
     @@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap');
-    @@import url('https://css.gg/push-chevron-down.css');
     @@import url('https://css.gg/arrow-left.css');
 </style>
 
@@ -13,30 +12,24 @@
         
         @* THIS IS THE FILTER PART OF THE SITE *@
         <div class = "filtersContainer">
-            <div >
-                <i class="gg-arrow-left"></i>
+
+         <img class = "BackButtonImage" src="images/backButton.png" alt="Image is not showing" width="30px" @onclick = "NavigateToSearchPage" /> 
+           
+            <div class = "filtersNoSignOut">
                 <p class = "headerText">Relevant Filters</p>
                 <p class = "filterText"> Filter #1</p>
                 <p class = "filterText"> Filter #2</p>
-                <div class = "FilterAndIcon"> 
-                    <p class = "filterText"> Filter #3 <span class="gg-push-chevron-down"> </span> </p> 
-                </div>
+                <p class = "filterText"> Filter #3 <span class="gg-push-chevron-down"> </span> </p> 
+             </div>
 
-               
-            @* Everything in this div is related to the signOut div.*@
-                <div class="signOutContainer">
-                    <div class="imagePlaceholder">
-                        <img class ="imageSignOut" src="images/signout.png" alt="Image is not showing"/>
-                        <div class ="imageText">                                
-                        <p>Sign out</p>
-                        </div>
-                    </div>
+            <div class = "filtersWithSignOut">
+                <img class ="imageSignOut" src="images/signOutWhite.png" alt="Image is not showing" @onclick = "NavigateToLoginPage"/>
+                 <div class ="imageSignOutText">                                
+                    <p>Sign out</p>
                 </div>
-               
             </div>
-
         </div>
-        
+
         @* THIS IS THE RESOURCE DISPLAY OF THE SITE *@
         <div class = "resourcesContainer">
             <p>resourcesContainer</p>
@@ -49,8 +42,25 @@
             
         </div>
         
-        <div class = "placeHolder"></div>
-
+        <div class = "placeHolderResources"></div>
     </div>
 </body>
 </html 
+
+
+@code {
+    [Inject]
+    public NavigationManager NavigationManager { get; set; }
+    
+    @* Making it possible to navigate to ResultPage *@
+    public void NavigateToSearchPage()
+    {
+        NavigationManager.NavigateTo("/searchpage");
+    }
+
+    public void NavigateToLoginPage()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+
+}

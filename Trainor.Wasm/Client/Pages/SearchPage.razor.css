@@ -81,12 +81,20 @@ html, body {
 
 
 .searchButton {
-    background-color: #3EC6FF;
+    background-color: white;
     border-radius: 50%;
     margin-left: 2%;
     width: 50px;
     height: 50px;
 } 
+
+.searchButtonPicture{
+    background-color: #3EC6FF;
+    border-radius: 50%;
+    margin-left: 1%;
+    width: 50px;
+    height: 50px;
+}
 
 .forstorelsesglas {
     /* background-color: blue; */

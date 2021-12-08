@@ -14,7 +14,7 @@
         @* Everything in this div is related to the signOut div.*@
         <div class="signOutContainer">
             <div class="imagePlaceholder">
-                    <img class ="imageSignOut" src="images/signout.png" alt="Image is not showing"/>
+                    <img class ="imageSignOut" src="images/signout.png" alt="Image is not showing" @onclick = "NavigateToLoginPage"/>
                 <div class ="imageText">
                     <p>Sign out</p>
                 </div>
@@ -43,9 +43,10 @@
                         <input class="input" type="text">
                     </div>
                 </div>
-                @* <img class ="searchButton" src="images/searchButton.png"/> *@
-                <button @onclick = "NavigateToResult" class = "searchButton"> <img class ="searchButton" src="images/searchButton.png"/> </button> 
-                @* <button class = "searchButton" @onclick="NavigateToResult"> Navigate to ResultPage, hopefully </button>  *@
+               
+               
+               <input type = "image" src = "images/searchButton.png" @onclick = "NavigateToResult">
+            
             </div> 
         </div> 
 
@@ -59,7 +60,6 @@
 </html>
 
 
-@* Copied from Login.razor? It this okay? *@
 @code {
     [Inject]
     public NavigationManager NavigationManager { get; set; }
@@ -68,5 +68,9 @@
     public void NavigateToResult()
     {
         NavigationManager.NavigateTo("/resultpage");
+    }
+    public void NavigateToLoginPage()
+    {
+        NavigationManager.NavigateTo("/");
     }
 }
