@@ -17,7 +17,7 @@ namespace Trainor.App
         public IEnumerable<ResourceDto> SearchByKeyword(string keyword)
         {
             throw new NotImplementedException();
-            //var resource = new DataContext(resource);
+            
         }
 
         private IEnumerable<ResourceDetailsDto> GetBySearchQuery(Func<ResourceDetailsDto, ResourceDetailsDto, bool> property)

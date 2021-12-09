@@ -115,5 +115,19 @@ namespace Trainor.Storage
 
             return Deleted;
         }
+
+        public async Task<(CrudStatus, IReadOnlyCollection<ResourceDto>)> ReadFromKeyword(string keyword){
+            var entities = (await _context.Resources
+                                        .Where(r => r.Name.Contains(keyword) || r.Authors.Contains(keyword))
+                                        .Select(r => new ResourceDto(r.Name, r.Authors))
+                                        .ToListAsync())
+                                        .AsReadOnly();
+            
+            if (entities == null)
+                return (NotFound, null);
+
+            return (Ok, entities);
+                                    
+        }
     }
 }

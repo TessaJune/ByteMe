@@ -14,5 +14,6 @@ namespace Trainor.Storage
         Task<(CrudStatus, ResourceDetailsDto?)> ReadDetailsAsync(int resourceId);
         Task<CrudStatus> UpdateAsync(ResourceUpdateDto resource);
         Task<CrudStatus> DeleteAsync(int resourceId);
+        Task<(CrudStatus, IReadOnlyCollection<ResourceDto?>)> ReadFromKeyword(string keyword);
     }
 }
