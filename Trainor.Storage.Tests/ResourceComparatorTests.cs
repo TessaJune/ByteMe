@@ -10,6 +10,7 @@ namespace Trainor.Storage.Tests{
         public void Given_Same_Name_And_Author_With_Two_ResourceDTOs_IsEqual_Returns_True() 
         {
             //Arrange
+            
             var dto1 = new ResourceDto("skrrt", new []{"skrrtacus"});
             var dto2 = new ResourceDto("skrrt", new []{"skrrtacus"});
 
