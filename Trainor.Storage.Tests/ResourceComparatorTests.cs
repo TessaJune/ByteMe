@@ -1,6 +1,6 @@
 using Xunit;
-using Trainor.Storage;
 using Trainor.Storage.Entities;
+using Trainer.Storage;
 
 namespace Trainor.Storage.Tests{
 
