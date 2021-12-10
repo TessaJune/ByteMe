@@ -15,6 +15,8 @@ namespace Trainor.Storage
 
         public DbSet<Resource> Resources => Set<Resource>();
 
+        public DbSet<SubjectTag> SubjectTags => Set<SubjectTag>();
+
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -48,9 +50,14 @@ namespace Trainor.Storage
                 .Entity<Resource>()
                 .Property(r => r.Link)
                 .IsRequired();
+
+            modelBuilder
+                .Entity<SubjectTag>()
+                .Property(s => s.Title)
+                .HasMaxLength(50);
         }
 
-        
+
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {

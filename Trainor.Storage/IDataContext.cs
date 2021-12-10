@@ -15,6 +15,8 @@ namespace Trainor.Storage
 
         DbSet<Resource> Resources { get; }
 
+        DbSet<SubjectTag> SubjectTags { get; }
+
         int SaveChanges();
         
         Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);

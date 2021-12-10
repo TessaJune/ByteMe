@@ -20,8 +20,6 @@ namespace Trainor.Storage.Entities
         }
         
         public IEnumerable<Author> Authors { get; set; }
-
-        [NotMapped]
         public IEnumerable<SubjectTag>? Subjects { get; set; }
         public TypeTag Types { get; set; }
         public DateTime Date { get; set; }
