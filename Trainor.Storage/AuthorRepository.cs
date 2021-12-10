@@ -21,6 +21,7 @@ namespace Trainor.Storage
         {
             var entity = new Author
             {
+                Id = author.Id,
                 GivenName = author.GivenName,
                 LastName = author.LastName,
             };
