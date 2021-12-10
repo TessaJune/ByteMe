@@ -22,6 +22,34 @@ namespace Trainor.Storage.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
+            modelBuilder.Entity("Trainor.Storage.Entities.Author", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("GivenName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<int?>("ResourceId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ResourceId");
+
+                    b.ToTable("Authors");
+                });
+
             modelBuilder.Entity("Trainor.Storage.Entities.Resource", b =>
                 {
                     b.Property<int>("Id")
@@ -41,7 +69,7 @@ namespace Trainor.Storage.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
-                    b.Property<int>("Type")
+                    b.Property<int>("Types")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -71,6 +99,18 @@ namespace Trainor.Storage.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("Trainor.Storage.Entities.Author", b =>
+                {
+                    b.HasOne("Trainor.Storage.Entities.Resource", null)
+                        .WithMany("Authors")
+                        .HasForeignKey("ResourceId");
+                });
+
+            modelBuilder.Entity("Trainor.Storage.Entities.Resource", b =>
+                {
+                    b.Navigation("Authors");
                 });
 #pragma warning restore 612, 618
         }

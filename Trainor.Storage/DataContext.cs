@@ -1,7 +1,5 @@
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Trainor.Storage.Entities;
 
 namespace Trainor.Storage
@@ -51,6 +49,8 @@ namespace Trainor.Storage
                 .Property(r => r.Link)
                 .IsRequired();
         }
+
+        
 
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {

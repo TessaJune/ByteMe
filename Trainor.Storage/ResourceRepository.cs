@@ -24,8 +24,8 @@ namespace Trainor.Storage
                 Name = resource.Name,
                 Link = resource.Link,
                 Authors = resource.Authors,
-                Type = resource.Type,
                 Subjects = resource.Subjects,
+                Types = resource.Types,
                 Date = resource.Date
             };
 
@@ -94,7 +94,7 @@ namespace Trainor.Storage
             entity.Name = resource.Name;
             entity.Link = resource.Link;
             entity.Authors = resource.Authors;
-            entity.Type = resource.Type;
+            entity.Types = resource.Types;
             entity.Subjects = resource.Subjects;
             entity.Date = resource.Date;
 
