@@ -37,17 +37,17 @@ namespace Trainor.Storage
                                  entity.Id,
                                  entity.Name,
                                  entity.Link,
-                                 entity.Authors,
-                                 entity.Type,
-                                 entity.Subjects,
+                                 entity.Authors.ToHashSet(),
+                                //  entity.Authors,
+                                 entity.Subjects.ToHashSet(),
+                                 entity.Types,
                                  entity.Date
                              ));
         }
-
         public async Task<(CrudStatus, IReadOnlyCollection<ResourceDto>)> ReadAsync()
         {
             var entities = (await _context.Resources
-                                          .Select(r => new ResourceDto(r.Name, r.Authors))
+                                          .Select(r => new ResourceDto(r.Name, r.Authors.ToHashSet()))
                                           .ToListAsync())
                                           .AsReadOnly();
 
@@ -61,7 +61,7 @@ namespace Trainor.Storage
         {
             var entity = await _context.Resources
                                        .Where(r => r.Id == resourceId)
-                                       .Select(r => new ResourceDto(r.Name, r.Authors))
+                                       .Select(r => new ResourceDto(r.Name, r.Authors.ToHashSet()))
                                        .FirstOrDefaultAsync();
 
             if (entity == null)
@@ -75,7 +75,7 @@ namespace Trainor.Storage
         {
             var entity = await _context.Resources
                                        .Where(r => r.Id == resourceId)
-                                       .Select(r => new ResourceDetailsDto(r.Id, r.Name, r.Link, r.Authors, r.Type, r.Subjects, r.Date))
+                                       .Select(r => new ResourceDetailsDto(r.Id, r.Name, r.Link, r.Authors.ToHashSet(), r.Subjects.ToHashSet(), r.Types, r.Date))
                                        .FirstOrDefaultAsync();
 
             if (entity == null)

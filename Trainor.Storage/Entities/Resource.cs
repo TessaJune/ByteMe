@@ -18,11 +18,11 @@ namespace Trainor.Storage.Entities
             get => Link;
             set => Link = Link ?? throw new NullReferenceException();
         }
-        [NotMapped] // This needs fixing
-        public IEnumerable<string>? Authors { get; set; }
+        
+        public ICollection<string> Authors { get; set; }
         public TypeTag Type { get; set; }
-        [NotMapped] // This needs fixing
-        public IEnumerable<SubjectTag>? Subjects { get; set; }
+        public ICollection<SubjectTag> Subjects { get; set; }
+        public TypeTag Types { get; set; }
         public DateTime Date { get; set; }
     }
 }

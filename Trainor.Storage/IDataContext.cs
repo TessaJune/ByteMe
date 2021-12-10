@@ -11,6 +11,8 @@ namespace Trainor.Storage
     {
         DbSet<User> Users { get; }
 
+        DbSet<Author> Authors { get; }
+
         DbSet<Resource> Resources { get; }
 
         int SaveChanges();

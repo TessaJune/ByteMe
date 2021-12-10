@@ -13,6 +13,8 @@ namespace Trainor.Storage
         }
         public DbSet<User> Users => Set<User>();
 
+        public DbSet<Author> Authors => Set<Author>();
+
         public DbSet<Resource> Resources => Set<Resource>();
 
         public DataContext(DbContextOptions<DataContext> options) : base(options) { }
@@ -27,6 +29,16 @@ namespace Trainor.Storage
             modelBuilder
                 .Entity<User>()
                 .Property(u => u.LastName)
+                .HasMaxLength(50);
+
+            modelBuilder
+                .Entity<Author>()
+                .Property(a => a.GivenName)
+                .HasMaxLength(50);
+
+            modelBuilder
+                .Entity<Author>()
+                .Property(a => a.LastName)
                 .HasMaxLength(50);
 
             modelBuilder
