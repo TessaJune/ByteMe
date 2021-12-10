@@ -9,20 +9,19 @@ services:
       - '5432:5432'
     environment:
       POSTGRES_USER: 'postgres'
-      POSTGRES_PASSWORD: 'postgres'
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
       POSTGRES_DB: 'postgres'
     secrets:
-      - test
+      - db_password
   blazor-server:
-    image: server
     build:
       context: .
-      dockerfile: ./Trainor.Wasm/Server/Dockerfile
-    environment:
-      - ConnectionStrings__Trainor: ????
-      - ASPNETCORE_URLS: https://+;http://+
-      - ASPNETCORE_Kestrel__Certificates__Default__Path: /https/aspnetapp.pfx
-      - ASPNETCORE_Kestrel__Certificates__Default__Password: localhost
+      dockerfile: ./Dockerfile
+    #environment:
+      #- ConnectionStrings__Trainor: ????
+      #- ASPNETCORE_URLS: https://+;http://+
+      #- ASPNETCORE_Kestrel__Certificates__Default__Path: /https/aspnetapp.pfx
+      #- ASPNETCORE_Kestrel__Certificates__Default__Password: localhost
     ports:
       - 5077:80
       - 7207:443
@@ -31,9 +30,11 @@ services:
     secrets:
       - source: connection_string
         target: ConnectionStrings__Trainor
-    volumes:
-      - '../../../../.aspnet/https:/https/'
+    #volumes:
+     # - '../../../../.aspnet/https:/https/'
 
 secrets:
   connection_string:
     file: ../connection_string.txt
+  db_password:
+    file: ../db_password.txt
