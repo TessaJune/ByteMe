@@ -129,5 +129,10 @@ namespace Trainor.Storage
             return (Ok, entities);
                                     
         }
+
+        public async Task<(CrudStatus, IReadOnlyCollection<ResourceDto>)> ReadFromFilters(IEnumerable<TypeTag> filterTags)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
