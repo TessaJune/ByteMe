@@ -16,32 +16,63 @@
          <img class = "BackButtonImage" src="images/backButton.png" alt="Image is not showing" width="30px" @onclick = "NavigateToSearchPage" /> 
            
             <div class = "filtersNoSignOut">
-                <p class = "headerText">Relevant Filters</p>
+                <p class = "headerText">Filters</p>
                 <ul>
-                    <div class = "ListItem">
-                        <li>C#</li>
-                        <img class = "downArrow" src = "images/downButton.png" alt = "Image is not showing">
+                    <div class = "ListItemGeneral" id="Subject">
+                        <input class="listItemWithCheckbox" type="checkbox">
+                        <li>Subject</li>
                     </div>
-                    <div class = "ListItem">
-                        <li>Distributed Systems</li>
-                        <img class = "downArrow" src = "images/downButton.png" alt = "Image is not showing">
+                        <div class="listItemNotGeneral">
+                            <input class="listItemWithCheckbox" type="checkbox">
+                            <li>C#</li>
+                            <input class="listItemWithCheckbox" type="checkbox">
+                            <li>Java</li>
+                            <input class="listItemWithCheckbox" type="checkbox">
+                            <li>.NET</li>
+                            <input class="listItemWithCheckbox" type="checkbox">
+                            <li>Docker</li>
+                        </div>                    
+                    
+                    <div class = "ListItemGeneral" id="C">
+                        <input class="listItemWithCheckbox" type="checkbox">
+                        <li>Type of Resource</li>
                     </div>
-                    <div class = "ListItem">
-                        <li>Introduction to Database</li>
-                        <img class = "downArrow" src = "images/downButton.png" alt = "Image is not showing">
-                    </div>
+                        <div class="listItemNotGeneral">
+                            <input class="listItemWithCheckbox" type="checkbox">
+                            <li>Document</li>
+                            <input class="listItemWithCheckbox" type="checkbox">
+                            <li>Video</li>
+                        </div>  
+                    
+                    <div class = "ListItemGeneral" id="Disys">
+                        <input class="listItemWithCheckbox" type="checkbox">
+                        <li>Release Year</li>
+                    </div>  
+                        <div class="listItemNotGeneral">
+                            <input class="listItemWithCheckbox" type="checkbox">
+                            <li>2010</li>
+                            <input class="listItemWithCheckbox" type="checkbox">
+                            <li>2011</li>
+                            <input class="listItemWithCheckbox" type="checkbox">
+                            <li>2012</li>
+                            <input class="listItemWithCheckbox" type="checkbox">
+                            <li>2013</li>
+                        </div>  
+
+                    
                 </ul>
             </div>
 
             @* sign out part *@
             <div class = "filtersWithSignOut">
-                <img class ="imageSignOut" src="images/signOutWhite.png" alt="Image is not showing" @onclick = "NavigateToLoginPage"/>
+                <input class ="imageSignOut" type = "image" src="images/signOutWhite.png" @onclick = "NavigateToLoginPage"/>
                  <div class ="imageSignOutText">                                
                     <p>Sign out</p>
                 </div>
             </div>
         </div>
 
+    
         @* THIS IS THE RESOURCE DISPLAY OF THE SITE *@
         <div class = "resourcesContainer">
 
@@ -63,15 +94,15 @@
                     <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusamus recusandae aspernatur possimus illum, repellat ad quasi earum, illo voluptatibus minima fugiat saepe magni corporis vero eius accusantium quidem, consectetur nesciunt!</p>
                 </div>
                 <div class = "CResource">
-                    <h2>C #</h2>
+                    <h2>C#</h2>
                     <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusamus recusandae aspernatur possimus illum, repellat ad quasi earum, illo voluptatibus minima fugiat saepe magni corporis vero eius accusantium quidem, consectetur nesciunt!</p>
                 </div>
                 <div class = "Disys">
-                    <h2>DISYS</h2>
+                    <h2>Distributed Systems</h2>
                     <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusamus recusandae aspernatur possimus illum, repellat ad quasi earum, illo voluptatibus minima fugiat saepe magni corporis vero eius accusantium quidem, consectetur nesciunt!</p>
                 </div>
                 <div class = "Database">
-                    <h2>Database</h2>
+                    <h2>Introduction to Database</h2>
                     <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusamus recusandae aspernatur possimus illum, repellat ad quasi earum, illo voluptatibus minima fugiat saepe magni corporis vero eius accusantium quidem, consectetur nesciunt!</p>
                 </div>
             </div>
@@ -100,4 +131,7 @@
         NavigationManager.NavigateTo("/");
     }
 
+    @* Metode der tager en string array, den string array skal starte med at være 
+    ALL eller GENERAL, så alt bliver vist og efter at man tilføjer filtre (tjekker dem af med tjekbokse), 
+    skal den string array opdateres til kun at have de tilføjede filtre*@
 }

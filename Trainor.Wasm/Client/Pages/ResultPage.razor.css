@@ -5,10 +5,6 @@ html, body {
     width: 100vw;
 }
 
-#p {
-    color: red;
-}
-
 /* This is controlling the dimensions of the page and how divs should be displayed  */
 .container {
     display: flex;
@@ -32,7 +28,8 @@ html, body {
 }
 
 .filtersWithSignOut {
-    margin-top: 28%;
+    position: fixed;
+    margin-top: 25%;
     display: flex;
     position: absolute;
     width: 100%;
@@ -51,24 +48,41 @@ html, body {
 .BackButtonImage {
     margin-left: 50%;
     margin: 2%;
+    cursor: pointer;
 }
 
-.ListItem {
+.ListItemGeneral {
     font-size: 20px;
     font-family: garamond;
     color: white;
-    list-style-type: none; /* ingen - */
+    list-style-type: none;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
+    margin-top: 5%;
+    
 }
 
-.downArrow {
-    height: 5%;
-    width: 5%;
+.listItemWithCheckbox[type="checkbox"] {
+    height: 19px;
+    width: 19px;
+    margin-right: 2%;
+    margin-bottom: 2%;
 }
 
-/* skal fjernes på et tidspunkt */
+.listItemNotGeneral {
+    font-size:15px;
+    font-family: garamond;
+    color: white;
+    list-style-type: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    margin-top: 1%;
+    margin-left: 3%;
+}
+
+/* skal fjernes på et tidspunkt. Bliver ikke brugt lige nu*/
 .filterText{
     font-size: 20px;
     font-family: garamond;
@@ -84,13 +98,15 @@ html, body {
     width: 40px;
     height: 40px;
     margin-left: 1%;
+    cursor: pointer;
 }
+
 
 .imageSignOutText {
     font-size: 18px;
     color: white;
     text-align: left;
-    line-height: 20%;
+    line-height: 15%;
     padding-left: 1%; 
 }
 
@@ -154,9 +170,10 @@ html, body {
     height: 40px;
 } 
 
-/* IN RELEVANCE TO DISPLAY OF RESOURCES */
+/* IN RELEVANCE TO DISPLAY OF SINGLE RESOURCES */
 .displayAllResources {
-
+    display: inline-table;
+    padding: 10%;
 }
 
 
