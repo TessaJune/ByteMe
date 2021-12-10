@@ -1,14 +1,16 @@
+using System.Linq;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.Identity.Web;
-using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using System.Linq;
+using Microsoft.Identity.Web;
+using Trainor.Storage;
 
 namespace Trainor.Wasm.Server
 {
@@ -30,6 +32,10 @@ namespace Trainor.Wasm.Server
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+            services.AddDbContext<DataContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DataContext")));
+            services.AddScoped<IDataContext, DataContext>();
+            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IResourceRepository, ResourceRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
