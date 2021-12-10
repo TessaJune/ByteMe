@@ -1,5 +1,6 @@
 @page "/fetchresources"
 @using Microsoft.AspNetCore.Authorization
+@using Trainor.Storage.Entities
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using Trainor.Wasm.Shared
 @inject HttpClient Http
@@ -8,7 +9,7 @@
 
 <p>This component demonstrates fetching data from the server.</p>
 
-@if (dates == null)
+@if (resources== null)
 {
     <p><em>Loading...</em></p>
     <p><em>@otherFailMessage</em></p>
@@ -25,10 +26,11 @@ else
             </tr>
         </thead>
         <tbody>
-          @foreach (var date in dates)
+          @foreach (var resource in resources)
             {
                 <tr>
-                    <td>@date.Date.ToShortDateString()</td>
+                    <td>@resource.name</td>
+                    <td>@resource.name</td>
                 </tr>
             }
         </tbody>
@@ -36,13 +38,13 @@ else
 }
 
 @code {
-    private DateTime[] dates;
+    private ResourceDto[] resources;
     private string otherFailMessage = "";
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            dates = await Http.GetFromJsonAsync<DateTime[]>("Test");
+            resources = await Http.GetFromJsonAsync<ResourceDto[]>("Test");
         }
         catch (AccessTokenNotAvailableException exception)
         {
