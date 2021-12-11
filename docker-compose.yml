@@ -20,9 +20,9 @@ services:
       dockerfile: ./Dockerfile
     environment:
       ConnectionStrings__Trainor:
-      #-ASPNETCORE_URLS: https://+;http://+
-      #-ASPNETCORE_Kestrel__Certificates__Default__Path: /https/aspnetapp.pfx
-      #-ASPNETCORE_Kestrel__Certificates__Default__Password: localhost
+      ASPNETCORE_URLS: https://+;http://+
+      ASPNETCORE_Kestrel__Certificates__Default__Path: /https/Trainor.Wasm.Server.pfx
+      ASPNETCORE_Kestrel__Certificates__Default__Password: 80a75217-d1e7-4076-a031-2de6dba5361d
     ports:
       - 7208:80
       - 7207:443
@@ -31,8 +31,8 @@ services:
     secrets:
       - source: connection_string
         target: ConnectionStrings__Trainor
-    # volumes:
-    #   - '../../../../.aspnet/https:/https/'
+    volumes:
+      - $USERPROFILE\.aspnet\https:/https/
 
 secrets:
   connection_string:

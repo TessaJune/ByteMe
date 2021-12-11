@@ -1,4 +1,5 @@
 using System.Linq;
+using static System.Net.HttpStatusCode;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -36,6 +37,11 @@ namespace Trainor.Wasm.Server
             services.AddScoped<IDataContext, DataContext>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IResourceRepository, ResourceRepository>();
+            services.AddHttpsRedirection(options =>
+            {
+                options.RedirectStatusCode = (int) TemporaryRedirect;
+                options.HttpsPort = 7207;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,9 +56,9 @@ namespace Trainor.Wasm.Server
             {
                 app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                //app.UseHsts();
+                app.UseHsts();
             }
-            //app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
             app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();
 
