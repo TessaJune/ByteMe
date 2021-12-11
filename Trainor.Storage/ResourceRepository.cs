@@ -165,7 +165,8 @@ namespace Trainor.Storage
             if (entities == null)
                 return (NotFound, null);
 
-            return (Ok, entities); 
+            return (Ok, entities);
+            //No search methods are fully implemented yet.
         }
     }
 }
