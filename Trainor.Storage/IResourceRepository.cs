@@ -15,7 +15,10 @@ namespace Trainor.Storage
         Task<CrudStatus> UpdateAsync(ResourceUpdateDto resource);
         Task<CrudStatus> DeleteAsync(int resourceId);
         Task<(CrudStatus, IReadOnlyCollection<ResourceDto?>)> ReadFromKeyword(string keyword);
-        Task<(CrudStatus, IReadOnlyCollection<ResourceDto?>)> ReadFromFilters(IEnumerable<TypeTag> filterTags);
+        Task<(CrudStatus, IReadOnlyCollection<ResourceDetailsDto?>)> ReadFromFilters(IEnumerable<TypeTag> filterTags);
+        Task<(CrudStatus, IReadOnlyCollection<ResourceDetailsDto?>)> ReadFromFilters(IEnumerable<SubjectTag> filterTags);
+        Task<(CrudStatus, IReadOnlyCollection<ResourceDetailsDto?>)> ReadFromFilters(IEnumerable<TypeTag> typeFilter, IEnumerable<SubjectTag> subjectFilter);
+
         /*
         TypeTag is a temporary solution, unsure how to get around making 3 methods for each Tag for filters.
         3 Would be: Method for TypeTag, Method for Subject Tag, Method for both

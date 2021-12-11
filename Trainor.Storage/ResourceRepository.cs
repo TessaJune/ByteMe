@@ -126,13 +126,46 @@ namespace Trainor.Storage
             if (entities == null)
                 return (NotFound, null);
 
-            return (Ok, entities);
-                                    
+            return (Ok, entities);           
         }
 
-        public async Task<(CrudStatus, IReadOnlyCollection<ResourceDto>)> ReadFromFilters(IEnumerable<TypeTag> filterTags)
+        public async Task<(CrudStatus, IReadOnlyCollection<ResourceDetailsDto>)> ReadFromFilters(TypeTag filterTags)
         {
-            throw new NotImplementedException();
+            var entities = (await _context.Resources
+                                        .Where(r => r.Type == filterTags)
+                                        .Select(r => new ResourceDetailsDto(r.Id,r.Name,r.Link, r.Authors, r.Type, r.Subjects, r.Date))
+                                        .ToListAsync())
+                                        .AsReadOnly();
+            if (entities == null)
+                return (NotFound, null);
+
+            return (Ok, entities); 
+        }
+
+        public async Task<(CrudStatus, IReadOnlyCollection<ResourceDetailsDto?>)> ReadFromFilters(IEnumerable<SubjectTag> filterTags)
+        {
+            var entities = (await _context.Resources
+                                        .Where(r => r.Subjects == filterTags)
+                                        .Select(r => new ResourceDetailsDto(r.Id,r.Name,r.Link, r.Authors, r.Type, r.Subjects, r.Date))
+                                        .ToListAsync())
+                                        .AsReadOnly();
+            if (entities == null)
+                return (NotFound, null);
+
+            return (Ok, entities); 
+        }
+
+        public async Task<(CrudStatus, IReadOnlyCollection<ResourceDetailsDto?>)> ReadFromFilters(TypeTag typeFilter, IEnumerable<SubjectTag> subjectFilter)
+        {
+            var entities = (await _context.Resources
+                                        .Where(r => r.Type == typeFilter && r.Subjects == subjectFilter)
+                                        .Select(r => new ResourceDetailsDto(r.Id,r.Name,r.Link, r.Authors, r.Type, r.Subjects, r.Date))
+                                        .ToListAsync())
+                                        .AsReadOnly();
+            if (entities == null)
+                return (NotFound, null);
+
+            return (Ok, entities); 
         }
     }
 }
