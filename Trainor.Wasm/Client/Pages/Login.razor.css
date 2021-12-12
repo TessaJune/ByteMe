@@ -76,8 +76,9 @@ html, body {
     font-size: 20px;
     font-family: garamond;
     color: white;
-    margin-left: 7%;
-    margin-right: 7%;
+    margin-left: 13%;
+    margin-right: 13%;
+    text-align: justify ;
 }
 
 .WelcomeTitle {
