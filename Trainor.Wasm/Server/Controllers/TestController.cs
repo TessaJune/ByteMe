@@ -30,7 +30,6 @@ namespace Trainor.Wasm.Server.Controllers
         [HttpGet]
         public IEnumerable<ResourceDto> Get()
         {
-
             String[] authors = {
                 "Simon L.K.",
                 "Tessa J.S."

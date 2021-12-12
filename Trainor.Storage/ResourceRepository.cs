@@ -57,7 +57,7 @@ namespace Trainor.Storage
             return (Ok, entities);
         }
 
-        public async Task<(CrudStatus, ResourceDto)> ReadAsync(int resourceId)
+        public async Task<(CrudStatus, ResourceDto?)> ReadAsync(int resourceId)
         {
             var entity = await _context.Resources
                                        .Where(r => r.Id == resourceId)
@@ -71,7 +71,7 @@ namespace Trainor.Storage
 
         }
 
-        public async Task<(CrudStatus, ResourceDetailsDto)> ReadDetailsAsync(int resourceId)
+        public async Task<(CrudStatus, ResourceDetailsDto?)> ReadDetailsAsync(int resourceId)
         {
             var entity = await _context.Resources
                                        .Where(r => r.Id == resourceId)
@@ -115,5 +115,17 @@ namespace Trainor.Storage
 
             return Deleted;
         }
+
+        public async Task<(CrudStatus, IReadOnlyCollection<ResourceDetailsDto>?)> ReadTypeAsync(TypeTag typeTag)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<(CrudStatus, IReadOnlyCollection<ResourceDetailsDto>?)> ReadSubjectsAsync(
+            SubjectTag[] subjectTags)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }
