@@ -57,8 +57,6 @@ namespace Trainor.Storage
                 .HasMaxLength(50);
         }
 
-
-
         protected override void OnConfiguring(DbContextOptionsBuilder options)
         {
             if (!options.IsConfigured)
