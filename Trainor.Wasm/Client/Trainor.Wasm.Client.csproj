@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Shared\Trainor.Wasm.Shared.csproj" />
-    <ProjectReference Include="..\..\Trainor.Storage\Trainor.Storage.csproj" />
   </ItemGroup>
 
 </Project>

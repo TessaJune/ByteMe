@@ -29,7 +29,7 @@ namespace Trainor.Wasm.Server.Controllers
 
         [HttpGet]
         public IEnumerable<ResourceDto> Get()
-        {
+        {/*
             String[] authors = {
                 "Simon L.K.",
                 "Tessa J.S."
@@ -39,8 +39,8 @@ namespace Trainor.Wasm.Server.Controllers
                 new ResourceDto("Article2", authors),
                 new ResourceDto("Article3", authors),
                 new ResourceDto("Article4", authors)
-            };
-            return resourceDtos;
+            };*/
+            return null;
         }
     }
 }
