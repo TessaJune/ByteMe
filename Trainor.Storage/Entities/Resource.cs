@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Trainor.Storage.Entities
 {
@@ -8,7 +9,7 @@ namespace Trainor.Storage.Entities
     {
         public int Id { get; set; }
         [StringLength(50)]
-        public string? Name { get; set; }
+        public string Name { get; set; }
 
         [Required]
         [Url]
@@ -17,9 +18,10 @@ namespace Trainor.Storage.Entities
             get => Link;
             set => Link = Link ?? throw new NullReferenceException();
         }
-        public IEnumerable<string>? Authors { get; set; }
-        public TypeTag Type { get; set; }
+        
+        public IEnumerable<Author> Authors { get; set; }
         public IEnumerable<SubjectTag>? Subjects { get; set; }
+        public TypeTag Types { get; set; }
         public DateTime Date { get; set; }
     }
 }

@@ -12,9 +12,9 @@ namespace Trainor.Storage.Entities
         DOCUMENT,
         PICTURE,
     }
-    public enum SubjectTag
-    {
-        C_SHARP,
-        JAVA,
-    }
+    // public enum SubjectTag
+    // {
+    //     C_SHARP,
+    //     JAVA,
+    // }
 }

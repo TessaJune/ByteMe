@@ -8,6 +8,13 @@ namespace Trainor.Storage.Entities
     */
     public class User
     {
+        // public User(string givenName, string lastName, string email)
+        // {
+        //     GivenName = givenName;
+        //     LastName = lastName;
+        //     Email = email;
+        // }
+
         [Required]
         public int Id { get; set; }
 
