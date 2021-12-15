@@ -17,7 +17,7 @@ namespace Trainor.Storage
             _context = context;
         }
 
-        public async Task<(CrudStatus, ResourceDetailsDto)> CreateAsync(ResourceCreateDto resource)
+        public async Task<(CrudStatus, ResourceDto)> CreateAsync(ResourceCreateDto resource)
         {
             /*var entity = new Resource
             {
@@ -33,7 +33,7 @@ namespace Trainor.Storage
 
             await _context.SaveChangesAsync();
 
-            return (Created, new ResourceDetailsDto(
+            return (Created, new ResourceDto(
                                  entity.Id,
                                  entity.Name,
                                  entity.Link,
@@ -64,23 +64,7 @@ namespace Trainor.Storage
             /*
             var entity = await _context.Resources
                                        .Where(r => r.Id == resourceId)
-                                       .Select(r => new ResourceDto(r.Name, r.Authors))
-                                       .FirstOrDefaultAsync();
-
-            if (entity == null)
-                return (NotFound, null);
-
-            return (Ok, entity);
-            */
-            throw new NotImplementedException();
-        }
-
-        public async Task<(CrudStatus, ResourceDetailsDto)> ReadDetailsAsync(int resourceId)
-        {
-            /*
-            var entity = await _context.Resources
-                                       .Where(r => r.Id == resourceId)
-                                       .Select(r => new ResourceDetailsDto(r.Id, r.Name, r.Link, r.Authors, r.Subjects, r.Type, r.Date))
+                                       .Select(r => new ResourceDto(r.Id, r.Name, r.Link, r.Authors, r.Subjects, r.Type, r.Date))
                                        .FirstOrDefaultAsync();
 
             if (entity == null)
@@ -89,6 +73,7 @@ namespace Trainor.Storage
             return (Ok, entity);*/
             throw new NotImplementedException();
         }
+        
         public async Task<CrudStatus> UpdateAsync(ResourceUpdateDto resource)
         {
             /*var entity = await _context.Resources
@@ -124,11 +109,11 @@ namespace Trainor.Storage
             throw new NotImplementedException();
         }
 
-        public async Task<(CrudStatus, IReadOnlyCollection<ResourceDetailsDto>)> ReadFromKeyword(string keyword){
+        public async Task<(CrudStatus, IReadOnlyCollection<ResourceDto>)> ReadFromKeyword(string keyword){
             /*var entities = (await _context.Resources
                                         .Where(r => r.Name.Contains(keyword) || r.Link.Contains(keyword) || r.Authors. ||
                                          r.Type.ToString().Contains(keyword) || r.Subjects.ToString().Contains(keyword))
-                                        .Select(r => new ResourceDetailsDto(r.Id, r.Name, r.Link, r.Authors, r.Type, r.Subjects, r.Date))
+                                        .Select(r => new ResourceDto(r.Id, r.Name, r.Link, r.Authors, r.Type, r.Subjects, r.Date))
                                         .ToListAsync())
                                         .AsReadOnly();
             //Changed to DetailsDTO, remmeber to match on all parameters.
@@ -149,12 +134,12 @@ namespace Trainor.Storage
             }
         }*/
 
-        public async Task<(CrudStatus, IReadOnlyCollection<ResourceDetailsDto>)> ReadFromFilters(TypeTag filterTags)
+        public async Task<(CrudStatus, IReadOnlyCollection<ResourceDto>)> ReadFromFilters(TypeTag filterTags)
         {
             /*
             var entities = (await _context.Resources
                                         .Where(r => r.Type == filterTags)
-                                        .Select(r => new ResourceDetailsDto(r.Id,r.Name,r.Link, r.Authors, r.Type, r.Subjects, r.Date))
+                                        .Select(r => new ResourceDto(r.Id,r.Name,r.Link, r.Authors, r.Type, r.Subjects, r.Date))
                                         .ToListAsync())
                                         .AsReadOnly();
             if (entities == null)
@@ -164,12 +149,12 @@ namespace Trainor.Storage
             throw new NotImplementedException();
         }
 
-        public async Task<(CrudStatus, IReadOnlyCollection<ResourceDetailsDto?>)> ReadFromFilters(IEnumerable<SubjectTag> filterTags)
+        public async Task<(CrudStatus, IReadOnlyCollection<ResourceDto?>)> ReadFromFilters(IEnumerable<SubjectTag> filterTags)
         {
             /*
             var entities = (await _context.Resources
                                         .Where(r => r.Subjects == filterTags)
-                                        .Select(r => new ResourceDetailsDto(r.Id,r.Name,r.Link, r.Authors, r.Type, r.Subjects, r.Date))
+                                        .Select(r => new ResourceDto(r.Id,r.Name,r.Link, r.Authors, r.Type, r.Subjects, r.Date))
                                         .ToListAsync())
                                         .AsReadOnly();
             if (entities == null)
@@ -179,11 +164,11 @@ namespace Trainor.Storage
             throw new NotImplementedException();
         }
 
-        public async Task<(CrudStatus, IReadOnlyCollection<ResourceDetailsDto?>)> ReadFromFilters(TypeTag typeFilter, IEnumerable<SubjectTag> subjectFilter)
+        public async Task<(CrudStatus, IReadOnlyCollection<ResourceDto?>)> ReadFromFilters(TypeTag typeFilter, IEnumerable<SubjectTag> subjectFilter)
         {
             /*var entities = (await _context.Resources
                                         .Where(r => r.Type == typeFilter && r.Subjects == subjectFilter)
-                                        .Select(r => new ResourceDetailsDto(r.Id,r.Name,r.Link, r.Authors, r.Type, r.Subjects, r.Date))
+                                        .Select(r => new ResourceDto(r.Id,r.Name,r.Link, r.Authors, r.Type, r.Subjects, r.Date))
                                         .ToListAsync())
                                         .AsReadOnly();
             if (entities == null)

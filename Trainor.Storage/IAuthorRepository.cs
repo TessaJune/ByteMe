@@ -7,9 +7,7 @@ namespace Trainor.Storage
 {
     public interface IAuthorRepository
     {
-        Task<(CrudStatus, AuthorDetailsDto)> CreateAsync(AuthorCreateDto author);
-
-        Task<(CrudStatus, AuthorDetailsDto)> ReadDetailsAsync(int authorId);
+        Task<(CrudStatus, AuthorDto)> CreateAsync(AuthorCreateDto author);
 
         Task<(CrudStatus, AuthorDto)> ReadAsync(int authorId);
 
