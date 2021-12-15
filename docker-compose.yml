@@ -32,7 +32,7 @@ services:
       - source: connection_string
         target: ConnectionStrings__Trainor
     volumes:
-      - ..\aspnet\https:/https/
+      - ../aspnet/https:/https/
 
 secrets:
   connection_string:
