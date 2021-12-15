@@ -30,7 +30,7 @@ namespace Trainor.App
                 if (type.Equals(typeTag.ToString()))
                 {
                     var typeToSearch = typeTag;
-                    var asyncResult = await _repo.ReadTypeAsync(typeToSearch);
+                    var asyncResult = await _repo.ReadFromFilters(typeToSearch);
                     return asyncResult.Item2;
                 }
             }
@@ -62,7 +62,8 @@ namespace Trainor.App
                         counter++;
                     }
                 }
-                var asyncResult = await _repo.ReadSubjectsAsync(subjectTagsToSearch);
+                var asyncResult = 
+                    await _repo.ReadFromFilters(subjectTagsToSearch);
                 return asyncResult.Item2;
             }
             return null;
