@@ -17,7 +17,7 @@ namespace Trainor.Storage
             _context = context;
         }
 
-        public async Task<(CrudStatus, SubjectTagDetailsDto)> CreateAsync(SubjectTagCreateDto subjectTag)
+        public async Task<(CrudStatus, SubjectTagDto)> CreateAsync(SubjectTagCreateDto subjectTag)
         {
             var entity = new SubjectTag
             {
@@ -29,23 +29,10 @@ namespace Trainor.Storage
 
             await _context.SaveChangesAsync();
 
-            return (Created, new SubjectTagDetailsDto(
+            return (Created, new SubjectTagDto(
                 entity.Id,
                 entity.Title
                 ));
-        }
-
-        public async Task<(CrudStatus, SubjectTagDetailsDto)> ReadDetailsAsync(int subjectTagId)
-        {
-            var entity = await _context.SubjectTags
-                                       .Where(s => s.Id == subjectTagId)
-                                       .Select(s => new SubjectTagDetailsDto(s.Id, s.Title))
-                                       .FirstOrDefaultAsync();
-
-            if(entity == null) 
-                return (NotFound, null);
-             
-            return (Ok, entity);
         }
 
         public async Task<(CrudStatus, SubjectTagDto)> ReadAsync(int subjectTagId)

@@ -7,9 +7,7 @@ namespace Trainor.Storage
 {
     public interface IUserRepository
     {
-        Task<(CrudStatus, UserDetailsDto)> CreateAsync(UserCreateDto user);
-
-        Task<(CrudStatus, UserDetailsDto)> ReadDetailsAsync(int userId);
+        Task<(CrudStatus, UserDto)> CreateAsync(UserCreateDto user);
 
         Task<(CrudStatus, UserDto)> ReadAsync(int userId);
 

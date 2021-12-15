@@ -17,7 +17,7 @@ namespace Trainor.Storage
             _context = context;
         }
 
-        public async Task<(CrudStatus, AuthorDetailsDto)> CreateAsync(AuthorCreateDto author)
+        public async Task<(CrudStatus, AuthorDto)> CreateAsync(AuthorCreateDto author)
         {
             var entity = new Author
             {
@@ -30,31 +30,18 @@ namespace Trainor.Storage
 
             await _context.SaveChangesAsync();
 
-            return (Created, new AuthorDetailsDto(
+            return (Created, new AuthorDto(
                 entity.Id,
                 entity.GivenName,
                 entity.LastName
                 ));
         }
-
-        public async Task<(CrudStatus, AuthorDetailsDto)> ReadDetailsAsync(int authorId)
-        {
-            var entity = await _context.Authors
-                                       .Where(a => a.Id == authorId)
-                                       .Select(a => new AuthorDetailsDto(a.Id, a.GivenName, a.LastName))
-                                       .FirstOrDefaultAsync();
-
-            if(entity == null) 
-                return (NotFound, null);
-             
-            return (Ok, entity);
-        }
-
+        
         public async Task<(CrudStatus, AuthorDto)> ReadAsync(int authorId)
         {
                    var entity = await _context.Authors
                                               .Where(a => a.Id == authorId)
-                                              .Select(a => new AuthorDto(a.GivenName, a.LastName))
+                                              .Select(a => new AuthorDto(a.Id ,a.GivenName, a.LastName))
                                               .FirstOrDefaultAsync();
 
             if (entity == null)
@@ -66,7 +53,7 @@ namespace Trainor.Storage
         public async Task<(CrudStatus, IReadOnlyCollection<AuthorDto>)> ReadAsync() 
         {
             var entities = (await _context.Authors
-                                          .Select(a => new AuthorDto(a.GivenName, a.LastName))
+                                          .Select(a => new AuthorDto(a.Id, a.GivenName, a.LastName))
                                           .ToListAsync())
                                           .AsReadOnly();
 

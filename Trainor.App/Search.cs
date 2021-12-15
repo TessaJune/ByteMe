@@ -21,7 +21,7 @@ namespace Trainor.App
             return asyncResult.Item2;
         }
 
-        public async Task<IReadOnlyCollection<ResourceDetailsDto>> SearchByType(string type)
+        public async Task<IReadOnlyCollection<ResourceDto>> SearchByType(string type)
         {
             var typeTags = Enum.GetValues(typeof(TypeTag));
             
@@ -37,7 +37,7 @@ namespace Trainor.App
             return null;
         }
 
-        public async Task<IReadOnlyCollection<ResourceDetailsDto>> SearchBySubject(IEnumerable<string> subjects)
+        public async Task<IReadOnlyCollection<ResourceDto>> SearchBySubject(IEnumerable<string> subjects)
         {
             var subjectTags = Enum.GetValues(typeof(SubjectTag));
             var subjectsToSearch = new List<string>();
@@ -69,7 +69,7 @@ namespace Trainor.App
             return null;
         }
 
-        public async Task<IReadOnlyCollection<ResourceDetailsDto>> SearchByYear(int year)
+        public async Task<IReadOnlyCollection<ResourceDto>> SearchByYear(int year)
         {
             throw new NotImplementedException();
         }
