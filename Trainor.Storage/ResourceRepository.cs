@@ -116,12 +116,14 @@ namespace Trainor.Storage
             return Deleted;
         }
 
-        public async Task<(CrudStatus, IReadOnlyCollection<ResourceDto>)> ReadFromKeyword(string keyword){
+        public async Task<(CrudStatus, IReadOnlyCollection<ResourceDetailsDto>)> ReadFromKeyword(string keyword){
             var entities = (await _context.Resources
-                                        .Where(r => r.Name.Contains(keyword) || r.Authors.Contains(keyword))
-                                        .Select(r => new ResourceDto(r.Name, r.Authors))
+                                        .Where(r => r.Name.Contains(keyword) || r.Link.Contains(keyword) || r.Authors.Contains(keyword) ||
+                                         r.Type.ToString().Contains(keyword) || r.Subjects.ToString().Contains(keyword))
+                                        .Select(r => new ResourceDetailsDto(r.Id, r.Name, r.Link, r.Authors, r.Type, r.Subjects, r.Date))
                                         .ToListAsync())
                                         .AsReadOnly();
+            //Changed to DetailsDTO, remmeber to match on all parameters.
             
             if (entities == null)
                 return (NotFound, null);
