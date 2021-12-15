@@ -10,7 +10,7 @@
 <body>
     <div class ="container">
         
-        @* THIS IS THE FILTER PART OF THE SITE *@
+        @* THIS IS THE FILTER PART OF THE SITE
         <div class = "filtersContainer">
 
          <img class = "BackButtonImage" src="images/backButton.png" alt="Image is not showing" width="30px" @onclick = "NavigateToSearchPage" /> 
@@ -19,49 +19,117 @@
                 <p class = "headerText">Filters</p>
                 <ul>
                     <div class = "ListItemGeneral" id="Subject">
-                        <input class="listItemWithCheckbox" type="checkbox">
                         <li>Subject</li>
                     </div>
                         <div class="listItemNotGeneral">
-                            <input class="listItemWithCheckbox" type="checkbox">
+                            
+                            <input name="AreChecked" class="listItemWithCheckbox" type="checkbox" value="@C#">
                             <li>C#</li>
-                            <input class="listItemWithCheckbox" type="checkbox">
+                            <input name="AreChecked" class="listItemWithCheckbox" type="checkbox" value="@Java">
                             <li>Java</li>
-                            <input class="listItemWithCheckbox" type="checkbox">
+                            <input name="AreChecked" class="listItemWithCheckbox" type="checkbox" value="@.NET">
                             <li>.NET</li>
-                            <input class="listItemWithCheckbox" type="checkbox">
+                            <input name="AreChecked" class="listItemWithCheckbox" type="checkbox" value="@Docker">
                             <li>Docker</li>
                         </div>                    
                     
-                    <div class = "ListItemGeneral" id="C">
-                        <input class="listItemWithCheckbox" type="checkbox">
+                    <div class = "ListItemGeneral">
                         <li>Type of Resource</li>
                     </div>
                         <div class="listItemNotGeneral">
-                            <input class="listItemWithCheckbox" type="checkbox">
+                            <input name="AreChecked" class="listItemWithCheckbox" type="checkbox" value="@Document">
                             <li>Document</li>
-                            <input class="listItemWithCheckbox" type="checkbox">
+                            <input name="AreChecked" class="listItemWithCheckbox" type="checkbox" value="@Video">
                             <li>Video</li>
                         </div>  
                     
                     <div class = "ListItemGeneral" id="Disys">
-                        <input class="listItemWithCheckbox" type="checkbox">
                         <li>Release Year</li>
                     </div>  
                         <div class="listItemNotGeneral">
-                            <input class="listItemWithCheckbox" type="checkbox">
+                            <input name="AreChecked" class="listItemWithCheckbox" type="checkbox" value="@2010">
                             <li>2010</li>
-                            <input class="listItemWithCheckbox" type="checkbox">
+                            <input name="AreChecked" class="listItemWithCheckbox" type="checkbox" value="@2011">
                             <li>2011</li>
-                            <input class="listItemWithCheckbox" type="checkbox">
+                            <input name="AreChecked" class="listItemWithCheckbox" type="checkbox" value="@2012">
                             <li>2012</li>
-                            <input class="listItemWithCheckbox" type="checkbox">
+                            <input name="AreChecked" class="listItemWithCheckbox" type="checkbox" value="@2013">
                             <li>2013</li>
                         </div>  
 
                     
                 </ul>
+            </div> 
+
+            @* New div for filters *@
+            <div class="filtersNoSignOut">
+                <form method="post">
+                <table>
+                    
+                    @foreach (var i in Database)
+                    {
+                        <tr>
+                            <th>
+                                Subject
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input name="AreChecked" class="listItemWithCheckbox" type="checkbox" value="@i.Value" checked="@i.Selected">
+                            </td>
+                            <td>
+                                <label for="@i.Value"> @i.Text </label>
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+                <table>
+                    @foreach (var i in Database)
+                    {
+                        <tr>
+                            <th>
+                                Resource Type
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input name="AreChecked" class="listItemWithCheckbox" type="checkbox" value="@i.Value" checked="@i.Selected">
+                            </td>
+                            <td>
+                                <label for="@i.Value"> @i.Text </label>
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+                <table>
+                    @foreach (var i in Database)
+                    {
+                        <tr>
+                            <th>
+                                Release Year
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                <input name="AreChecked" class="listItemWithCheckbox" type="checkbox" value="@i.Value" checked="@i.Selected">
+                            </td>
+                            <td>
+                                <label for="@i.Value"> @i.Text </label>
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+
+                <input type="search" value="search" @onclick="search">
+
+                </form>
+
             </div>
+            
+
 
             @* sign out part *@
             <div class = "filtersWithSignOut">
@@ -87,8 +155,8 @@
                 <input class = "searchButton" type = "image" src = "images/searchButton.png">
             </div>  
 
-            @* Resources displayed part *@  
-            <div class = "displayAllResources">
+            Resources displayed part  
+            @* <div class = "displayAllResources">
                 <div class = "All">
                     <h2>All</h2>
                     <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusamus recusandae aspernatur possimus illum, repellat ad quasi earum, illo voluptatibus minima fugiat saepe magni corporis vero eius accusantium quidem, consectetur nesciunt!</p>
@@ -105,13 +173,17 @@
                     <h2>Introduction to Database</h2>
                     <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusamus recusandae aspernatur possimus illum, repellat ad quasi earum, illo voluptatibus minima fugiat saepe magni corporis vero eius accusantium quidem, consectetur nesciunt!</p>
                 </div>
+            </div> *@
+
+            <div>
+                
             </div>
             
         </div>
         
         <div class = "placeHolderResources"></div>
 
-    </div>
+    
 </body>
 </html 
 
@@ -131,7 +203,7 @@
         NavigationManager.NavigateTo("/");
     }
 
-    @* Metode der tager en string array, den string array skal starte med at være 
-    ALL eller GENERAL, så alt bliver vist og efter at man tilføjer filtre (tjekker dem af med tjekbokse), 
-    skal den string array opdateres til kun at have de tilføjede filtre*@
+    public List<string> AreChecked { get; set; }
+    
+    
 }
