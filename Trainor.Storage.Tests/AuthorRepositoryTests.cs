@@ -20,42 +20,117 @@ namespace Trainor.Storage.Tests
             connection.Open();
             var builder = new DbContextOptionsBuilder<DataContext>();
             builder.UseSqlite(connection);
-            var context = new DataContext(builder.Options);
-            context.Database.EnsureCreated();
-            //context.Authors.AddRange(new City("Metropolis") { Id = 1 }, new City("Gotham City") { Id = 2 });
-            context.Authors.AddRange(new Author{Id = 12, GivenName = "John", LastName = "Doe"});
-            context.SaveChanges();
+            var dataContext = new DataContext(builder.Options);
+            dataContext.Database.EnsureCreated();
+            dataContext.Authors.AddRange(new Author{Id = 12, GivenName = "John", LastName = "Doe"}, 
+                                         new Author{Id = 15, GivenName = "Jane", LastName = "Doe"});
+            dataContext.SaveChanges();
 
-            _context = context;
+            _context = dataContext;
             _repository = new AuthorRepository(_context);
         }
 
         [Fact]
-        public async Task CreateAsync_creates_new_author_with_createAuthorDto()
+        public async Task CreateAsync_creates_new_author_with_createAuthorDto_returns_created()
         {
             // Arrange
-            AuthorCreateDto author = new AuthorCreateDto
+            AuthorCreateDto alice = new AuthorCreateDto
             {
-                Id = 1,
-                GivenName = "Paolo",
-                LastName = "Tell"
+                Id = 56,
+                GivenName = "Alice",
+                LastName = "Unknown"
             };
 
             // Act
-            var authorCreated = await _repository.CreateAsync(author);
+            var aliceCreated = await _repository.CreateAsync(alice);
 
             // Assert
-            Assert.Equal((CrudStatus.Created, new AuthorDto(1, "Paolo", "Tell")), authorCreated);
+            Assert.Equal((CrudStatus.Created, new AuthorDto(56, "Alice", "Unknown")), aliceCreated);
         }
 
         [Fact]
-        public async Task ReadAsync_reads_author_with_given_id_returns_true() // Return Status and xDto, input xId 
+        public async Task ReadAsync_reads_author_with_existing_id_returns_ok() 
         {     
             var authorId = await _repository.ReadAsync(12);
 
             Assert.Equal((CrudStatus.Ok, new AuthorDto(12, "John", "Doe")), authorId);
+            // Reads author that exists in database created in the AuthorRepositoryTests() method
         }
 
+        [Fact]
+        public async Task ReadAsync_reads_author_with_non_existing_id_returns_not_found()
+        {     
+            var alice = new AuthorDto(56, "Alice", "Unknown");
+
+            var aliceId = await _repository.ReadAsync(alice.Id);
+
+            Assert.Equal((CrudStatus.NotFound, null), aliceId);
+        }
+
+        // [Fact]
+        // public async Task ReadAsync_returns_all_authors()
+        // {
+        //     var authors = await _repository.ReadAsync();
+
+        //     Assert.Collection(authors,
+        //         author => Assert.Equal((CrudStatus.Ok, new AuthorDto(12, "John", "Doe")), author),
+        //         author => Assert.Equal((CrudStatus.Ok, new AuthorDto(15, "Jane", "Doe")), author)
+        //     );
+        // }
+
+        [Fact]
+        public async Task UpdateAsync_updates_author_with_given_id_returns_true() 
+        { 
+            var authorJohn = new AuthorUpdateDto
+            {
+                Id = 12,
+                GivenName = "John",
+                LastName = ""
+            };
+
+            var updatedJohn = await _repository.UpdateAsync(authorJohn);
+
+            Assert.Equal(CrudStatus.Updated, updatedJohn);
+
+            // Testing to see that the updated method removed authorJohn lastname.
+            var test = await _repository.ReadAsync(authorJohn.Id);
+
+            Assert.Empty(authorJohn.LastName);
+        }
+
+        [Fact]
+        public async Task UpdateAsync_updates_author_with_non_existing_id_returns_false() 
+        { 
+            var authorAlice = new AuthorUpdateDto 
+            {
+                Id = 56,
+                GivenName = "Alice",
+                LastName = "unknown"
+            };
+
+            var updatedAlice = await _repository.UpdateAsync(authorAlice);
+            Assert.Equal(CrudStatus.NotFound, updatedAlice); 
+            // The database does not know about Alice, which is why it can't be updated.
+        }
+
+        [Fact]
+        public async Task DeleteAsync_given_non_existing_author_returns_NotFound()
+        {
+            var deletedAlice = await _repository.DeleteAsync(56);
+            Assert.Equal(CrudStatus.NotFound, deletedAlice); // It can't delete a author, that does not exists in the database
+        }
+
+        [Fact]
+        public async Task DeleteAsync_given_an_existing_author_returns_Deleted() 
+        {
+            var authorJohn = new AuthorDto(12, "John", "Doe");
+
+            var deleteJohn = await _repository.DeleteAsync(authorJohn.Id);
+
+            Assert.Equal(CrudStatus.Deleted, deleteJohn);
+        }
+
+        // DO NOT EDIT THIS 
         private bool disposed;
 
         protected virtual void Dispose(bool disposing)
@@ -78,11 +153,8 @@ namespace Trainor.Storage.Tests
         }
     }
 }
+
 /* 
-    Test repositories:          |        Methods that should be tested
-    - ResourceRepository        |        
-    - UserRepository            |        - ReadAsync()     -- Return Status and xDto, input xId 
-    - SubjectTagRepository      |        - ReadAsync()     -- Return Status and collection of xDto
-    - AuthorRepository          |        - UpdateAsync()   -- Return Status, input xId
-                                |        - DeleteAsync()   -- Return Status, input xId
+    Test repositories:          |        Methods that should be tested:
+    - AuthorRepository          |        - ReadAsync()     -- Return Status and collection of xDto -- Missing
 */
