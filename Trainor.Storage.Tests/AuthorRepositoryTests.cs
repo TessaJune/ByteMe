@@ -65,9 +65,10 @@ namespace Trainor.Storage.Tests
             var aliceId = await _repository.ReadAsync(alice.Id);
 
             Assert.Equal((CrudStatus.NotFound, null), aliceId);
+            // Can't read an author that does not exist in the database
         }
 
-        // [Fact]
+        // [Fact] -- This is not working yet, hence why it's outcommented
         // public async Task ReadAsync_returns_all_authors()
         // {
         //     var authors = await _repository.ReadAsync();
@@ -79,55 +80,55 @@ namespace Trainor.Storage.Tests
         // }
 
         [Fact]
-        public async Task UpdateAsync_updates_author_with_given_id_returns_true() 
+        public async Task UpdateAsync_updates_author_with_existing_id_returns_true() 
         { 
-            var authorJohn = new AuthorUpdateDto
+            var john = new AuthorUpdateDto
             {
                 Id = 12,
                 GivenName = "John",
                 LastName = ""
             };
 
-            var updatedJohn = await _repository.UpdateAsync(authorJohn);
+            var updatedJohn = await _repository.UpdateAsync(john);
 
             Assert.Equal(CrudStatus.Updated, updatedJohn);
 
-            // Testing to see that the updated method removed authorJohn lastname.
-            var test = await _repository.ReadAsync(authorJohn.Id);
-
-            Assert.Empty(authorJohn.LastName);
+            // Testing to see that the updated method removed authorJohn lastname
+            var test = await _repository.ReadAsync(john.Id);
+            Assert.Empty(john.LastName);
         }
 
         [Fact]
         public async Task UpdateAsync_updates_author_with_non_existing_id_returns_false() 
         { 
-            var authorAlice = new AuthorUpdateDto 
+            var alice = new AuthorUpdateDto 
             {
                 Id = 56,
                 GivenName = "Alice",
                 LastName = "unknown"
             };
 
-            var updatedAlice = await _repository.UpdateAsync(authorAlice);
+            var updatedAlice = await _repository.UpdateAsync(alice);
             Assert.Equal(CrudStatus.NotFound, updatedAlice); 
             // The database does not know about Alice, which is why it can't be updated.
+        }
+
+        [Fact]
+        public async Task DeleteAsync_given_an_existing_author_returns_Deleted() 
+        {
+            var john = new AuthorDto(12, "John", "Doe");
+
+            var deleteJohn = await _repository.DeleteAsync(john.Id);
+
+            Assert.Equal(CrudStatus.Deleted, deleteJohn);
         }
 
         [Fact]
         public async Task DeleteAsync_given_non_existing_author_returns_NotFound()
         {
             var deletedAlice = await _repository.DeleteAsync(56);
-            Assert.Equal(CrudStatus.NotFound, deletedAlice); // It can't delete a author, that does not exists in the database
-        }
-
-        [Fact]
-        public async Task DeleteAsync_given_an_existing_author_returns_Deleted() 
-        {
-            var authorJohn = new AuthorDto(12, "John", "Doe");
-
-            var deleteJohn = await _repository.DeleteAsync(authorJohn.Id);
-
-            Assert.Equal(CrudStatus.Deleted, deleteJohn);
+            Assert.Equal(CrudStatus.NotFound, deletedAlice); 
+            // It can't delete a author, that does not exists in the database
         }
 
         // DO NOT EDIT THIS 
@@ -153,8 +154,3 @@ namespace Trainor.Storage.Tests
         }
     }
 }
-
-/* 
-    Test repositories:          |        Methods that should be tested:
-    - AuthorRepository          |        - ReadAsync()     -- Return Status and collection of xDto -- Missing
-*/
