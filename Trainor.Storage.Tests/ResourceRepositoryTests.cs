@@ -1,26 +1,81 @@
-// using Xunit;
+using Xunit;
+using Trainor.Storage;
+using Trainor.Storage.Entities;
+using System.Threading.Tasks;
+using System;
+using Microsoft.Data.Sqlite;
+using Microsoft.EntityFrameworkCore;
 
-// namespace Trainor.Storage.Tests;
+namespace Trainor.Storage.Tests
+{
+    public class ResourceRepositoryTests : IDisposable
+    {
+        private readonly IDataContext _context;
+        private readonly ResourceRepository _repository;
 
-// public class ResourceRepositoryTests
-// {
-//     [Fact]
-//     public void Test1()
-//     {
-//         // Arrange
+        public ResourceRepositoryTests()
+        {
+            // Creating database that tests can communicate with
+            var connection = new SqliteConnection("Filename=:memory:");
+            connection.Open();
+            var builder = new DbContextOptionsBuilder<DataContext>();
+            builder.UseSqlite(connection);
+            var dataContext = new DataContext(builder.Options);
+            dataContext.Database.EnsureCreated();
+            dataContext.Authors.AddRange(
+                new Author { Id = 12, GivenName = "John", LastName = "Doe" },
+                new Author { Id = 15, GivenName = "Jane", LastName = "Doe" });
+            dataContext.SubjectTags.AddRange(
+                new SubjectTag { Id = 1, Title = "C#" },
+                new SubjectTag { Id = 2, Title = "HTML" },
+                new SubjectTag { Id = 3, Title = "CSS" });
+            dataContext.SaveChanges();
 
-//         // Act
+            _context = dataContext;
+            _repository = new ResourceRepository(_context);
+        }
 
-//         // Assert
+        [Fact]
+        public async Task CreateAsync_creates_new_resource_with_createResourceDto_returns_created() {}
 
-//     }
-// }
+        [Fact]
+        public async Task ReadAsync_reads_resource_with_existing_id_returns_ok() {}
 
-// /* 
-//     Test repositories:          |        Methods that should be tested
-//     - ResourceRepository        |        - CreateAsync()   -- Return Status and xDto, input xCreateDto  
-//     - UserRepository            |        - ReadAsync()     -- Return Status and xDto, input xId 
-//     - SubjectTagRepository      |        - ReadAsync()     -- Return Status and collection of xDto
-//     - AuthorRepository          |        - UpdateAsync()   -- Return Status, input xId
-//                                 |        - DeleteAsync()   -- Return Status, input xId
-// */
+        [Fact]
+        public async Task ReadAsync_reads_resource_with_non_existing_id_returns_notFound() {}
+
+        [Fact]
+        public async Task UpdateAsync_updates_resource_with_existing_id_returns_true() {}
+
+        [Fact]
+        public async Task UpdateAsync_updates_resource_with_non_existing_id_returns_notFound() {}
+
+        [Fact]
+        public async Task DeleteAsync_given_an_existing_resource_returns_Deleted() {}
+
+        [Fact]
+        public async Task DeleteAsync_given_non_existing_resource_returns_notFound() {}
+
+        // DO NOT EDIT THIS. Code from Rasmus  
+        private bool disposed;
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (!disposed)
+            {
+                if (disposing)
+                {
+                    _context.Dispose();
+                }
+
+                disposed = true;
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(disposing: true);
+            GC.SuppressFinalize(this);
+        }
+    }
+}

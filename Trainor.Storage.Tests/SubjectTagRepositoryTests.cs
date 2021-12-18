@@ -22,9 +22,10 @@ namespace Trainor.Storage.Tests
             builder.UseSqlite(connection);
             var dataContext = new DataContext(builder.Options);
             dataContext.Database.EnsureCreated();
-            dataContext.SubjectTags.AddRange(new SubjectTag{Id = 1, Title = "C#"}, 
-                                             new SubjectTag{Id = 2, Title = "HTML"},
-                                             new SubjectTag{Id = 3, Title = "CSS"});
+            dataContext.SubjectTags.AddRange(
+                new SubjectTag { Id = 1, Title = "C#" },
+                new SubjectTag { Id = 2, Title = "HTML" },
+                new SubjectTag { Id = 3, Title = "CSS" });
             dataContext.SaveChanges();
 
             _context = dataContext;
@@ -118,7 +119,7 @@ namespace Trainor.Storage.Tests
             // It can't delete a subjectTag that does not exists in the database
         }
 
-        // DO NOT EDIT THIS 
+        // DO NOT EDIT THIS. Code from Rasmus 
         private bool disposed;
 
         protected virtual void Dispose(bool disposing)

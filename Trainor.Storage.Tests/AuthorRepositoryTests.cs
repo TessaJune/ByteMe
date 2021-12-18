@@ -22,8 +22,9 @@ namespace Trainor.Storage.Tests
             builder.UseSqlite(connection);
             var dataContext = new DataContext(builder.Options);
             dataContext.Database.EnsureCreated();
-            dataContext.Authors.AddRange(new Author{Id = 12, GivenName = "John", LastName = "Doe"}, 
-                                         new Author{Id = 15, GivenName = "Jane", LastName = "Doe"});
+            dataContext.Authors.AddRange(
+                new Author { Id = 12, GivenName = "John", LastName = "Doe" },
+                new Author { Id = 15, GivenName = "Jane", LastName = "Doe" });
             dataContext.SaveChanges();
 
             _context = dataContext;
@@ -131,7 +132,7 @@ namespace Trainor.Storage.Tests
             // It can't delete an author, that does not exists in the database
         }
 
-        // DO NOT EDIT THIS 
+        // DO NOT EDIT THIS. Code from Rasmus  
         private bool disposed;
 
         protected virtual void Dispose(bool disposing)
