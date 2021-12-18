@@ -22,6 +22,8 @@ namespace Trainor.Storage.Tests
             builder.UseSqlite(connection);
             var context = new DataContext(builder.Options);
             context.Database.EnsureCreated();
+            //context.Authors.AddRange(new City("Metropolis") { Id = 1 }, new City("Gotham City") { Id = 2 });
+            context.Authors.AddRange(new Author{Id = 12, GivenName = "John", LastName = "Doe"});
             context.SaveChanges();
 
             _context = context;
@@ -46,13 +48,13 @@ namespace Trainor.Storage.Tests
             Assert.Equal((CrudStatus.Created, new AuthorDto(1, "Paolo", "Tell")), authorCreated);
         }
 
-        // [Fact]
-        // public async Task ReadAsync_reads_author_with_given_id_returns_true() // Return Status and xDto, input xId 
-        // {     
-        //     var authorId = await _repository.ReadAsync(12);
+        [Fact]
+        public async Task ReadAsync_reads_author_with_given_id_returns_true() // Return Status and xDto, input xId 
+        {     
+            var authorId = await _repository.ReadAsync(12);
 
-        //     Assert.Equal((CrudStatus.Ok, new AuthorDto(12, "John", "Doe")), authorId);
-        // } THIS TEST IS NOT PASSING YET
+            Assert.Equal((CrudStatus.Ok, new AuthorDto(12, "John", "Doe")), authorId);
+        }
 
         private bool disposed;
 
