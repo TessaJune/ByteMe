@@ -1,15 +1,14 @@
 @page "/fetchresources"
 @using Microsoft.AspNetCore.Authorization
-@*@using Trainor.Storage.Entities*@
+@using Trainor.Storage.Entities
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
-@using Trainor.Wasm.Shared
 @inject HttpClient Http
 
 <h1>Hej</h1>
 
 <p>This component demonstrates fetching data from the server.</p>
-@*
-@if (resources== null)
+
+@if (_resources== null)
 {
     <p><em>Loading...</em></p>
     <p><em>@otherFailMessage</em></p>
@@ -26,25 +25,25 @@ else
             </tr>
         </thead>
         <tbody>
-          @foreach (var resource in resources)
+          @foreach (var resource in _resources)
             {
                 <tr>
-                    <td>@resource.name</td>
-                    <td>@resource.name</td>
+                    <td>@resource.id</td>
+                    <td>@resource.link</td>
                 </tr>
             }
         </tbody>
     </table>
-}*@
+}
 
-@code {/*
-    private ResourceDto[] resources;
+@code {
+    private IReadOnlyCollection<ResourceDto> _resources;
     private string otherFailMessage = "";
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            resources = await Http.GetFromJsonAsync<ResourceDto[]>("Test");
+            _resources = await Http.GetFromJsonAsync<IReadOnlyCollection<ResourceDto>>("Resource");
         }
         catch (AccessTokenNotAvailableException exception)
         {
@@ -53,6 +52,6 @@ else
         catch (Exception ex){
             otherFailMessage = ex.Message;
         }
-    */}
+    }
 
 }
