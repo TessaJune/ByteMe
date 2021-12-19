@@ -17,23 +17,24 @@ else
 {
     <table class="table">
         <thead>
-            <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-            </tr>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
         </thead>
         <tbody>
-          @foreach (var resource in _resources)
-            {
-                <tr>
-                    <td>@resource.id</td>
-                    <td>@resource.link</td>
-                </tr>
-            }
+        @foreach (var resource in _resources)
+        {
+            <tr>
+                <td>@resource.id</td>
+                <td>@resource.link</td>
+            </tr>
+        }
         </tbody>
     </table>
+    <button class="guestButton" @onclick="IncrementCount">Search by type</button>
 }
 
 @code {
@@ -53,5 +54,12 @@ else
             otherFailMessage = ex.Message;
         }
     }
+}
+@code {
+    private int currentCount = 0;
 
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
 }
