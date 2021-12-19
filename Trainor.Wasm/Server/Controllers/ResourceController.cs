@@ -36,10 +36,10 @@ namespace Trainor.Wasm.Server.Controllers
             => await _search.SearchAll();
 
         
-        /*//[ProducesResponseType((int) HttpStatusCode.NotFound)]
-        //[ProducesResponseType(typeof(IReadOnlyCollection<ResourceDto>), (int) HttpStatusCode.OK)]
-        [HttpGet("{bysubject}")]
-        public async Task<ActionResult<IReadOnlyCollection<ResourceDto>>> Get(string[] subjects)
+        [ProducesResponseType((int) HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(IReadOnlyCollection<ResourceDto>), (int) HttpStatusCode.OK)]
+        [HttpGet("bysubject")]
+        public async Task<ActionResult<IReadOnlyCollection<ResourceDto>>> Get([FromQuery]string[] subjects)
         {
             List<ResourceDto> searchResult = (List<ResourceDto>)await _search.SearchBySubject(subjects);
             if (searchResult.IsNullOrEmpty())
@@ -47,7 +47,7 @@ namespace Trainor.Wasm.Server.Controllers
                 return new NotFoundResult();
             }
             return searchResult;
-        }*/
+        }
 
         
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
