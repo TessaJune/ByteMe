@@ -3,6 +3,7 @@
 @using Trainor.Storage.Entities
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @inject HttpClient Http
+@inject NavigationManager NavigationManager
 
 <h1>Hej</h1>
 
@@ -34,7 +35,7 @@ else
         }
         </tbody>
     </table>
-    <button class="guestButton" @onclick="IncrementCount">Search by type</button>
+    <button class="guestButton" @onclick="@(() => GoToTypePage("type"))">Search by type</button>
 }
 
 @code {
@@ -56,10 +57,8 @@ else
     }
 }
 @code {
-    private int currentCount = 0;
-
-    private void IncrementCount()
+    private void GoToTypePage(string type)
     {
-        currentCount++;
+        NavigationManager.NavigateTo($"/fetchresources/{type}");
     }
 }

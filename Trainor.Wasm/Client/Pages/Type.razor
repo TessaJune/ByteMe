@@ -1,0 +1,54 @@
+@page "/fetchresources/type"
+@using Microsoft.AspNetCore.Authorization
+@using Trainor.Storage.Entities
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using Trainor.Wasm.Shared
+@using System.Net
+@inject HttpClient Http
+
+<h1>Hej</h1>
+
+<p>This component demonstrates fetching type from the server.</p>
+
+@*@if (_resourcesByType == null)
+{
+    <p><em>Loading by type...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var resource in _resourcesByType)
+        {
+            <tr>
+                <td>@resource.id</td>
+                <td>@resource.link</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}*@
+
+@*@code {
+    [Parameter] 
+    public string? SearchType { get; set; }
+    
+    private List<ResourceDto>? _resourcesByType;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Type != null)
+        {
+            _resourcesByType = await Http.GetFromJsonAsync<List<ResourceDto>>($"Resource/{SearchType}");
+        }
+        await base.OnParametersSetAsync();
+    }
+}*@
