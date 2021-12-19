@@ -50,7 +50,7 @@ namespace Trainor.Wasm.Server.Controllers
         }*/
 
         
-        /*[ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(IReadOnlyCollection<ResourceDto>), (int)HttpStatusCode.OK)]
         [HttpGet("{type}")]
         public async Task<ActionResult<IReadOnlyCollection<ResourceDto>>> Get(string type)
@@ -61,6 +61,6 @@ namespace Trainor.Wasm.Server.Controllers
                 return new NotFoundResult();
             }
             return searchResult;
-        }*/
+        }
     }
 }

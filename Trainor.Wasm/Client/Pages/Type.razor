@@ -10,9 +10,12 @@
 
 <p>This component demonstrates fetching type from the server.</p>
 
-@*@if (_resourcesByType == null)
+
+@if (_resourcesByType == null)
 {
     <p><em>Loading by type...</em></p>
+    <button class="searchButton" @onclick="SetParamType">Initialize search by type</button>
+    @*<button class="searchButton" @onclick="SetParamSubject">Initialize search by subject</button>*@
 }
 else
 {
@@ -35,9 +38,10 @@ else
         }
         </tbody>
     </table>
-}*@
+}
 
-@*@code {
+@code 
+{
     [Parameter] 
     public string? SearchType { get; set; }
     
@@ -45,10 +49,28 @@ else
 
     protected override async Task OnParametersSetAsync()
     {
-        if (Type != null)
+        if (SearchType != null)
         {
             _resourcesByType = await Http.GetFromJsonAsync<List<ResourceDto>>($"Resource/{SearchType}");
         }
         await base.OnParametersSetAsync();
+    }
+
+}
+@code 
+{
+    private async void SetParamType()
+    {
+        SearchType = "type";
+        await OnParametersSetAsync();
+    }
+}
+
+@*@code 
+{
+    private async void SetParamSubject()
+    {
+        SearchType = "subject";
+        await OnParametersSetAsync();
     }
 }*@
