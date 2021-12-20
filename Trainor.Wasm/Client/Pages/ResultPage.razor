@@ -2,6 +2,7 @@
 @using Trainor.Storage
 @using Trainor.Storage.Entities
 @inject HttpClient Http
+@inject NavigationManager NavigationManager
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @using Microsoft.AspNetCore.Authorization
 
@@ -13,158 +14,158 @@
 <!DOCTYPE html>
 <html>
 <body>
-    <div class ="container">
-            @* Div for filters *@
-            <div class="filtersNoSignOut">
-                <form method="post">
-                <table>
+<div class ="container">
+    @* Div for filters *@
+    <div class="filtersNoSignOut">
+        <form method="post">
+            <table>
                     
-                    @foreach (var i in ListFromDatabase)
-                    {
-                        <tr>
-                            <th>
-                                Subject
-                            </th>
-                        </tr>
-                        <tr>
-                            <td>
-                               @*  <input name="AreChecked" class="listItemWithCheckbox" type="checkbox" value="@i.Value" checked="@i.Selected"> *@
-                            </td>
-                            <td>
-                               @*  <label for="@i.Value"> @i.Text </label> *@
-                            </td>
-                        </tr>
-                    }
+                @foreach (var i in ListFromDatabase)
+                {
+                    <tr>
+                        <th>
+                            Subject
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            @*  <input name="AreChecked" class="listItemWithCheckbox" type="checkbox" value="@i.Value" checked="@i.Selected"> *@
+                        </td>
+                        <td>
+                            @*  <label for="@i.Value"> @i.Text </label> *@
+                        </td>
+                    </tr>
+                }
 
-                </table>
-                <table>
-                    @foreach (var i in ListFromDatabase)
-                    {
-                        <tr>
-                            <th>
-                                Resource Type
-                            </th>
-                        </tr>
-                        <tr>
-                            <td>
-                                @* <input name="AreChecked" class="listItemWithCheckbox" type="checkbox" value="@i.Value" checked="@i.Selected"> *@
-                            </td>
-                            <td>
-                                @* <label for="@i.Value"> @i.Text </label> *@
-                            </td>
-                        </tr>
-                    }
+            </table>
+            <table>
+                @foreach (var i in ListFromDatabase)
+                {
+                    <tr>
+                        <th>
+                            Resource Type
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            @* <input name="AreChecked" class="listItemWithCheckbox" type="checkbox" value="@i.Value" checked="@i.Selected"> *@
+                        </td>
+                        <td>
+                            @* <label for="@i.Value"> @i.Text </label> *@
+                        </td>
+                    </tr>
+                }
 
-                </table>
-                <table>
-                    @foreach (var i in ListFromDatabase)
-                    {
-                        <tr>
-                            <th>
-                                Release Year
-                            </th>
-                        </tr>
-                        <tr>
-                            <td>
-                                @* <input name="AreChecked" class="listItemWithCheckbox" type="checkbox" value="@i.Value" checked="@i.Selected"> *@
-                            </td>
-                            <td>
-                                @*<label for="@i.Value"> @i.Text </label>*@
-                            </td>
-                        </tr>
-                    }
+            </table>
+            <table>
+                @foreach (var i in ListFromDatabase)
+                {
+                    <tr>
+                        <th>
+                            Release Year
+                        </th>
+                    </tr>
+                    <tr>
+                        <td>
+                            @* <input name="AreChecked" class="listItemWithCheckbox" type="checkbox" value="@i.Value" checked="@i.Selected"> *@
+                        </td>
+                        <td>
+                            @*<label for="@i.Value"> @i.Text </label>*@
+                        </td>
+                    </tr>
+                }
 
-                </table>
+            </table>
 
-                @* <input type="search" value="search" @onclick="search"> *@
+            @* <input type="search" value="search" @onclick="search"> *@
 
-                </form>
+        </form>
 
-            </div>
+    </div>
             
 
 
-            @* sign out part *@
-            <div class = "filtersWithSignOut">
-                <input class ="imageSignOut" type = "image" src="images/signOutWhite.png" @onclick = "NavigateToLoginPage"/>
-                 <div class ="imageSignOutText">                                
-                    <p>Sign out</p>
-                </div>
-            </div>
+    @* sign out part *@
+    <div class = "filtersWithSignOut">
+        <input class ="imageSignOut" type = "image" src="images/signOutWhite.png" @onclick = "NavigateToLoginPage"/>
+        <div class ="imageSignOutText">                                
+            <p>Sign out</p>
         </div>
+    </div>
+</div>
 
     
-        @* THIS IS THE RESOURCE DISPLAY OF THE SITE *@
-        <div class = "resourcesContainer">
+@* THIS IS THE RESOURCE DISPLAY OF THE SITE *@
+<div class = "resourcesContainer">
 
-            @* Searchbar *@
-            <div class = "searchField">    
-                <div class="searchBar">
-                    <img class ="forstorelsesglas" src="images/magnifyingGlass.png" alt="Image is not showing"/>
-                    <div class="searchInput">
-                        <input class="input" type="text">
-                    </div>
-                </div>
-                <input class = "searchButton" type = "image" src = "images/searchButton.png">
-            </div>  
-
-            @* Resources displayed part *@  
-            @foreach (var i in ListFromDatabase)
-            {
-                <table>
-                    <tr>
-                    <button class="buttonAccordion"> Overskift </button>
-                    <div class="infoPanelPerResource">
-                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusamus recusandae aspernatur possimus illum, repellat ad quasi earum, illo voluptatibus minima fugiat saepe magni corporis vero eius accusantium quidem, consectetur nesciunt!</p>
-                    </div>
-                    </tr>
-                </table>
-
-            }
-
-            <div>
-
+    @* Searchbar *@
+    <div class = "searchField">    
+        <div class="searchBar">
+            <img class ="forstorelsesglas" src="images/magnifyingGlass.png" alt="Image is not showing"/>
+            <div class="searchInput">
+                <input class="input" type="text">
             </div>
-            
         </div>
+        <input class = "searchButton" type = "image" src = "images/searchButton.png">
+    </div>  
+
+    @* Resources displayed part *@  
+    @foreach (var i in ListFromDatabase)
+    {
+        <table>
+            <tr>
+                <button class="buttonAccordion"> Overskift </button>
+                <div class="infoPanelPerResource">
+                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusamus recusandae aspernatur possimus illum, repellat ad quasi earum, illo voluptatibus minima fugiat saepe magni corporis vero eius accusantium quidem, consectetur nesciunt!</p>
+                </div>
+            </tr>
+        </table>
+
+    }
+
+    <div>
+
+    </div>
+            
+</div>
         
-        <div class = "placeHolderResources"></div>
+<div class = "placeHolderResources"></div>
 
     
 </body>
-</html 
+</html>
 
 
 @code {
     IResourceRepository Database;
     IReadOnlyCollection<ResourceDto> ListFromDatabase;
-    [Inject]
+    @*[Inject]
     public NavigationManager NavigationManager { get; set; }
     
-    @* Making it possible to navigate to ResultPage *@
+    $2$ Making it possible to navigate to ResultPage #2#
     public void NavigateToSearchPage()
     {
         NavigationManager.NavigateTo("/searchpage");
     }
 
-    public void NavigateToLoginPage()
+    *@public void NavigateToLoginPage()
     {
         NavigationManager.NavigateTo("/");
-    }
+    }@*
 
     public List<string> AreChecked { get; set; }
     
-    protected override async Task OnInitializedAsync()
+    *@protected override async Task OnInitializedAsync()
     {
         try
         {
-            ListFromDatabase = await Http.GetFromJsonAsync<ResourceDto[]>("Resource");
+            ListFromDatabase = await Http.GetFromJsonAsync<IReadOnlyCollection<ResourceDto>>("Search");
         }
         catch (AccessTokenNotAvailableException exception)
         {
             exception.Redirect();
         }
-    }
+    }@*
 
     protected async Task OnInitializedAsyncFilters(List<string> l)
     {
@@ -176,5 +177,5 @@
         {
             exception.Redirect();
         }
-    }
+    }*@
 }

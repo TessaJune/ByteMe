@@ -20,12 +20,12 @@ namespace Trainor.Wasm.Server.Controllers
     [ApiController]
     [Route("[controller]")]
     [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
-    public class ResourceController : ControllerBase
+    public class SearchController : ControllerBase
     {
-        private readonly ILogger<ResourceController> _logger;
+        private readonly ILogger<SearchController> _logger;
         private readonly ISearch _search;
 
-        public ResourceController(ILogger<ResourceController> logger, ISearch search)
+        public SearchController(ILogger<SearchController> logger, ISearch search)
         {
             _logger = logger;
             _search = search;
