@@ -11,14 +11,14 @@ namespace Trainor.App
             return SeedSearch("all");
         }
 
-        public Task<IReadOnlyCollection<ResourceDto>> SearchByType(string type)
+        public Task<IReadOnlyCollection<ResourceDto>> SearchByFilter(string filter)
         {
-            return SeedSearch("byType");
+            return SeedSearch("filter");
         }
 
-        public Task<IReadOnlyCollection<ResourceDto>> SearchBySubject(IEnumerable<string> type)
+        public Task<IReadOnlyCollection<ResourceDto>> SearchByFilters(IEnumerable<string> filters)
         {
-            return SeedSearch("bySubject");
+            return SeedSearch("filters");
         }
 
         public Task<IReadOnlyCollection<ResourceDto>> SearchByYear(int year)
@@ -38,7 +38,7 @@ namespace Trainor.App
                 returnList.Add(new ResourceDto(4, null, "www.www.com", null, null, null, null));
                 returnList.Add(new ResourceDto(5, null, "www.www.com", null, null, null, null));
             } 
-            else if (searchType == "byType")
+            else if (searchType == "filter")
             {
                 returnList.Add(new ResourceDto(0, null, "www.www.type", null, null, null, null));
                 returnList.Add(new ResourceDto(1, null, "www.www.type", null, null, null, null));
@@ -47,7 +47,7 @@ namespace Trainor.App
                 returnList.Add(new ResourceDto(4, null, "www.www.type", null, null, null, null));
                 returnList.Add(new ResourceDto(5, null, "www.www.type", null, null, null, null));
             }
-            else if (searchType == "bySubject")
+            else if (searchType == "filters")
             {
                 returnList.Add(new ResourceDto(0, null, "www.www.subject", null, null, null, null));
                 returnList.Add(new ResourceDto(1, null, "www.www.subject", null, null, null, null));

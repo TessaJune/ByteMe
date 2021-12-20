@@ -10,6 +10,5 @@ namespace Trainor.Storage.Entities
     {
         VIDEO,
         DOCUMENT,
-        PICTURE,
     }
 }

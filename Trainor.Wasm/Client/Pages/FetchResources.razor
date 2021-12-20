@@ -122,13 +122,13 @@ else
     private List<ResourceDto>? _subjectResources;
     protected override async Task OnParametersSetAsync()
     {
-        if (TypeString != null)
+        if (Filter != null)
         {
-            _typeResources = await Http.GetFromJsonAsync<List<ResourceDto>>($"Resource/{TypeString}");
+            _typeResources = await Http.GetFromJsonAsync<List<ResourceDto>>($"Resource/{Filter}");
         } 
-        else if (SubjectSearchString != null)
+        else if (Filters != null)
         {
-            _subjectResources = await Http.GetFromJsonAsync<List<ResourceDto>>($"Resource/bysubject?{SubjectSearchString}");
+            _subjectResources = await Http.GetFromJsonAsync<List<ResourceDto>>($"Resource/bysubject?{Filters}");
         }
         await base.OnParametersSetAsync();
     }
@@ -137,10 +137,10 @@ else
 @code 
 {
     [Parameter] 
-    public string? TypeString { get; set; }
+    public string? Filter { get; set; }
     private async void SetParamType()
     {
-        TypeString = "type";
+        Filter = "type";
         await OnParametersSetAsync();
     }
 }
@@ -148,7 +148,7 @@ else
 @code 
 {
     [Parameter] 
-    public string? SubjectSearchString { get; set; }
+    public string? Filters { get; set; }
     private async void SetParamSubject()
     {
         string[] inputArray = new[]
@@ -158,7 +158,7 @@ else
             "a",
             "stringarray"
         };
-        SubjectSearchString = inputArray.ToFilterQueryString();
+        Filters = inputArray.ToFilterQueryString();
         await OnParametersSetAsync();
     }
 }
