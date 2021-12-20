@@ -21,8 +21,7 @@
                     <p id="fTitle">TypeTag</p>
                     <div class="filterCheckBox">
                         <input type="checkbox" id="filterbox" name="filterOne" value="Filter">
-                        <label for="filterOne">Video</label><br>
-<br>
+                        <label for="filterOne">Video</label><br><br>
                         <input type="checkbox" id="filterbox" name="filterOne" value="Filter">
                         <label for="filterOne">Document</label><br><br> 
 
@@ -84,19 +83,45 @@
                 </div>
             </div>
             <div class="allResources">
-
-            </div>     
+                @if (_searchResult== null)
+                {
+                    <p><em>Loading...</em></p>
+                }
+                else
+                {
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var resource in _searchResult)
+                        {
+                            <tr>
+                                <td>@resource.id</td>
+                                <td>@resource.link</td>
+                                 @* <h2>Resource name</h2>
+                                    <p>Resource description</p> *@
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                }
+            </div>
         </div>
 
-
         <div class="placeholderDiv"></div>
-
 
     </div>
 </body>
 </html>
 
-@code {
+@code 
+{
     @* Making it possible to navigate to loginPage *@
     public void NavigateToLoginPage()
         {
