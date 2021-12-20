@@ -1,44 +1,66 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Microsoft.Identity.Web.Resource;
+using Microsoft.IdentityModel.Tokens;
 using Trainor.Storage;
 using Trainor.Storage.Entities;
+using Trainor.App;
 using Trainor.Wasm.Shared;
 
 namespace Trainor.Wasm.Server.Controllers
 {
-    //[Authorize]
+    [Authorize]
     [ApiController]
     [Route("[controller]")]
+    [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
     public class ResourceController : ControllerBase
     {
         private readonly ILogger<ResourceController> _logger;
-        private readonly IResourceRepository _repo;
+        private readonly ISearch _search;
 
-        // The Web API will only accept tokens 1) for users, and 2) having the "API.Access" scope for this API
-        static readonly string[] scopeRequiredByApi = new string[] { "API.Access" };
-
-        public ResourceController(ILogger<ResourceController> logger, IResourceRepository repo)
+        public ResourceController(ILogger<ResourceController> logger, ISearch search)
         {
             _logger = logger;
-            _repo = repo;
+            _search = search;
         }
-
+        
         [HttpGet]
-        public Task<(CrudStatus, IReadOnlyCollection<ResourceDto>)> Get()
+        public async Task<IReadOnlyCollection<ResourceDto>> Get()
+            => await _search.SearchAll();
+
+        
+        [ProducesResponseType((int) HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(IReadOnlyCollection<ResourceDto>), (int) HttpStatusCode.OK)]
+        [HttpGet("bysubject")]
+        public async Task<ActionResult<IReadOnlyCollection<ResourceDto>>> Get([FromQuery]string[] subjects)
         {
-            _logger.LogInformation("bim bam get of the testcontroller has been slam");
-            return _repo.ReadAsync();
+            List<ResourceDto> searchResult = (List<ResourceDto>)await _search.SearchBySubject(subjects);
+            if (searchResult.IsNullOrEmpty())
+            {
+                return new NotFoundResult();
+            }
+            return searchResult;
         }
 
-        private Task<(CrudStatus, IReadOnlyCollection<ResourceDto>)> GetFromRepo()
+        
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(IReadOnlyCollection<ResourceDto>), (int)HttpStatusCode.OK)]
+        [HttpGet("{type}")]
+        public async Task<ActionResult<IReadOnlyCollection<ResourceDto>>> Get(string type)
         {
-            return _repo.ReadAsync();
+            List<ResourceDto> searchResult = (List<ResourceDto>)await _search.SearchByType(type);
+            if (searchResult.IsNullOrEmpty())
+            {
+                return new NotFoundResult();
+            }
+            return searchResult;
         }
     }
 }
