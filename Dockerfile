@@ -7,6 +7,9 @@ WORKDIR /source/Trainor.Wasm/Server
 RUN dotnet restore
 
 RUN dotnet publish --configuration Release --output /app
+WORKDIR /app
+
+RUN dotnet ef migrations add dbmigration -s 
 
 FROM mcr.microsoft.com/dotnet/aspnet:6.0
 WORKDIR /app

@@ -56,13 +56,5 @@ namespace Trainor.Storage
                 .Property(s => s.Title)
                 .HasMaxLength(50);
         }
-
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-        {
-            if (!options.IsConfigured)
-            {
-                options.UseSqlServer("Trainor"); // I think this is what makes migrations work
-            }
-        }
     }
 }
