@@ -45,7 +45,8 @@ namespace Trainor.App
                     return asyncResult.Item2;
                 }
             }
-            return null;
+            var keywordAsyncResult = await _repo.ReadFromKeyword(filter);
+            return keywordAsyncResult.Item2;
         }
 
         public async Task<IReadOnlyCollection<ResourceDto>> SearchByFilters(IEnumerable<string> filters)
@@ -79,7 +80,7 @@ namespace Trainor.App
         }
         
         public async Task<IReadOnlyCollection<ResourceDto>> SearchByFilters(TypeTag typeFilter, IEnumerable<string> filters)
-        {
+        { 
             var subjectTags = Enum.GetValues(typeof(SubjectTag));
             List<SubjectTag> searchFilters = new List<SubjectTag>();
             foreach (var filter in filters)
