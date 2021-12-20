@@ -71,7 +71,7 @@ namespace Trainor.Storage
             if (entity == null)
                 return NotFound;
             
-    
+            entity.Id = author.Id;
             entity.GivenName = author.GivenName;
             entity.LastName = author.LastName;
 
