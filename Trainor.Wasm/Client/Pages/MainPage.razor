@@ -1,0 +1,104 @@
+@inject NavigationManager NavigationManager
+
+@page "/mainpage"
+
+<style>
+    @@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap');
+</style>
+
+<!DOCTYPE html>
+<html>
+<body>
+    <div class="container">
+        <div class="filterDiv">
+            <div class="filterCheckBoxesDiv">
+                <div class="filterTitle">
+                    <p class="title">Filter through resources</p>
+                </div>
+
+
+                <div id="filters">
+                    <p id="fTitle">TypeTag</p>
+                    <div class="filterCheckBox">
+                        <input type="checkbox" id="filterbox" name="filterOne" value="Filter">
+                        <label for="filterOne">Video</label><br>
+<br>
+                        <input type="checkbox" id="filterbox" name="filterOne" value="Filter">
+                        <label for="filterOne">Document</label><br><br> 
+
+                        <input type="checkbox" id="filterbox" name="filterOne" value="Filter">
+                        <label for="filterOne">Article</label><br><br>
+
+                        <input type="checkbox" id="filterbox" name="filterOne" value="Filter">
+                        <label for="filterOne">PDF</label><br>
+                    </div>
+                </div>
+
+                <div id="filters">
+                    <p id="fTitle">SubjectTag</p>
+                    <div class="filterCheckBox">
+                        @* Filter 2.1 *@
+                        <input type="checkbox" id="filterbox" name="filterOne" value="Filter">
+                        <label for="filterOne"> C#</label><br><br>
+
+                        @* Filter 2.2 *@
+                        <input type="checkbox" id="filterbox" name="filterOne" value="Filter">
+                        <label for="filterOne">Java</label><br><br>
+
+                        @* Filter 2.3 *@
+                        <input type="checkbox" id="filterbox" name="filterOne" value="Filter">
+                        <label for="filterOne">GoLang</label><br><br>
+
+                        <input type="checkbox" id="filterbox" name="filterOne" value="Filter">
+                        <label for="filterOne">SQL</label><br><br>
+
+                        <input type="checkbox" id="filterbox" name="filterOne" value="Filter">
+                        <label for="filterOne">HTML</label><br><br>
+
+                        <input type="checkbox" id="filterbox" name="filterOne" value="Filter">
+                        <label for="filterOne">CSS</label><br><br>
+                    </div>
+                </div>
+
+            </div>
+            <div class="signOutDiv">
+                <input class ="imageSignOut" type = "image" src="images/signOutWhite.png" @onclick = "NavigateToLoginPage"/>
+                <div class ="imageSignOutText">                                
+                    <p>Sign out</p>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+        <div class="resourceDiv">
+            <div class="searchbarDiv">
+                <div class="inputField"> 
+                    <div class="magnifyingGlassDiv">
+                        <img class ="magnifyingGlass" src="images/magnifyingGlass.png" alt="Image is not showing"/>
+                    </div>
+                    <div class="inputText">
+                        <input class="input" type="text">
+                    </div>
+                </div>
+                <div class="buttonDiv">
+                    <input class = "searchButton" type = "image" src = "images/searchButton.png">
+                </div>
+            </div>     
+        </div>
+
+
+        <div class="placeholderDiv"></div>
+
+
+    </div>
+</body>
+</html>
+
+@code {
+    @* Making it possible to navigate to loginPage *@
+    public void NavigateToLoginPage()
+        {
+            NavigationManager.NavigateTo("/");
+        }
+}

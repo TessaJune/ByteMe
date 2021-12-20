@@ -23,7 +23,7 @@
             </div>
             <div class="guestUser">
                 <p>Not interested in making a user? </p>
-                <button class="guestButton" @onclick="NavigateToSearch">Login as Guest User</button>
+                <button class="guestButton" @onclick="NavigateToResultPage">Login as Guest User</button>
             </div>
         </div>
 
@@ -45,8 +45,8 @@
     public NavigationManager NavigationManager { get; set; }
     
     @* Making it possible to navigate to searchPage *@
-    public void NavigateToSearch()
+    public void NavigateToResultPage()
     {
-        NavigationManager.NavigateTo("/searchpage");
+        NavigationManager.NavigateTo("/mainpage");
     }
 }
