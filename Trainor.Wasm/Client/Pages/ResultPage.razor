@@ -1,4 +1,9 @@
 @page "/resultpage"
+@using Trainor.Storage
+@using Trainor.Storage.Entities
+@inject HttpClient Http
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using Microsoft.AspNetCore.Authorization
 
 <style>
     @@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap');
@@ -9,59 +14,75 @@
 <html>
 <body>
     <div class ="container">
-        
-        @* THIS IS THE FILTER PART OF THE SITE *@
-        <div class = "filtersContainer">
+            @* Div for filters *@
+            <div class="filtersNoSignOut">
+                <form method="post">
+                <table>
+                    
+                    @foreach (var i in ListFromDatabase)
+                    {
+                        <tr>
+                            <th>
+                                Subject
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                               @*  <input name="AreChecked" class="listItemWithCheckbox" type="checkbox" value="@i.Value" checked="@i.Selected"> *@
+                            </td>
+                            <td>
+                               @*  <label for="@i.Value"> @i.Text </label> *@
+                            </td>
+                        </tr>
+                    }
 
-         <img class = "BackButtonImage" src="images/backButton.png" alt="Image is not showing" width="30px" @onclick = "NavigateToSearchPage" /> 
-           
-            <div class = "filtersNoSignOut">
-                <p class = "headerText">Filters</p>
-                <ul>
-                    <div class = "ListItemGeneral" id="Subject">
-                        <input class="listItemWithCheckbox" type="checkbox">
-                        <li>Subject</li>
-                    </div>
-                        <div class="listItemNotGeneral">
-                            <input class="listItemWithCheckbox" type="checkbox">
-                            <li>C#</li>
-                            <input class="listItemWithCheckbox" type="checkbox">
-                            <li>Java</li>
-                            <input class="listItemWithCheckbox" type="checkbox">
-                            <li>.NET</li>
-                            <input class="listItemWithCheckbox" type="checkbox">
-                            <li>Docker</li>
-                        </div>                    
-                    
-                    <div class = "ListItemGeneral" id="C">
-                        <input class="listItemWithCheckbox" type="checkbox">
-                        <li>Type of Resource</li>
-                    </div>
-                        <div class="listItemNotGeneral">
-                            <input class="listItemWithCheckbox" type="checkbox">
-                            <li>Document</li>
-                            <input class="listItemWithCheckbox" type="checkbox">
-                            <li>Video</li>
-                        </div>  
-                    
-                    <div class = "ListItemGeneral" id="Disys">
-                        <input class="listItemWithCheckbox" type="checkbox">
-                        <li>Release Year</li>
-                    </div>  
-                        <div class="listItemNotGeneral">
-                            <input class="listItemWithCheckbox" type="checkbox">
-                            <li>2010</li>
-                            <input class="listItemWithCheckbox" type="checkbox">
-                            <li>2011</li>
-                            <input class="listItemWithCheckbox" type="checkbox">
-                            <li>2012</li>
-                            <input class="listItemWithCheckbox" type="checkbox">
-                            <li>2013</li>
-                        </div>  
+                </table>
+                <table>
+                    @foreach (var i in ListFromDatabase)
+                    {
+                        <tr>
+                            <th>
+                                Resource Type
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                @* <input name="AreChecked" class="listItemWithCheckbox" type="checkbox" value="@i.Value" checked="@i.Selected"> *@
+                            </td>
+                            <td>
+                                @* <label for="@i.Value"> @i.Text </label> *@
+                            </td>
+                        </tr>
+                    }
 
-                    
-                </ul>
+                </table>
+                <table>
+                    @foreach (var i in ListFromDatabase)
+                    {
+                        <tr>
+                            <th>
+                                Release Year
+                            </th>
+                        </tr>
+                        <tr>
+                            <td>
+                                @* <input name="AreChecked" class="listItemWithCheckbox" type="checkbox" value="@i.Value" checked="@i.Selected"> *@
+                            </td>
+                            <td>
+                                @*<label for="@i.Value"> @i.Text </label>*@
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+
+                @* <input type="search" value="search" @onclick="search"> *@
+
+                </form>
+
             </div>
+            
+
 
             @* sign out part *@
             <div class = "filtersWithSignOut">
@@ -88,35 +109,35 @@
             </div>  
 
             @* Resources displayed part *@  
-            <div class = "displayAllResources">
-                <div class = "All">
-                    <h2>All</h2>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusamus recusandae aspernatur possimus illum, repellat ad quasi earum, illo voluptatibus minima fugiat saepe magni corporis vero eius accusantium quidem, consectetur nesciunt!</p>
-                </div>
-                <div class = "CResource">
-                    <h2>C#</h2>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusamus recusandae aspernatur possimus illum, repellat ad quasi earum, illo voluptatibus minima fugiat saepe magni corporis vero eius accusantium quidem, consectetur nesciunt!</p>
-                </div>
-                <div class = "Disys">
-                    <h2>Distributed Systems</h2>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusamus recusandae aspernatur possimus illum, repellat ad quasi earum, illo voluptatibus minima fugiat saepe magni corporis vero eius accusantium quidem, consectetur nesciunt!</p>
-                </div>
-                <div class = "Database">
-                    <h2>Introduction to Database</h2>
-                    <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusamus recusandae aspernatur possimus illum, repellat ad quasi earum, illo voluptatibus minima fugiat saepe magni corporis vero eius accusantium quidem, consectetur nesciunt!</p>
-                </div>
+            @foreach (var i in ListFromDatabase)
+            {
+                <table>
+                    <tr>
+                    <button class="buttonAccordion"> Overskift </button>
+                    <div class="infoPanelPerResource">
+                        <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Accusamus recusandae aspernatur possimus illum, repellat ad quasi earum, illo voluptatibus minima fugiat saepe magni corporis vero eius accusantium quidem, consectetur nesciunt!</p>
+                    </div>
+                    </tr>
+                </table>
+
+            }
+
+            <div>
+
             </div>
             
         </div>
         
         <div class = "placeHolderResources"></div>
 
-    </div>
+    
 </body>
 </html 
 
 
 @code {
+    IResourceRepository Database;
+    IReadOnlyCollection<ResourceDto> ListFromDatabase;
     [Inject]
     public NavigationManager NavigationManager { get; set; }
     
@@ -131,7 +152,29 @@
         NavigationManager.NavigateTo("/");
     }
 
-    @* Metode der tager en string array, den string array skal starte med at være 
-    ALL eller GENERAL, så alt bliver vist og efter at man tilføjer filtre (tjekker dem af med tjekbokse), 
-    skal den string array opdateres til kun at have de tilføjede filtre*@
+    public List<string> AreChecked { get; set; }
+    
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            ListFromDatabase = await Http.GetFromJsonAsync<ResourceDto[]>("Resource");
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
+    }
+
+    protected async Task OnInitializedAsyncFilters(List<string> l)
+    {
+        try
+        {
+            ListFromDatabase = await Http.GetFromJsonAsync<ResourceDto[]>("Filter");
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
+    }
 }

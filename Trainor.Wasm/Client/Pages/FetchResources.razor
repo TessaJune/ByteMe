@@ -1,12 +1,12 @@
 @page "/fetchresources"
 @using Microsoft.AspNetCore.Authorization
-@using Trainor.Storage
 @using Trainor.Storage.Entities
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
 
 <h1>Resources</h1>
+
 
 <p>This component demonstrates using parameterized calls to fetch resources from the server.</p>
 
@@ -93,6 +93,7 @@ else
         </tbody>
     </table>
 }
+
 <button class="searchButton" @onclick="SetParamSubject">Initialize search by subject</button>
 
 
@@ -114,7 +115,6 @@ else
             otherFailMessage = ex.Message;
         }
     }
-}
 }
 @code 
 {
