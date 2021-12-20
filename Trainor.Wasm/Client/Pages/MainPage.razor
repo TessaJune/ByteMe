@@ -1,6 +1,7 @@
 
 @using Trainor.Storage
 @using Trainor.Storage.Entities
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
 
@@ -26,7 +27,7 @@
                     <div class="filterCheckBox">
 
                         <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("Video"))" value="Filter">
-                        <label for="filterOne">Video</label><br>
+                        <label for="filterOne">Video</label><br><br> 
                       
                         <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("Document"))" value="Filter">
                         <label for="filterOne">Document</label><br><br> 
@@ -90,7 +91,7 @@
                 </div>
             </div>
             <div class="allResources">
-                @if (_searchResult== null)
+                @if (_searchResults== null)
                 {
                     <p><em>Loading...</em></p>
                 }
@@ -106,7 +107,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach (var resource in _searchResult)
+                        @foreach (var resource in _searchResults)
                         {
                             <tr>
                                 <td>@resource.id</td>
@@ -120,27 +121,36 @@
                 }
             </div>
         </div>
-
         <div class="placeholderDiv"></div>
-
-            </div>     
-        </div>
-
-
-        <div class="placeholderDiv"></div>
-
     </div>
 </body>
 </html>
 
 
-@code {
-    List<ResourceDto> _searchResults = new List<ResourceDto>();
-    
+@code 
+{
+    private IReadOnlyCollection<ResourceDto> _searchResults;
+
+    protected override async Task OnInitializedAsync()
+
+    {
+        try
+        {
+            _searchResults = await Http.GetFromJsonAsync<IReadOnlyCollection<ResourceDto>>("Search");
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
+    }
+}
+
+@code 
+{
     [Parameter]                            
     public string? Filters { get; set; } 
     
-    private List<string> filters = new ();
+    private List<string> filters = new List<string>();
         
     @* Making it possible to navigate to loginPage *@
     public void NavigateToLoginPage()
@@ -169,7 +179,7 @@
     {
         if (Filters != null)
         {
-            _searchResults = await Http.GetFromJsonAsync<List<ResourceDto>>($"Resource/filtered?{Filters}");
+            _searchResults = await Http.GetFromJsonAsync<List<ResourceDto>>($"Search/filtered?{Filters}");
         }
         await base.OnParametersSetAsync();
     }
