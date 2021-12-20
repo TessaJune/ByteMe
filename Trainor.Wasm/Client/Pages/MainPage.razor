@@ -1,3 +1,4 @@
+
 @using Trainor.Storage
 @using Trainor.Storage.Entities
 @inject NavigationManager NavigationManager
@@ -23,9 +24,10 @@
                 <div id="filters">
                     <p id="fTitle">TypeTag</p>
                     <div class="filterCheckBox">
+
                         <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("Video"))" value="Filter">
                         <label for="filterOne">Video</label><br>
-<br>
+                      
                         <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("Document"))" value="Filter">
                         <label for="filterOne">Document</label><br><br> 
 
@@ -41,6 +43,7 @@
                     <p id="fTitle">SubjectTag</p>
                     <div class="filterCheckBox">
                         @* Filter 2.1 *@
+
                         <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("C#"))" value="Filter">
                         <label for="filterOne"> C#</label><br><br>
 
@@ -72,8 +75,6 @@
             </div>
         </div>
         
-        
-        
         <div class="resourceDiv">
             <div class="searchbarDiv">
                 <div class="inputField"> 
@@ -87,16 +88,51 @@
                 <div class="buttonDiv">
                     <input class = "searchButton" type = "image" src = "images/searchButton.png">
                 </div>
+            </div>
+            <div class="allResources">
+                @if (_searchResult== null)
+                {
+                    <p><em>Loading...</em></p>
+                }
+                else
+                {
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        @foreach (var resource in _searchResult)
+                        {
+                            <tr>
+                                <td>@resource.id</td>
+                                <td>@resource.link</td>
+                                 @* <h2>Resource name</h2>
+                                    <p>Resource description</p> *@
+                            </tr>
+                        }
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+
+        <div class="placeholderDiv"></div>
+
             </div>     
         </div>
 
 
         <div class="placeholderDiv"></div>
 
-
     </div>
 </body>
 </html>
+
 
 @code {
     List<ResourceDto> _searchResults = new List<ResourceDto>();
