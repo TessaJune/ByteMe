@@ -1,4 +1,7 @@
+@using Trainor.Storage
+@using Trainor.Storage.Entities
 @inject NavigationManager NavigationManager
+@inject HttpClient Http
 
 @page "/mainpage"
 
@@ -20,16 +23,16 @@
                 <div id="filters">
                     <p id="fTitle">TypeTag</p>
                     <div class="filterCheckBox">
-                        <input type="checkbox" id="filterbox" name="filterOne" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("Video"))" value="Filter">
                         <label for="filterOne">Video</label><br>
 <br>
-                        <input type="checkbox" id="filterbox" name="filterOne" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("Document"))" value="Filter">
                         <label for="filterOne">Document</label><br><br> 
 
-                        <input type="checkbox" id="filterbox" name="filterOne" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("Article"))" value="Filter">
                         <label for="filterOne">Article</label><br><br>
 
-                        <input type="checkbox" id="filterbox" name="filterOne" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("PDF"))" value="Filter">
                         <label for="filterOne">PDF</label><br>
                     </div>
                 </div>
@@ -38,31 +41,31 @@
                     <p id="fTitle">SubjectTag</p>
                     <div class="filterCheckBox">
                         @* Filter 2.1 *@
-                        <input type="checkbox" id="filterbox" name="filterOne" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("C#"))" value="Filter">
                         <label for="filterOne"> C#</label><br><br>
 
                         @* Filter 2.2 *@
-                        <input type="checkbox" id="filterbox" name="filterOne" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("Java"))" value="Filter">
                         <label for="filterOne">Java</label><br><br>
 
                         @* Filter 2.3 *@
-                        <input type="checkbox" id="filterbox" name="filterOne" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("GoLang"))" value="Filter">
                         <label for="filterOne">GoLang</label><br><br>
 
-                        <input type="checkbox" id="filterbox" name="filterOne" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("SQL"))" value="Filter">
                         <label for="filterOne">SQL</label><br><br>
 
-                        <input type="checkbox" id="filterbox" name="filterOne" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("HTML"))" value="Filter">
                         <label for="filterOne">HTML</label><br><br>
 
-                        <input type="checkbox" id="filterbox" name="filterOne" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("CSS"))" value="Filter">
                         <label for="filterOne">CSS</label><br><br>
                     </div>
                 </div>
 
             </div>
             <div class="signOutDiv">
-                <input class ="imageSignOut" type = "image" src="images/signOutWhite.png" @onclick = "NavigateToLoginPage"/>
+                <input class ="imageSignOut" type = "image" src="images/signOutWhite.png" @onclick="NavigateToLoginPage"/>
                 <div class ="imageSignOutText">                                
                     <p>Sign out</p>
                 </div>
@@ -96,9 +99,42 @@
 </html>
 
 @code {
+    List<ResourceDto> _searchResults = new List<ResourceDto>();
+    
+    [Parameter]                            
+    public string? Filters { get; set; } 
+    
+    private List<string> filters = new ();
+        
     @* Making it possible to navigate to loginPage *@
     public void NavigateToLoginPage()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+
+    public async void AddFilter(string filter)
+    {
+        Filters = null;
+        _searchResults = null;
+        if (!filters.Contains(filter))
         {
-            NavigationManager.NavigateTo("/");
+            filters.Add(filter);
         }
+        else
+        {
+            filters.Remove(filter);
+        }
+        var filtersArray = filters.ToArray();
+        Filters = filtersArray.ToFilterQueryString();
+        await OnParametersSetAsync();
+    }
+    
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Filters != null)
+        {
+            _searchResults = await Http.GetFromJsonAsync<List<ResourceDto>>($"Resource/filtered?{Filters}");
+        }
+        await base.OnParametersSetAsync();
+    }
 }
