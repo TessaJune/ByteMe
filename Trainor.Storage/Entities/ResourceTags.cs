@@ -10,8 +10,7 @@ namespace Trainor.Storage.Entities
     {
         VIDEO,
         DOCUMENT,
-        PICTURE,
         ARTICLE,
-        PDF, // This has been added
+        PDF
     }
 }

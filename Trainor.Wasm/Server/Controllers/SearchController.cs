@@ -20,6 +20,7 @@ namespace Trainor.Wasm.Server.Controllers
     [ApiController]
     [Route("[controller]")]
     [RequiredScope(RequiredScopesConfigurationKey = "AzureAd:Scopes")]
+
     public class SearchController : ControllerBase
     {
         private readonly ILogger<SearchController> _logger;
@@ -35,27 +36,26 @@ namespace Trainor.Wasm.Server.Controllers
         public async Task<IReadOnlyCollection<ResourceDto>> Get()
             => await _search.SearchAll();
 
-        
-        [ProducesResponseType((int) HttpStatusCode.NotFound)]
-        [ProducesResponseType(typeof(IReadOnlyCollection<ResourceDto>), (int) HttpStatusCode.OK)]
-        [HttpGet("bysubject")]
-        public async Task<ActionResult<IReadOnlyCollection<ResourceDto>>> Get([FromQuery]string[] subjects)
+        [ProducesResponseType((int)HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(IReadOnlyCollection<ResourceDto>), (int)HttpStatusCode.OK)]
+        [HttpGet("{filter}")]
+        public async Task<ActionResult<IReadOnlyCollection<ResourceDto>>> Get(string filter)
         {
-            List<ResourceDto> searchResult = (List<ResourceDto>)await _search.SearchBySubject(subjects);
+            List<ResourceDto> searchResult = (List<ResourceDto>)await _search.SearchByFilter(filter);
             if (searchResult.IsNullOrEmpty())
             {
                 return new NotFoundResult();
             }
             return searchResult;
         }
-
         
-        [ProducesResponseType((int)HttpStatusCode.NotFound)]
-        [ProducesResponseType(typeof(IReadOnlyCollection<ResourceDto>), (int)HttpStatusCode.OK)]
-        [HttpGet("{type}")]
-        public async Task<ActionResult<IReadOnlyCollection<ResourceDto>>> Get(string type)
+        [ProducesResponseType((int) HttpStatusCode.NotFound)]
+        [ProducesResponseType(typeof(IReadOnlyCollection<ResourceDto>), (int) HttpStatusCode.OK)]
+        [HttpGet("filtered")]
+        public async Task<ActionResult<IReadOnlyCollection<ResourceDto>>> Get([FromQuery]string[] filters)
         {
-            List<ResourceDto> searchResult = (List<ResourceDto>)await _search.SearchByType(type);
+            List<ResourceDto> searchResult = (List<ResourceDto>)await _search.SearchByFilters(filters);
+
             if (searchResult.IsNullOrEmpty())
             {
                 return new NotFoundResult();

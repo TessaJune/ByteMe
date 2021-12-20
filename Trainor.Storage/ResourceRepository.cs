@@ -109,9 +109,11 @@ namespace Trainor.Storage
             throw new NotImplementedException();
         }
 
-        public async Task<(CrudStatus, IReadOnlyCollection<ResourceDto>)> ReadFromKeyword(string keyword){
-            /*var entities = (await _context.Resources
-                                        .Where(r => r.Name.Contains(keyword) || r.Link.Contains(keyword) || r.Authors. ||
+        public async Task<(CrudStatus, IReadOnlyCollection<ResourceDto>)> ReadFromKeyword(string keyword)
+        {
+            /*
+            entities = (await _context.Resources
+                                        .Where(r => r.Name.Contains(keyword) || r.Link.Contains(keyword) || r.Authors.Name.Contains(keyword) ||
                                          r.Type.ToString().Contains(keyword) || r.Subjects.ToString().Contains(keyword))
                                         .Select(r => new ResourceDto(r.Id, r.Name, r.Link, r.Authors, r.Type, r.Subjects, r.Date))
                                         .ToListAsync())
@@ -125,14 +127,16 @@ namespace Trainor.Storage
             throw new NotImplementedException();
         }
 
-        /*private string GetAuthors(IEnumerable<Author> authors)
+        private string GetAuthors(IEnumerable<Author> authors)
         {
+            /*
             var sb = new StringBuilder();
             foreach (var author in authors)
             {
                 return author.GivenName;
-            }
-        }*/
+            }*/
+            throw new NotImplementedException();
+        }
 
         public async Task<(CrudStatus, IReadOnlyCollection<ResourceDto>)> ReadFromFilters(TypeTag filterTags)
         {
