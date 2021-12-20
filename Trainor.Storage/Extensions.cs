@@ -2,7 +2,7 @@ namespace Trainor.Storage;
 
 public static class Extensions
 {
-    public static string ToQueryString(this string[] input)
+    public static string ToFilterQueryString(this string[] input)
     {
         string output = "";
         if (input.Length > 0)
