@@ -54,11 +54,11 @@ namespace Trainor.App
             var typeTags = Enum.GetValues(typeof(TypeTag));
             foreach (var filter in filters) 
             {
-                foreach (var typeTag in typeTags)
+                foreach (TypeTag typeTag in typeTags)
                 {
                     if (filter.ToLower().Equals(typeTag.ToString().ToLower()))
                     {
-                        return await SearchByFilters(filter, filters);
+                        return await SearchByFilters(typeTag, filters);
                     }
                 }
             }
@@ -78,23 +78,27 @@ namespace Trainor.App
             return asyncResult.Item2;
         }
         
-        public async Task<IReadOnlyCollection<ResourceDto>> SearchByFilters(string filter, IEnumerable<string> filters)
+        public async Task<IReadOnlyCollection<ResourceDto>> SearchByFilters(TypeTag typeFilter, IEnumerable<string> filters)
         {
             var subjectTags = Enum.GetValues(typeof(SubjectTag));
-            var typeTags = Enum.GetValues(typeof(TypeTag));
-            foreach (var filterino in filters) 
+            List<SubjectTag> searchFilters = new List<SubjectTag>();
+            foreach (var filter in filters)
             {
-                
+                foreach (SubjectTag subjectTag in subjectTags)
+                {
+                    if (filter.ToLower().Equals(subjectTag.ToString().ToLower()))
+                    {
+                        searchFilters.Add(subjectTag);
+                    }
+                } 
             }
-
-
-            return null;
+            var asyncResult = await _repo.ReadFromFilters(typeFilter, searchFilters);
+            return asyncResult.Item2;
         }
 
         public async Task<IReadOnlyCollection<ResourceDto>> SearchByYear(int year)
         {
             throw new NotImplementedException();
         }
-
     }
 }
