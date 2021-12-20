@@ -106,7 +106,7 @@ else
     {
         try
         {
-            _resources = await Http.GetFromJsonAsync<IReadOnlyCollection<ResourceDto>>("Resource");
+            _resources = await Http.GetFromJsonAsync<IReadOnlyCollection<ResourceDto>>("Search");
         }
         catch (AccessTokenNotAvailableException exception)
         {
@@ -121,15 +121,16 @@ else
 {
     private List<ResourceDto>? _typeResources;
     private List<ResourceDto>? _subjectResources;
+    
     protected override async Task OnParametersSetAsync()
     {
         if (Filter != null)
         {
-            _typeResources = await Http.GetFromJsonAsync<List<ResourceDto>>($"Resource/{Filter}");
+            _typeResources = await Http.GetFromJsonAsync<List<ResourceDto>>($"Search/{Filter}");
         } 
         else if (Filters != null)
         {
-            _subjectResources = await Http.GetFromJsonAsync<List<ResourceDto>>($"Resource/bysubject?{Filters}");
+            _subjectResources = await Http.GetFromJsonAsync<List<ResourceDto>>($"Search/bysubject?{Filters}");
         }
         await base.OnParametersSetAsync();
     }

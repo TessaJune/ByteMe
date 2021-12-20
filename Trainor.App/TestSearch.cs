@@ -40,21 +40,21 @@ namespace Trainor.App
             } 
             else if (searchType == "filter")
             {
-                returnList.Add(new ResourceDto(0, null, "www.www.type", null, null, null, null));
-                returnList.Add(new ResourceDto(1, null, "www.www.type", null, null, null, null));
-                returnList.Add(new ResourceDto(2, null, "www.www.type", null, null, null, null));
-                returnList.Add(new ResourceDto(3, null, "www.www.type", null, null, null, null));
-                returnList.Add(new ResourceDto(4, null, "www.www.type", null, null, null, null));
-                returnList.Add(new ResourceDto(5, null, "www.www.type", null, null, null, null));
+                returnList.Add(new ResourceDto(0, null, "www.www.filter", null, null, null, null));
+                returnList.Add(new ResourceDto(1, null, "www.www.filter", null, null, null, null));
+                returnList.Add(new ResourceDto(2, null, "www.www.filter", null, null, null, null));
+                returnList.Add(new ResourceDto(3, null, "www.www.filter", null, null, null, null));
+                returnList.Add(new ResourceDto(4, null, "www.www.filter", null, null, null, null));
+                returnList.Add(new ResourceDto(5, null, "www.www.filter", null, null, null, null));
             }
             else if (searchType == "filters")
             {
-                returnList.Add(new ResourceDto(0, null, "www.www.subject", null, null, null, null));
-                returnList.Add(new ResourceDto(1, null, "www.www.subject", null, null, null, null));
-                returnList.Add(new ResourceDto(2, null, "www.www.subject", null, null, null, null));
-                returnList.Add(new ResourceDto(3, null, "www.www.subject", null, null, null, null));
-                returnList.Add(new ResourceDto(4, null, "www.www.subject", null, null, null, null));
-                returnList.Add(new ResourceDto(5, null, "www.www.subject", null, null, null, null));
+                returnList.Add(new ResourceDto(0, null, "www.www.filters", null, null, null, null));
+                returnList.Add(new ResourceDto(1, null, "www.www.filters", null, null, null, null));
+                returnList.Add(new ResourceDto(2, null, "www.www.filters", null, null, null, null));
+                returnList.Add(new ResourceDto(3, null, "www.www.filters", null, null, null, null));
+                returnList.Add(new ResourceDto(4, null, "www.www.filters", null, null, null, null));
+                returnList.Add(new ResourceDto(5, null, "www.www.filters", null, null, null, null));
             }
             return returnList;
         }
