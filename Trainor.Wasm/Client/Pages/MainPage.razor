@@ -129,8 +129,6 @@
 
 @code 
 {
-    private IReadOnlyCollection<ResourceDto> _searchResults;
-
     protected override async Task OnInitializedAsync()
 
     {
@@ -147,21 +145,24 @@
 
 @code 
 {
-    [Parameter]                            
-    public string? Filters { get; set; } 
-    
     private List<string> filters = new List<string>();
-        
-    @* Making it possible to navigate to loginPage *@
-    public void NavigateToLoginPage()
-    {
-        NavigationManager.NavigateTo("/");
-    }
+    private IReadOnlyCollection<ResourceDto> _searchResults;
 
-    public async void AddFilter(string filter)
+    protected override async Task OnParametersSetAsync()
     {
-        Filters = null;
-        _searchResults = null;
+        if (Filters != null)
+        {
+            _searchResults = await Http.GetFromJsonAsync<List<ResourceDto>>($"Search/filtered?{Filters}");
+        }
+        await base.OnParametersSetAsync();
+    }
+}
+
+@code {
+    [Parameter]
+    public string? Filters { get; set; }
+    private async void AddFilter(string filter)
+    {
         if (!filters.Contains(filter))
         {
             filters.Add(filter);
@@ -174,13 +175,12 @@
         Filters = filtersArray.ToFilterQueryString();
         await OnParametersSetAsync();
     }
-    
-    protected override async Task OnParametersSetAsync()
+}
+
+@code {    
+    @* Making it possible to navigate to loginPage *@
+    public void NavigateToLoginPage()
     {
-        if (Filters != null)
-        {
-            _searchResults = await Http.GetFromJsonAsync<List<ResourceDto>>($"Search/filtered?{Filters}");
-        }
-        await base.OnParametersSetAsync();
+        NavigationManager.NavigateTo("/");
     }
 }
