@@ -7,9 +7,7 @@ namespace Trainor.Storage
 {
     public interface ISubjectTagRepository
     {
-        Task<(CrudStatus, SubjectTagDetailsDto)> CreateAsync(SubjectTagCreateDto author);
-
-        Task<(CrudStatus, SubjectTagDetailsDto)> ReadDetailsAsync(int authorId);
+        Task<(CrudStatus, SubjectTagDto)> CreateAsync(SubjectTagCreateDto author);
 
         Task<(CrudStatus, SubjectTagDto)> ReadAsync(int SubjectTagId);
 

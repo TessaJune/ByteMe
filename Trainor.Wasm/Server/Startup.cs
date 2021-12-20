@@ -1,4 +1,5 @@
 using System.Linq;
+using static System.Net.HttpStatusCode;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -10,6 +11,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Identity.Web;
+using Trainor.App;
 using Trainor.Storage;
 
 namespace Trainor.Wasm.Server
@@ -32,10 +34,16 @@ namespace Trainor.Wasm.Server
 
             services.AddControllersWithViews();
             services.AddRazorPages();
-            services.AddDbContext<DataContext>(options => options.UseNpgsql(Configuration.GetConnectionString("DataContext")));
+            services.AddDbContext<DataContext>(options => options.UseNpgsql(Configuration.GetConnectionString("Trainor")));
+            services.AddScoped<ISearch, TestSearch>();
             services.AddScoped<IDataContext, DataContext>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IResourceRepository, ResourceRepository>();
+            services.AddHttpsRedirection(options =>
+            {
+                options.RedirectStatusCode = (int) TemporaryRedirect;
+                options.HttpsPort = 7207;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -52,7 +60,6 @@ namespace Trainor.Wasm.Server
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
             app.UseHttpsRedirection();
             app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();

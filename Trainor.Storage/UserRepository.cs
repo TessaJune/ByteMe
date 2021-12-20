@@ -17,7 +17,7 @@ namespace Trainor.Storage
             _context = context;
         }
 
-        public async Task<(CrudStatus, UserDetailsDto)> CreateAsync(UserCreateDto user)
+        public async Task<(CrudStatus, UserDto)> CreateAsync(UserCreateDto user)
         {
             var entity = new User
             {
@@ -30,7 +30,7 @@ namespace Trainor.Storage
 
             await _context.SaveChangesAsync();
 
-            return (Created, new UserDetailsDto(
+            return (Created, new UserDto(
                 entity.Id,
                 entity.GivenName,
                 entity.LastName,
@@ -38,24 +38,11 @@ namespace Trainor.Storage
                 ));
         }
 
-        public async Task<(CrudStatus, UserDetailsDto)> ReadDetailsAsync(int userId)
-        {
-            var entity = await _context.Users
-                                       .Where(u => u.Id == userId)
-                                       .Select(u => new UserDetailsDto(u.Id, u.GivenName, u.LastName, u.Email))
-                                       .FirstOrDefaultAsync();
-
-            if(entity == null) 
-                return (NotFound, null);
-             
-            return (Ok, entity);
-        }
-
         public async Task<(CrudStatus, UserDto)> ReadAsync(int userId)
         {
                    var entity = await _context.Users
                                               .Where(u => u.Id == userId)
-                                              .Select(u => new UserDto(u.GivenName, u.LastName))
+                                              .Select(u => new UserDto(u.Id, u.GivenName, u.LastName, u.Email))
                                               .FirstOrDefaultAsync();
 
             if (entity == null)
@@ -67,7 +54,7 @@ namespace Trainor.Storage
         public async Task<(CrudStatus, IReadOnlyCollection<UserDto>)> ReadAsync() 
         {
             var entities = (await _context.Users
-                                          .Select(u => new UserDto(u.GivenName, u.LastName))
+                                          .Select(u => new UserDto(u.Id, u.GivenName, u.LastName, u.Email))
                                           .ToListAsync())
                                           .AsReadOnly();
 

@@ -21,7 +21,7 @@ namespace Trainor.App
             return asyncResult.Item2;
         }
 
-        public async Task<IReadOnlyCollection<ResourceDetailsDto>> SearchByType(string type)
+        public async Task<IReadOnlyCollection<ResourceDto>> SearchByType(string type)
         {
             var typeTags = Enum.GetValues(typeof(TypeTag));
             
@@ -30,14 +30,14 @@ namespace Trainor.App
                 if (type.Equals(typeTag.ToString()))
                 {
                     var typeToSearch = typeTag;
-                    var asyncResult = await _repo.ReadTypeAsync(typeToSearch);
+                    var asyncResult = await _repo.ReadFromFilters(typeToSearch);
                     return asyncResult.Item2;
                 }
             }
             return null;
         }
 
-        public async Task<IReadOnlyCollection<ResourceDetailsDto>> SearchBySubject(IEnumerable<string> subjects)
+        public async Task<IReadOnlyCollection<ResourceDto>> SearchBySubject(IEnumerable<string> subjects)
         {
             var subjectTags = Enum.GetValues(typeof(SubjectTag));
             var subjectsToSearch = new List<string>();
@@ -62,13 +62,14 @@ namespace Trainor.App
                         counter++;
                     }
                 }
-                var asyncResult = await _repo.ReadSubjectsAsync(subjectTagsToSearch);
+                var asyncResult = 
+                    await _repo.ReadFromFilters(subjectTagsToSearch);
                 return asyncResult.Item2;
             }
             return null;
         }
 
-        public async Task<IReadOnlyCollection<ResourceDetailsDto>> SearchByYear(int year)
+        public async Task<IReadOnlyCollection<ResourceDto>> SearchByYear(int year)
         {
             throw new NotImplementedException();
         }

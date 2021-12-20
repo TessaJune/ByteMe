@@ -2,14 +2,15 @@
 @using Microsoft.AspNetCore.Authorization
 @using Trainor.Storage.Entities
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
-@using Trainor.Wasm.Shared
 @inject HttpClient Http
+@inject NavigationManager NavigationManager
 
-<h1>Hej</h1>
+<h1>Resources</h1>
 
-<p>This component demonstrates fetching data from the server.</p>
 
-@if (resources== null)
+<p>This component demonstrates using parameterized calls to fetch resources from the server.</p>
+
+@if (_resources== null)
 {
     <p><em>Loading...</em></p>
     <p><em>@otherFailMessage</em></p>
@@ -18,33 +19,93 @@ else
 {
     <table class="table">
         <thead>
-            <tr>
-                <th></th>
-                <th></th>
-                <th></th>
-                <th></th>
-            </tr>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
         </thead>
         <tbody>
-          @foreach (var resource in resources)
-            {
-                <tr>
-                    <td>@resource.name</td>
-                    <td>@resource.name</td>
-                </tr>
-            }
+        @foreach (var resource in _resources)
+        {
+            <tr>
+                <td>@resource.id</td>
+                <td>@resource.link</td>
+            </tr>
+        }
         </tbody>
     </table>
 }
 
+@if (_typeResources == null)
+{
+    <p><em>Loading by type...</em></p>
+
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var resource in _typeResources)
+        {
+            <tr>
+                <td>@resource.id</td>
+                <td>@resource.link</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+<button class="searchButton" @onclick="SetParamType">Initialize search by type</button>
+
+@if (_subjectResources == null)
+{
+    <p><em>Loading by subject...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+        <tr>
+            <th></th>
+            <th></th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var resource in _subjectResources)
+        {
+            <tr>
+                <td>@resource.id</td>
+                <td>@resource.link</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+}
+
+<button class="searchButton" @onclick="SetParamSubject">Initialize search by subject</button>
+
+
+
 @code {
-    private ResourceDto[] resources;
+    private IReadOnlyCollection<ResourceDto> _resources;
     private string otherFailMessage = "";
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            resources = await Http.GetFromJsonAsync<ResourceDto[]>("Test");
+            _resources = await Http.GetFromJsonAsync<IReadOnlyCollection<ResourceDto>>("Resource");
         }
         catch (AccessTokenNotAvailableException exception)
         {
@@ -53,5 +114,51 @@ else
         catch (Exception ex){
             otherFailMessage = ex.Message;
         }
+    }
+}
+@code 
+{
+    private List<ResourceDto>? _typeResources;
+    private List<ResourceDto>? _subjectResources;
+    protected override async Task OnParametersSetAsync()
+    {
+        if (TypeString != null)
+        {
+            _typeResources = await Http.GetFromJsonAsync<List<ResourceDto>>($"Resource/{TypeString}");
+        } 
+        else if (SubjectSearchString != null)
+        {
+            _subjectResources = await Http.GetFromJsonAsync<List<ResourceDto>>($"Resource/bysubject?{SubjectSearchString}");
+        }
+        await base.OnParametersSetAsync();
+    }
+}
+
+@code 
+{
+    [Parameter] 
+    public string? TypeString { get; set; }
+    private async void SetParamType()
+    {
+        TypeString = "type";
+        await OnParametersSetAsync();
+    }
+}
+
+@code 
+{
+    [Parameter] 
+    public string? SubjectSearchString { get; set; }
+    private async void SetParamSubject()
+    {
+        string[] inputArray = new[]
+        {
+            "hello",
+            "i'm",
+            "a",
+            "stringarray"
+        };
+        SubjectSearchString = inputArray.ToFilterQueryString();
+        await OnParametersSetAsync();
     }
 }

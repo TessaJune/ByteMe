@@ -22,6 +22,7 @@
     <ProjectReference Include="..\Client\Trainor.Wasm.Client.csproj" />
     <ProjectReference Include="..\Shared\Trainor.Wasm.Shared.csproj" />
     <ProjectReference Include="..\..\Trainor.Storage\Trainor.Storage.csproj" />
+    <ProjectReference Include="..\..\Trainor.App\Trainor.App.csproj" />
   </ItemGroup>
 
 </Project>

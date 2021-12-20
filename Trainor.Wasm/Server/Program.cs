@@ -22,7 +22,7 @@ namespace Trainor.Wasm.Server
             Host.CreateDefaultBuilder(args)
             .ConfigureAppConfiguration((hostingContext, config) =>
                 {
-                    config.AddKeyPerFile("run/secrets", optional: true);
+                    config.AddKeyPerFile("/run/secrets", optional: true);
                 })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {

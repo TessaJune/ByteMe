@@ -21,7 +21,7 @@ namespace Trainor.Storage.Entities
         
         public IEnumerable<Author> Authors { get; set; }
         public IEnumerable<SubjectTag>? Subjects { get; set; }
-        public TypeTag Types { get; set; }
+        public TypeTag Type { get; set; }
         public DateTime Date { get; set; }
     }
 }
