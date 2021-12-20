@@ -11,12 +11,5 @@ namespace Trainor.Storage.Entities {
 
         [StringLength(50)]
         public string LastName { get; set; }
-
-        // public Author(int id, string givenName, string lastName)
-        // {
-        //     Id = id;
-        //     GivenName = givenName;
-        //     LastName = lastName;
-        // }
     }
 }
