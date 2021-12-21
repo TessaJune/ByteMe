@@ -106,6 +106,7 @@ namespace Trainor.Storage
             throw new NotImplementedException();
         }
 
+        //Unsure if we can use anyResourceAttributeContainsAnyKeyword without asking db for all data
         public async Task<(CrudStatus, IReadOnlyCollection<ResourceDto>?)> ReadFromKeywordsAsync(IEnumerable<string> keywords)
         {
             Func<Resource, bool> anyResourceAttributeContainsAnyKeyword = r =>
@@ -178,10 +179,11 @@ namespace Trainor.Storage
 
         public async Task<(CrudStatus, IReadOnlyCollection<ResourceDto>?)> ReadFromFiltersAsync(IEnumerable<TypeTag> typeTags, IEnumerable<SubjectTag> subjectTags)
         {
-            var entities = await _context.Resources
+            var entities = (await _context.Resources
                             .Where(r => subjectTags.Contains(r.Subject) && typeTags.Contains(r.Type))
                             .Select(r => new ResourceDto(r.Id, r.Name, r.Link, r.Authors.AsDto(), r.Subject, r.Type, r.Date))
-                            .ToListAsync();
+                            .ToListAsync())
+                            .AsReadOnly();
 
             if (entities == null)
                 return (NotFound, null);
