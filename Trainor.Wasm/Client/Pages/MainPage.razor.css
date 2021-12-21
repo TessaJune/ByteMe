@@ -43,6 +43,37 @@ body {
 	margin-top: 15%;
 }
 
+.tableDiv {
+	display: flex;
+	justify-content: center;
+}
+
+.tableHeader {
+	flex: 1;
+	color: #000000;
+}
+
+.astTable {
+	color: aqua;
+	align-self: start;
+}
+
+#tdAat {
+	margin-left: 10%;
+	margin-right: 10%;
+}
+
+.arrowDown {
+	flex: 1;
+	align-self: center;
+	width: 150px;
+}
+
+.imageArrow {
+	width: 18px;
+	height: 18px;
+}
+
 .signOutDiv {
     position: fixed;
     margin-top: 5%;
@@ -70,10 +101,6 @@ body {
 	border-color: transparent;
 	background-color: transparent;
 	cursor: pointer;	
-}
-
-.cursor {
-	cursor: pointer;
 }
 
 .resourceDiv {

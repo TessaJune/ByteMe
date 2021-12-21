@@ -113,10 +113,21 @@
                         @foreach (var resource in _searchResults)
                         {
                             <tr>
-                                <td>@resource.id</td>
-                                <td>@resource.link</td>
-                                 @* <h2>Resource name</h2>
-                                    <p>Resource description</p> *@
+                                <td>
+                                    <div class="tableDiv">
+                                        <div class="tableHeader">
+                                            <h1>@resource.name</h1>
+                                        </div>
+                                        <div class="arrowDown">
+                                            <input class ="imageArrow" alt = "picture is not showing" type = "image" src=@imagePath @onclick="changeImage"/>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr class="astTable">
+                                <td id="tdAat"><p>Subjects(s): @resource.id</p></td>
+                                <td id="tdAat"><p>Type: @resource.id</p></td>
+                                <td ><p>Author(s): @resource.id</p></td>
                             </tr>
                         }
                         </tbody>
@@ -132,9 +143,11 @@
 
 @code 
 {
+    string imagePath;
     protected override async Task OnInitializedAsync()
-
     {
+        imagePath = "images/sideArrow.png";
+
         try
         {
             _searchResults = await Http.GetFromJsonAsync<IReadOnlyCollection<ResourceDto>>("Search");
@@ -187,11 +200,20 @@
         NavigationManager.NavigateTo("/");
     }
 
-@code{
+
     private async Task BeginLogout(MouseEventArgs args)
     {
         await SignOutManager.SetSignOutState();
         NavigationManager.NavigateTo("authentication/logout");
     }
-}
+
+    private void changeImage() {
+    
+
+        if (imagePath == "images/sideArrow.png") {
+            imagePath = "images/downArrow.png";
+        } else {
+            imagePath = "images/sideArrow.png";
+        }
+    }
 }

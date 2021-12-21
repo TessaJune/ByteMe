@@ -31,12 +31,12 @@ namespace Trainor.App
             List<ResourceDto> returnList = new List<ResourceDto>();
             if (searchType == "all")
             {
-                returnList.Add(new ResourceDto(0, null, "www.www.com", null, null, null, null));
-                returnList.Add(new ResourceDto(1, null, "www.www.com", null, null, null, null));
-                returnList.Add(new ResourceDto(2, null, "www.www.com", null, null, null, null));
-                returnList.Add(new ResourceDto(3, null, "www.www.com", null, null, null, null));
-                returnList.Add(new ResourceDto(4, null, "www.www.com", null, null, null, null));
-                returnList.Add(new ResourceDto(5, null, "www.www.com", null, null, null, null));
+                returnList.Add(new ResourceDto(0, "Title1", "www.www.com", null, null, null, null));
+                returnList.Add(new ResourceDto(1, "Title2", "www.www.com", null, null, null, null));
+                returnList.Add(new ResourceDto(2, "Title3", "www.www.com", null, null, null, null));
+                returnList.Add(new ResourceDto(3, "Title4", "www.www.com", null, null, null, null));
+                returnList.Add(new ResourceDto(4, "Title5", "www.www.com", null, null, null, null));
+                returnList.Add(new ResourceDto(5, "Title6", "www.www.com", null, null, null, null));
             } 
             else if (searchType == "filter")
             {
