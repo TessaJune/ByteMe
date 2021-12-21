@@ -112,23 +112,28 @@
                         <tbody>
                         @foreach (var resource in _searchResults)
                         {
-                            <tr>
-                                <td>
-                                    <div class="tableDiv">
-                                        <div class="tableHeader">
-                                            <h1>@resource.name</h1>
-                                        </div>
-                                        <div class="arrowDown">
-                                            <input class ="imageArrow" alt = "picture is not showing" type = "image" src=@imagePath @onclick="changeImage"/>
-                                        </div>
+                            <div class="resourcerContainer">
+                                <div class="tableDiv">
+                                    <div class="tableHeader">
+                                        <h1>@resource.name</h1>
                                     </div>
-                                </td>
-                            </tr>
-                            <tr class="astTable">
-                                <td id="tdAat"><p>Subjects(s): @resource.id</p></td>
-                                <td id="tdAat"><p>Type: @resource.id</p></td>
-                                <td ><p>Author(s): @resource.id</p></td>
-                            </tr>
+                                    <div class="arrowDown">
+                                        <input class ="imageArrow" alt = "picture is not showing" type = "image" src=@imagePath @onclick="changeImage"/>
+                                    </div>
+                                </div>
+
+                                <div class="resourceDescription">
+                                    <div id="Resource">
+                                        <p>Author(s): @resource.id</p>
+                                    </div>
+                                    <div id="Resource">
+                                        <p>Subject(s): @resource.id</p>
+                                    </div>
+                                    <div id="Resource">
+                                        <p>Type: @resource.id</p>
+                                    </div>
+                                </div>
+                            </div>
                         }
                         </tbody>
                     </table>
