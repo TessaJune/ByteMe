@@ -9,10 +9,13 @@ public static class Extensions
         {
             for (int i = 0; i < input.Length; i++)
             {
-                output += "subjects=" + input[i];
-                if (i != input.Length - 1)
+                if (input[i] != "")
                 {
-                    output += "&";
+                    output += "subjects=" + input[i];
+                    if (i != input.Length - 1)
+                    {
+                        output += "&";
+                    }
                 }
             } 
         }

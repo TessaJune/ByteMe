@@ -52,8 +52,14 @@ namespace Trainor.Wasm.Server.Controllers
         [ProducesResponseType((int) HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(IReadOnlyCollection<ResourceDto>), (int) HttpStatusCode.OK)]
         [HttpGet("filtered")]
-        public async Task<ActionResult<IReadOnlyCollection<ResourceDto>>> Get([FromQuery]string[] filters)
+        public async Task<ActionResult<IReadOnlyCollection<ResourceDto>>> Get([FromQuery (Name = "filters")]string[] filters)
         {
+            if (filters.Length == 0) Console.WriteLine("That shit empty");
+            foreach (string filter in filters)
+            {
+                Console.WriteLine(filter);
+            }
+
             List<ResourceDto> searchResult = (List<ResourceDto>)await _search.SearchByFilters(filters);
 
             if (searchResult.IsNullOrEmpty())
