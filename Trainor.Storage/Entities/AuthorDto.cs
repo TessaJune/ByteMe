@@ -18,6 +18,6 @@ namespace Trainor.Storage.Entities
     public record AuthorUpdateDto : AuthorCreateDto
     {
         public int Id { get; set; }
-        
+
     }
 }

@@ -11,7 +11,7 @@
 
 <p>This component demonstrates using parameterized calls to fetch resources from the server.</p>
 
-@if (_resources== null)
+@if (_resources == null)
 {
     <p><em>Loading...</em></p>
     <p><em>@otherFailMessage</em></p>
@@ -20,21 +20,21 @@ else
 {
     <table class="table">
         <thead>
-        <tr>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-        </tr>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
         </thead>
         <tbody>
-        @foreach (var resource in _resources)
-        {
-            <tr>
-                <td>@resource.id</td>
-                <td>@resource.link</td>
-            </tr>
-        }
+            @foreach (var resource in _resources)
+            {
+                <tr>
+                    <td>@resource.Id</td>
+                    <td>@resource.Link</td>
+                </tr>
+            }
         </tbody>
     </table>
 }
@@ -48,21 +48,21 @@ else
 {
     <table class="table">
         <thead>
-        <tr>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-        </tr>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
         </thead>
         <tbody>
-        @foreach (var resource in _typeResources)
-        {
-            <tr>
-                <td>@resource.id</td>
-                <td>@resource.link</td>
-            </tr>
-        }
+            @foreach (var resource in _typeResources)
+            {
+                <tr>
+                    <td>@resource.Id</td>
+                    <td>@resource.Link</td>
+                </tr>
+            }
         </tbody>
     </table>
 }
@@ -76,21 +76,21 @@ else
 {
     <table class="table">
         <thead>
-        <tr>
-            <th></th>
-            <th></th>
-            <th></th>
-            <th></th>
-        </tr>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
         </thead>
         <tbody>
-        @foreach (var resource in _subjectResources)
-        {
-            <tr>
-                <td>@resource.id</td>
-                <td>@resource.link</td>
-            </tr>
-        }
+            @foreach (var resource in _subjectResources)
+            {
+                <tr>
+                    <td>@resource.Id</td>
+                    <td>@resource.Link</td>
+                </tr>
+            }
         </tbody>
     </table>
 }
@@ -112,22 +112,23 @@ else
         {
             exception.Redirect();
         }
-        catch (Exception ex){
+        catch (Exception ex)
+        {
             otherFailMessage = ex.Message;
         }
     }
 }
-@code 
+@code
 {
     private List<ResourceDto>? _typeResources;
     private List<ResourceDto>? _subjectResources;
-    
+
     protected override async Task OnParametersSetAsync()
     {
         if (Filter != null)
         {
             _typeResources = await Http.GetFromJsonAsync<List<ResourceDto>>($"Search/{Filter}");
-        } 
+        }
         else if (Filters != null)
         {
             _subjectResources = await Http.GetFromJsonAsync<List<ResourceDto>>($"Search/bysubject?{Filters}");
@@ -136,9 +137,9 @@ else
     }
 }
 
-@code 
+@code
 {
-    [Parameter] 
+    [Parameter]
     public string? Filter { get; set; }
     private async void SetParamType()
     {
@@ -147,19 +148,19 @@ else
     }
 }
 
-@code 
+@code
 {
-    [Parameter] 
+    [Parameter]
     public string? Filters { get; set; }
     private async void SetParamSubject()
     {
         string[] inputArray = new[]
         {
-            "hello",
-            "i'm",
-            "a",
-            "stringarray"
-        };
+"hello",
+"i'm",
+"a",
+"stringarray"
+};
         Filters = inputArray.ToFilterQueryString();
         await OnParametersSetAsync();
     }
