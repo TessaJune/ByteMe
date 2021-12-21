@@ -17,8 +17,6 @@
 <!DOCTYPE html>
 <html>
 <body>
-    <AuthorizeView>
-    <Autherized>
     <div class="container">
         <div class="filterDiv">
             <div class="filterCheckBoxesDiv">
@@ -75,8 +73,8 @@
             </div>
             <div class="signOutDiv">
                 <input class ="imageSignOut" type = "image" src="images/signOutWhite.png" @onclick="BeginLogout"/>
-                <div class ="imageSignOutText">                                
-                    <p>Sign out</p>
+                <div class ="imageSignOutText">
+                    <button class ="imageSignOutButton" type="button">Sign out</button>                                
                 </div>
             </div>
         </div>
@@ -128,11 +126,6 @@
         </div>
         <div class="placeholderDiv"></div>
     </div>
-    </Autherized>
-    <NotAuterized>
-        <p>Hey</p>
-    </NotAuterized>
-</AuthorizeView>
 </body>
 </html>
 
@@ -194,18 +187,11 @@
         NavigationManager.NavigateTo("/");
     }
 
-[CascadingParameter] protected Task<AuthenticationState> AuthStat { get; set; }
 @code{
     private async Task BeginLogout(MouseEventArgs args)
     {
         await SignOutManager.SetSignOutState();
-
-        base.OnInitialized();
-        var user = (await AuthStat).User;
-        if (!user.Identity.IsAuthenticated) 
-        {
-            NavigationManager.NavigateTo("/loggedout");
-        }
+        NavigationManager.NavigateTo("authentication/logout");
     }
 }
 }

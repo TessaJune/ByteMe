@@ -24,15 +24,15 @@
         <div class="loginDiv">
             <div class ="loginHeader"> 
                 <img class = "LogoImage" src="images/Logo.png" alt="Image is not showing" width="300px" /> 
-                <p>Login with Microsoft</p>
+                <p>Log in with Microsoft</p>
             </div>
             <div class = "loginButton"> 
                 <LoginDisplay/>
             </div>
-            <div class="guestUser">
+            @* <div class="guestUser">
                 <p>Not interested in making a user? </p>
                 <button class="guestButton" @onclick="NavigateToResultPage">Login as Guest User</button>
-            </div>
+            </div> *@
         </div>
 
         @* This is the right side of the page *@
@@ -41,13 +41,13 @@
                 <p class = "WelcomeText">Trainor is a repository of high-quality software engineering resources, made for students that need access to tutorials and videos, 
                     that they can use to self-learn. Some of the content you can find here on Trainor is important 
                     emerging technologies such as programming frameworks, testing tools and deployment tools. </p>
-                <p class = "WelcomeText">Please login with your Microsoft account <br>
-                    or login as guest user below.</p>
+                <p class = "WelcomeText">Please log in with your Microsoft account. <br>
+                    @* or login as guest user below.*@</p> 
         </div>
     </div>
     </NotAuthorized>
     <Authorized>
-        <meta http-equiv = "refresh" content = "3; url = /mainpage" />
+        <meta http-equiv = "refresh" content = "1; url = /mainpage" />
     </Authorized>
 </AuthorizeView>
 </body>
