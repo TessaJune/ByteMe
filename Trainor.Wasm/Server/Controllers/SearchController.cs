@@ -52,7 +52,7 @@ namespace Trainor.Wasm.Server.Controllers
         [ProducesResponseType((int) HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(IReadOnlyCollection<ResourceDto>), (int) HttpStatusCode.OK)]
         [HttpGet("filtered")]
-        public async Task<ActionResult<IReadOnlyCollection<ResourceDto>>> Get([FromQuery]string[] filters)
+        public async Task<ActionResult<IReadOnlyCollection<ResourceDto>>> Get([FromQuery (Name = "filters")]string[] filters)
         {
             List<ResourceDto> searchResult = (List<ResourceDto>)await _search.SearchByFilters(filters);
 
