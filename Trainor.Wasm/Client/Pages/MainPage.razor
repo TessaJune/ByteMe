@@ -51,18 +51,15 @@
                 <div id="filters">
                     <p id="fTitle">SubjectTag</p>
                     <div class="filterCheckBox">
-                        @* Filter 2.1 *@
 
                         <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("C#"); })"
                             @bind="@_filterBools[4]" value="Filter">
                         <label for="filterOne"> C#</label><br><br>
 
-                        @* Filter 2.2 *@
                         <input type="checkbox" id="filterbox" name="filterOne"
                             @onclick="@(() => { AddFilter("Java"); })" @bind="@_filterBools[5]" value="Filter">
                         <label for="filterOne">Java</label><br><br>
 
-                        @* Filter 2.3 *@
                         <input type="checkbox" id="filterbox" name="filterOne"
                             @onclick="@(() => { AddFilter("GoLang"); })" @bind="@_filterBools[6]" value="Filter">
                         <label for="filterOne">GoLang</label><br><br>
@@ -83,11 +80,7 @@
                         <button class="filterButton" @onclick="@(() => RefreshResources(_searchResults))">Filtered
                             search</button>
                     </div>
-                    @* <div class="resetButtonDiv">
-                        <button class="resetButton" @onclick="OnInitializedAsync">Reset search</button>
-                    </div> *@
                 </div>
-
             </div>
             <div class="signOutDiv">    
                 <input class="imageSignOut" type="image" src="images/signOutWhite.png" @onclick="BeginLogout" />
@@ -145,9 +138,6 @@
                                         </div>
                                         <div class="arrowDown">
                                             <input class="imageArrow" alt="picture is not showing" type="image" src=@imagePath @onclick="changeImage"/>
-
-                                            @* <input class ="imageArrow" alt = "picture is not showing" type = "image"
-                                                src=@imagePath @onclick="@(() => { changeImage(resource); })"/> *@
                                         </div>
                                     </div>
 
@@ -266,12 +256,6 @@
 
     public void changeImage()
     {
-        @* if (!ResourceDtos.Contains(resource))
-            {
-            ResourceDtos.Add(resource);
-            } *@
-        
-
         if (imagePath == "images/sideArrow.png")
         {
             imagePath = "images/downArrow.png";

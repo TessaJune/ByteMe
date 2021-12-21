@@ -13,9 +13,6 @@
 <!DOCTYPE html>
 <html>
 <body>
-    
-    @* A NEW INTERFACE SHOULD BE MADE. THIS SHOULD NOT BE THE FINAL *@
-
     @* The container div has a flex display and contains all divs shown below *@
    <AuthorizeView>
     <NotAuthorized>
@@ -29,10 +26,6 @@
             <div class = "loginButton"> 
                 <LoginDisplay/>
             </div>
-            @* <div class="guestUser">
-                <p>Not interested in making a user? </p>
-                <button class="guestButton" @onclick="NavigateToResultPage">Login as Guest User</button>
-            </div> *@
         </div>
 
         @* This is the right side of the page *@
@@ -42,7 +35,7 @@
                     that they can use to self-learn. Some of the content you can find here on Trainor is important 
                     emerging technologies such as programming frameworks, testing tools and deployment tools. </p>
                 <p class = "WelcomeText">Please log in with your Microsoft account. <br>
-                    @* or login as guest user below.*@</p> 
+                    </p> 
         </div>
     </div>
     </NotAuthorized>
@@ -55,7 +48,6 @@
 
 
 @code {
-
     @* Making it possible to navigate to searchPage *@
     public void NavigateToResultPage()
     {
@@ -70,7 +62,6 @@
         if(!user.Identity.IsAuthenticated)
         {
             NavigationManager.NavigateTo("/");
-            @* NavigationManager.NavigateTo($"authentication/login?returnUrl={Uri.EscapeDataString(NavigationManager.Uri)}"); *@
         } else {
             NavigationManager.NavigateTo("/mainpage");
         }
