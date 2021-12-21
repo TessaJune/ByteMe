@@ -1,7 +1,5 @@
-
 @using Trainor.Storage
 @using Trainor.Storage.Entities
-@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
 
@@ -132,14 +130,7 @@
     protected override async Task OnInitializedAsync()
 
     {
-        try
-        {
-            _searchResults = await Http.GetFromJsonAsync<IReadOnlyCollection<ResourceDto>>("Search");
-        }
-        catch (AccessTokenNotAvailableException exception)
-        {
-            exception.Redirect();
-        }
+        _searchResults = await Http.GetFromJsonAsync<IReadOnlyCollection<ResourceDto>>("Search");
     }
 }
 
