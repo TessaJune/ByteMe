@@ -19,8 +19,7 @@ namespace Trainor.Storage.Entities
             get => _link;
             set => _link = value ?? throw new NullReferenceException();
         }
-
-        public IEnumerable<Author> Authors { get; set; } = new List<Author>();
+        public ICollection<Author> Authors { get; set; } = new HashSet<Author>();
         public SubjectTag Subject { get; set; }
         public TypeTag Type { get; set; }
         public DateTime Date { get; set; }

@@ -51,6 +51,7 @@
                     <div class="filterCheckBox">
                         @* Filter 2.1 *@
 
+
                         <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("C#"); })" @bind="@_filterBools[4]" value="Filter">
                         <label for="filterOne"> C#</label><br><br>
 
@@ -69,6 +70,7 @@
                         <label for="filterOne">HTML</label><br><br>
 
                         <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("CSS"); })" @bind="@_filterBools[9]" value="Filter">
+
                         <label for="filterOne">CSS</label><br><br>
                     </div>
                 </div>
@@ -94,7 +96,9 @@
                     </div>
                 </div>
                 <div class="buttonDiv">
+
                     <input class = "searchButton" type = "image" src = "images/searchButton.png" @onclick="SearchByKeyword">
+
                 </div>
                 <p>@_keywords</p>
             </div>
@@ -200,6 +204,7 @@
         _searchResults = await Http.GetFromJsonAsync<List<ResourceDto>>($"Search/{Filters}");
     }
 
+
     public void NavigateToLoginPage()
     {
         NavigationManager.NavigateTo("/");
@@ -245,4 +250,3 @@
         }
     }
 }
-
