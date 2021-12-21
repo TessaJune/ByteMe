@@ -43,6 +43,44 @@ body {
 	margin-top: 15%;
 }
 
+.resourcerContainer {
+	width: 300%;
+}
+
+.tableDiv {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+}
+
+.tableHeader {
+	width: 20%;
+	color: #000000;
+}
+
+.arrowDown {
+	flex: 1;
+	align-self: center;
+	width: 150px;
+}
+
+.imageArrow {
+	width: 18px;
+	height: 18px;
+}
+
+.resourceDescription {
+	display: flex;
+	justify-content: center;
+	height: 100%;
+    width: 100%;
+}
+
+#Resource {
+	flex: 1;
+    color: rgba(80, 77, 77, 1);
+}
+
 .signOutDiv {
     position: fixed;
     margin-top: 5%;
@@ -70,10 +108,6 @@ body {
 	border-color: transparent;
 	background-color: transparent;
 	cursor: pointer;	
-}
-
-.cursor {
-	cursor: pointer;
 }
 
 .resourceDiv {
