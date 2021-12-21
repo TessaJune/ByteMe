@@ -41,21 +41,19 @@ namespace Trainor.Wasm.Server.Controllers
         [HttpGet("{filter}")]
         public async Task<ActionResult<IReadOnlyCollection<ResourceDto>>> Get(string filter)
         {
-            List<ResourceDto> searchResult = (List<ResourceDto>)await _search.SearchByFilter(filter);
-            if (searchResult.IsNullOrEmpty())
+            List<ResourceDto> searchResult;
+            if (filter.Contains("&"))
             {
-                return new NotFoundResult();
+                string[] filters = filter.Split("&");
+                searchResult = (List<ResourceDto>)await _search.SearchByFilters(filters);
+                if (searchResult.IsNullOrEmpty())
+                {
+                    return new NotFoundResult();
+                }
+                return searchResult;
             }
-            return searchResult;
-        }
-        
-        [ProducesResponseType((int) HttpStatusCode.NotFound)]
-        [ProducesResponseType(typeof(IReadOnlyCollection<ResourceDto>), (int) HttpStatusCode.OK)]
-        [HttpGet("filtered")]
-        public async Task<ActionResult<IReadOnlyCollection<ResourceDto>>> Get([FromQuery]string[] filters)
-        {
-            List<ResourceDto> searchResult = (List<ResourceDto>)await _search.SearchByFilters(filters);
 
+            searchResult = (List<ResourceDto>)await _search.SearchByFilter(filter);
             if (searchResult.IsNullOrEmpty())
             {
                 return new NotFoundResult();
