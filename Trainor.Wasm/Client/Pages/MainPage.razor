@@ -2,6 +2,7 @@
 @using Trainor.Storage.Entities
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @inject NavigationManager NavigationManager
+@inject SignOutSessionStateManager SignOutManager
 @inject HttpClient Http
 
 @page "/mainpage"
@@ -68,7 +69,7 @@
 
             </div>
             <div class="signOutDiv">
-                <input class ="imageSignOut" type = "image" src="images/signOutWhite.png" @onclick="NavigateToLoginPage"/>
+                <input class ="imageSignOut" type = "image" src="images/signOutWhite.png" @onclick="BeginLogout"/>
                 <div class ="imageSignOutText">                                
                     <p>Sign out</p>
                 </div>
@@ -182,4 +183,13 @@
     {
         NavigationManager.NavigateTo("/");
     }
+
+@code{
+    private async Task BeginLogout(MouseEventArgs args)
+    {
+        await SignOutManager.SetSignOutState();
+        NavigationManager.NavigateTo("/");
+        
+    }
+}
 }
