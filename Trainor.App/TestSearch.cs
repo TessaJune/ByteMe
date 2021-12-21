@@ -29,7 +29,7 @@ namespace Trainor.App
         private async Task<IReadOnlyCollection<ResourceDto>> SeedSearch()
         {
             List<ResourceDto> returnList = new List<ResourceDto>();
-            returnList.Add(new ResourceDto(0, "Title1", "www.www.com", null, null, null, null));
+            returnList.Add(new ResourceDto(0, "FaceBook", "https://www.facebook.com", null, null, null, null));
             returnList.Add(new ResourceDto(1, "Title2", "www.www.com", null, null, null, null));
             returnList.Add(new ResourceDto(2, "Title3", "www.www.com", null, null, null, null));
             returnList.Add(new ResourceDto(3, "Title4", "www.www.com", null, null, null, null));

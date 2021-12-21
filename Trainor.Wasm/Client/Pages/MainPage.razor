@@ -89,10 +89,10 @@
                 </div>
 
             </div>
-            <div class="signOutDiv">
+            <div class="signOutDiv">    
                 <input class="imageSignOut" type="image" src="images/signOutWhite.png" @onclick="BeginLogout" />
                 <div class="imageSignOutText">
-                    <button class="imageSignOutButton" type="button">Sign out</button>
+                    <button class="imageSignOutButton" type="button" @onclick="BeginLogout">Sign out</button>
                 </div>
             </div>
         </div>
@@ -155,19 +155,19 @@
                                     @if (ExtendDiv == true)
                                     {
                                         <div class="linkDiv">
-                                            <p>Link: @resource.link </p>
+                                            <button class="buttonLink" type="button" @onclick="() => navigateToLink(resource.link)" >Link: @resource.link </button>
                                         </div>
                                         <div class="resourceDescription">
-                                <div id="Resource">
-                                    <p>Author(s): @resource.id</p>
-                                </div>
-                                <div id="Resource">
-                                    <p>Subject(s): @resource.id</p>
-                                </div>
-                                <div id="Resource">
-                                    <p>Type: @resource.id</p>
-                                </div>
-                            </div>
+                                        <div id="Resource">
+                                            <p>Author(s): @resource.id</p>
+                                        </div>
+                                        <div id="Resource">
+                                            <p>Subject(s): @resource.id</p>
+                                        </div>
+                                        <div id="Resource">
+                                            <p>Type: @resource.id</p>
+                                        </div>
+                                    </div>
                                     }
                                     else
                                     {
@@ -294,5 +294,9 @@
         {
             ExtendDiv = false;
         }
+    }
+
+    public void navigateToLink(string link) {
+        NavigationManager.NavigateTo(link);
     }
 }

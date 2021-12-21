@@ -87,6 +87,11 @@ body {
 	width: 100%;
 }
 
+.buttonLink {
+	background-color: transparent;
+	border-color: transparent;
+}
+
 .resourceDescription {
 	display: flex;
 	justify-content: center;
