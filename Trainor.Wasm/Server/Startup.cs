@@ -1,5 +1,4 @@
 using System.Linq;
-using static System.Net.HttpStatusCode;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -13,6 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Identity.Web;
 using Trainor.App;
 using Trainor.Storage;
+using static System.Net.HttpStatusCode;
 
 namespace Trainor.Wasm.Server
 {
@@ -34,10 +34,15 @@ namespace Trainor.Wasm.Server
 
             services.AddControllersWithViews();
             services.AddRazorPages();
-            services.AddDbContext<DataContext>(options => options.UseNpgsql(Configuration.GetConnectionString("Trainor")));
+            services.AddDbContext<DataContext>(options =>
+            {
+                options.UseNpgsql(Configuration.GetConnectionString("Trainor"));
+            });
             services.AddScoped<ISearch, TestSearch>();
             services.AddScoped<IDataContext, DataContext>();
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IAuthorRepository, AuthorRepository>();
+            services.AddScoped<ISubjectTagRepository, SubjectTagRepository>();
             services.AddScoped<IResourceRepository, ResourceRepository>();
             services.AddHttpsRedirection(options =>
             {
