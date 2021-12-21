@@ -20,7 +20,6 @@
     <div class="container">
         <div class="filterDiv">
             <div class="filterCheckBoxesDiv">
-                <button class="resetButton" @onclick="OnInitializedAsync">Reset search</button>
                 <div class="filterTitle">
                     <p class="title">Filter through resources</p>
                 </div>
@@ -69,7 +68,13 @@
                         <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("CSS"); })" @bind="@_filterBools[9]" value="Filter">
                         <label for="filterOne">CSS</label><br><br>
                     </div>
+                <div class="resetButtonDiv">
+                    <button class="resetButton" @onclick="@(() => RefreshResources(_searchResults))">Filtered search</button>
                 </div>
+                <div class="resetButtonDiv">
+                     <button class="resetButton" @onclick="OnInitializedAsync">Reset search</button>
+                </div>
+            </div>
 
             </div>
             <div class="signOutDiv">
@@ -78,7 +83,7 @@
                     <button class ="imageSignOutButton" type="button">Sign out</button>                                
                 </div>
             </div>
-            <button class="resetButton" @onclick="@(() => RefreshResources(_searchResults))">Filtered search</button>
+            @* <button class="resetButton" @onclick="@(() => RefreshResources(_searchResults))">Filtered search</button> *@
         </div>
         
         <div class="resourceDiv">
@@ -113,14 +118,14 @@
                         </thead>
                         <tbody>
                         @foreach (var resource in SearchResults)
-                        {
+                        {              
                             <div class="resourcerContainer">
                                 <div class="tableDiv">
                                     <div class="tableHeader">
                                         <h1>@resource.name</h1>
                                     </div>
                                     <div class="arrowDown">
-                                        <input class ="imageArrow" alt = "picture is not showing" type = "image" src=@imagePath @onclick="changeImage"/>
+                                        <input class ="imageArrow" alt = "picture is not showing" type = "image" src=@imagePath @onclick="@(() => changeImage(_searchResults))"/>
                                     </div>
                                 </div>
 
@@ -220,6 +225,7 @@
     public void RefreshResources(IReadOnlyCollection<ResourceDto> resources)
     {
         SearchResults = null;
+
         SearchResults = resources;
     }
 
@@ -229,8 +235,12 @@
         NavigationManager.NavigateTo("authentication/logout");
     }
 
-    private void changeImage(object div) 
+    public void changeImage(IReadOnlyCollection<ResourceDto> resources) 
     {
+        SearchResults = null;
+
+        SearchResults = resources;
+
         if (imagePath == "images/sideArrow.png") 
         {
             imagePath = "images/downArrow.png";
@@ -244,7 +254,6 @@
         } else {
             ExtendDiv = false;
         }
-
     }
 }
 

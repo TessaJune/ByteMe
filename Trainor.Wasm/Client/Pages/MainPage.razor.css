@@ -31,6 +31,22 @@ body {
 	margin-top: 15%;
 }
 
+.resetButtonDiv {
+	justify-content: right;
+	width: 100%;
+	display: flex;
+	margin-bottom: 3%;
+}
+
+.resetButton {
+	background-color: white;
+	border-color: transparent;
+	border-radius: 25px;
+	cursor: pointer;
+	align-self: flex-end;
+	margin-right: 5%;
+}
+
 #fTitle {
 	color: white;
 	font-size: 18px;
@@ -87,7 +103,7 @@ body {
 
 .signOutDiv {
     position: fixed;
-    margin-top: 5%;
+    margin-top: 2%;
     display: flex;
     position: absolute;
     width: 100%;
