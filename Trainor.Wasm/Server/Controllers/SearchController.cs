@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Net;
 using System.Runtime.CompilerServices;
@@ -41,11 +42,11 @@ namespace Trainor.Wasm.Server.Controllers
         [HttpGet("{queryString}")]
         public async Task<ActionResult<IReadOnlyCollection<ResourceDto>>> Get(string queryString)
         {
-            List<ResourceDto> searchResult;
+            ReadOnlyCollection<ResourceDto> searchResult;
             if (queryString.Contains('&'))
             {
                 string[] filters = queryString.Split("&");
-                searchResult = (List<ResourceDto>)await _search.QueryRepoFilteredAsync(filters);
+                searchResult = (ReadOnlyCollection<ResourceDto>)await _search.QueryRepoFilteredAsync(filters);
                 if (searchResult.IsNullOrEmpty())
                 {
                     return new NotFoundResult();
@@ -56,7 +57,7 @@ namespace Trainor.Wasm.Server.Controllers
             {
                 string[] filters = queryString.Split(" ");
 
-                searchResult = (List<ResourceDto>)await _search.QueryRepoKeywordsAsync(filters);
+                searchResult = (ReadOnlyCollection<ResourceDto>)await _search.QueryRepoKeywordsAsync(filters);
                 if (searchResult.IsNullOrEmpty())
                 {
                     return new NotFoundResult();
@@ -66,7 +67,7 @@ namespace Trainor.Wasm.Server.Controllers
 
             Console.WriteLine("I got here");
             Console.WriteLine($"With querystring: {queryString}");
-            searchResult = (List<ResourceDto>)await _search.QueryRepoKeywordsAsync(new []{queryString});
+            searchResult = (ReadOnlyCollection<ResourceDto>)await _search.QueryRepoKeywordsAsync(new []{queryString});
             if (searchResult.IsNullOrEmpty())
             {
                 return new NotFoundResult();

@@ -11,7 +11,12 @@ namespace Trainor.App
      {
          private IResourceRepository _repo;
 
-        public async Task<IReadOnlyCollection<ResourceDto>> SearchAllAsync()
+         public Search(IResourceRepository repo)
+         {
+             _repo = repo;
+         }
+
+         public async Task<IReadOnlyCollection<ResourceDto>> SearchAllAsync()
         {
             var asyncResult = await _repo.ReadAsync();
             return asyncResult.Item2;
@@ -19,8 +24,8 @@ namespace Trainor.App
 
         public async Task<IReadOnlyCollection<ResourceDto>> QueryRepoFilteredAsync(IEnumerable<string> filters)
         {
-            var subjectTags = Enum.GetValues(typeof(SubjectTag));
-            var typeTags = Enum.GetValues(typeof(TypeTag));
+            SubjectTag[] subjectTags = (SubjectTag[])Enum.GetValues(typeof(SubjectTag));
+            TypeTag[] typeTags = (TypeTag[])Enum.GetValues(typeof(TypeTag));
             var subjectTagsSearchList = new List<SubjectTag>();
             var typeTagsSearchList = new List<TypeTag>();
 
@@ -45,17 +50,17 @@ namespace Trainor.App
 
             (CrudStatus, IReadOnlyCollection<ResourceDto>) asyncResult = (CrudStatus.Ok, null);
 
-            if (typeTags.Length != 0 && subjectTags.Length != 0)
+            if (typeTagsSearchList.Count != 0 && subjectTagsSearchList.Count != 0)
             {
-                asyncResult = await _repo.ReadFromFiltersAsync(subjectTags, typeTags);
+                asyncResult = await _repo.ReadFromFiltersAsync(typeTagsSearchList, subjectTagsSearchList);
             }
             else if (subjectTags.Length != 0)
             {
-                asyncResult = await _repo.ReadFromFiltersAsync(subjectTags);
+                asyncResult = await _repo.ReadFromFiltersAsync(subjectTagsSearchList);
             }
             else if (typeTags.Length != 0)
             {
-                asyncResult = await _repo.ReadFromFiltersAsync(typeTags);
+                asyncResult = await _repo.ReadFromFiltersAsync(typeTagsSearchList);
             }
             
             return asyncResult.Item2;
@@ -63,7 +68,7 @@ namespace Trainor.App
         
         public async Task<IReadOnlyCollection<ResourceDto>> QueryRepoKeywordsAsync(IEnumerable<string> keywords)
         {
-            var asyncResult = _repo.ReadKeywordsAsync(keywords);
+            var asyncResult = await _repo.ReadFromKeywordsAsync(keywords);
             return asyncResult.Item2;
         }
     }
