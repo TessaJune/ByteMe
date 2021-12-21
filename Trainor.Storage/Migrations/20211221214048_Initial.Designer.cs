@@ -12,7 +12,7 @@ using Trainor.Storage;
 namespace Trainor.Storage.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20211221124132_Initial")]
+    [Migration("20211221214048_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -37,21 +37,6 @@ namespace Trainor.Storage.Migrations
                     b.HasIndex("ResourcesId");
 
                     b.ToTable("AuthorResource");
-                });
-
-            modelBuilder.Entity("ResourceSubjectTag", b =>
-                {
-                    b.Property<int>("ResourcesId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("SubjectsId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("ResourcesId", "SubjectsId");
-
-                    b.HasIndex("SubjectsId");
-
-                    b.ToTable("ResourceSubjectTag");
                 });
 
             modelBuilder.Entity("Trainor.Storage.Entities.Author", b =>
@@ -97,29 +82,17 @@ namespace Trainor.Storage.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("character varying(200)");
 
+                    b.Property<string>("Subject")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
                     b.Property<int>("Type")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
                     b.ToTable("Resources");
-                });
-
-            modelBuilder.Entity("Trainor.Storage.Entities.SubjectTag", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
-
-                    b.Property<string>("Title")
-                        .HasMaxLength(50)
-                        .HasColumnType("character varying(50)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("SubjectTags");
                 });
 
             modelBuilder.Entity("Trainor.Storage.Entities.User", b =>
@@ -157,21 +130,6 @@ namespace Trainor.Storage.Migrations
                     b.HasOne("Trainor.Storage.Entities.Resource", null)
                         .WithMany()
                         .HasForeignKey("ResourcesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("ResourceSubjectTag", b =>
-                {
-                    b.HasOne("Trainor.Storage.Entities.Resource", null)
-                        .WithMany()
-                        .HasForeignKey("ResourcesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Trainor.Storage.Entities.SubjectTag", null)
-                        .WithMany()
-                        .HasForeignKey("SubjectsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

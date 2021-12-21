@@ -5,6 +5,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Trainor.Storage.Entities;
+using static Trainor.Storage.Entities.SubjectTag;
+using static Trainor.Storage.Entities.TypeTag;
 
 namespace Trainor.Storage
 {
@@ -19,10 +21,9 @@ namespace Trainor.Storage
                 var userRepository = scope.ServiceProvider.GetRequiredService<IUserRepository>();
                 var resourceRepository = scope.ServiceProvider.GetRequiredService<IResourceRepository>();
                 var authorRepository = scope.ServiceProvider.GetRequiredService<IAuthorRepository>();
-                var subjectTagRepository = scope.ServiceProvider.GetRequiredService<ISubjectTagRepository>();
 
                 await SeedUserAsync(context, userRepository);
-                await SeedResourceAsync(context, authorRepository, subjectTagRepository);
+                await SeedResourceAsync(context, authorRepository);
             }
             return host;
         }
@@ -45,7 +46,7 @@ namespace Trainor.Storage
             }
         }
 
-        private static async Task SeedResourceAsync(DataContext context, IAuthorRepository authorRepository, ISubjectTagRepository subjectTagRepository)
+        private static async Task SeedResourceAsync(DataContext context, IAuthorRepository authorRepository)
         {
             await context.Database.MigrateAsync();
 
@@ -68,46 +69,21 @@ namespace Trainor.Storage
                 var steveSmith = new Author { Id = 70, GivenName = "Steve", LastName = "Smith" };
                 var tomDykstra = new Author { Id = 75, GivenName = "Tom", LastName = "Dykstra" };
 
-                // Creating subjects
-                var cSharp = new SubjectTag { Id = 1, Title = "C#" };
-                var java = new SubjectTag { Id = 2, Title = "Java" };
-                var goLang = new SubjectTag { Id = 3, Title = "GoLang" };
-                var SQL = new SubjectTag { Id = 4, Title = "SQL" };
-                var HTML = new SubjectTag { Id = 5, Title = "HTML" };
-                var CSS = new SubjectTag { Id = 6, Title = "CSS" };
-                var distributedSystems = new SubjectTag { Id = 7, Title = "Distributed systems" };
-                var databaseManagement = new SubjectTag { Id = 8, Title = "Database management" };
-                var unitTesting = new SubjectTag { Id = 9, Title = "Unit testing" };
-                var dotnet = new SubjectTag { Id = 10, Title = ".NET" };
-                var gitHub = new SubjectTag { Id = 11, Title = "GitHub" };
-                var umlDiagrams = new SubjectTag { Id = 12, Title = "UML diagrams" };
-                var softwareEngineering = new SubjectTag { Id = 13, Title = "Software engineeting" };
-
                 // Resources
                 context.Resources.AddRange( // Missing the date - should dates be "[Range(1900, 2100)]" ?
-                    new Resource { Id = 1, Name = "The RAFT Consensus Algorithm", Link = "https://raft.github.io/", Authors = new List<Author> { martinKleppmann }, Subjects = new List<SubjectTag> { goLang, distributedSystems }, Type = TypeTag.DOCUMENT },
-                    new Resource { Id = 2, Name = "Microservices", Link = "https://martinfowler.com/articles/microservices.html", Authors = new List<Author> { martinFowler }, Subjects = new List<SubjectTag> { goLang, distributedSystems }, Type = TypeTag.DOCUMENT },
-                    new Resource { Id = 3, Name = "Probabilistic clock synchronization", Link = "https://www.cs.utexas.edu/users/lorenzo/corsi/cs380d/papers/Cristian.pdf", Authors = new List<Author> { flaviuCristian }, Subjects = new List<SubjectTag> { distributedSystems }, Type = TypeTag.PDF },
-                    new Resource { Id = 4, Name = "Introduction to Operating Systems", Link = "https://learnit.itu.dk/pluginfile.php/270772/course/section/132582/introduction.pdf", Subjects = new List<SubjectTag> { databaseManagement }, Type = TypeTag.PDF },
-                    new Resource { Id = 5, Name = "Architecture of a Database System", Link = "https://learnit.itu.dk/pluginfile.php/270772/course/section/132585/fntdb07-architecture.pdf", Authors = new List<Author> { josephHellerStein, michaelStonebraker, jamesHamilton }, Subjects = new List<SubjectTag> { databaseManagement }, Type = TypeTag.PDF },
-                    new Resource { Id = 6, Name = "Consistency Tradeoffs in Modern Distributed Database System Design", Link = "https://learnit.itu.dk/pluginfile.php/270772/course/section/132586/abadi.pacelc.computer2012.pdf", Authors = new List<Author> { danielAbadi }, Subjects = new List<SubjectTag> { databaseManagement }, Type = TypeTag.PDF },
-                    new Resource { Id = 7, Name = "Unit testing C# in .NET Core using dotnet test and xUnit", Link = "https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test", Authors = new List<Author> { steveSmith, tomDykstra }, Subjects = new List<SubjectTag> { unitTesting, dotnet, cSharp }, Type = TypeTag.ARTICLE },
-                    new Resource { Id = 8, Name = "GitHub Actions and .NET", Link = "https://docs.microsoft.com/en-us/dotnet/devops/github-actions-overview", Authors = new List<Author> { davidPine, genevieveWarren }, Subjects = new List<SubjectTag> { gitHub, dotnet, cSharp }, Type = TypeTag.ARTICLE },
-                    new Resource { Id = 9, Name = "An Introduction to Object-Oriented Modeling", Link = "https://link.springer.com/content/pdf/10.1007%2F978-3-319-12742-2.pdf", Authors = new List<Author> { marionScholzChristianHuemer, martinaSeidl, gertiKappel }, Subjects = new List<SubjectTag> { umlDiagrams, softwareEngineering }, Type = TypeTag.PDF }
+                    new Resource { Id = 1, Name = "The RAFT Consensus Algorithm", Link = "https://raft.github.io/", Authors = new List<Author> { martinKleppmann }, Subject = GOLANG, Type = TypeTag.DOCUMENT },
+                    new Resource { Id = 2, Name = "Microservices", Link = "https://martinfowler.com/articles/microservices.html", Authors = new List<Author> { martinFowler }, Subject = GOLANG, Type = TypeTag.DOCUMENT },
+                    new Resource { Id = 3, Name = "Probabilistic clock synchronization", Link = "https://www.cs.utexas.edu/users/lorenzo/corsi/cs380d/papers/Cristian.pdf", Authors = new List<Author> { flaviuCristian }, Subject = DISTRIBUTED_SYSTEMS, Type = TypeTag.PDF },
+                    new Resource { Id = 4, Name = "Introduction to Operating Systems", Link = "https://learnit.itu.dk/pluginfile.php/270772/course/section/132582/introduction.pdf", Subject = DATABASE_MANAGEMENT, Type = TypeTag.PDF },
+                    new Resource { Id = 5, Name = "Architecture of a Database System", Link = "https://learnit.itu.dk/pluginfile.php/270772/course/section/132585/fntdb07-architecture.pdf", Authors = new List<Author> { josephHellerStein, michaelStonebraker, jamesHamilton }, Subject = DATABASE_MANAGEMENT, Type = TypeTag.PDF },
+                    new Resource { Id = 6, Name = "Consistency Tradeoffs in Modern Distributed Database System Design", Link = "https://learnit.itu.dk/pluginfile.php/270772/course/section/132586/abadi.pacelc.computer2012.pdf", Authors = new List<Author> { danielAbadi }, Subject = DATABASE_MANAGEMENT, Type = TypeTag.PDF },
+                    new Resource { Id = 7, Name = "Unit testing C# in .NET Core using dotnet test and xUnit", Link = "https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test", Authors = new List<Author> { steveSmith, tomDykstra }, Subject = TESTING, Type = TypeTag.ARTICLE },
+                    new Resource { Id = 8, Name = "GitHub Actions and .NET", Link = "https://docs.microsoft.com/en-us/dotnet/devops/github-actions-overview", Authors = new List<Author> { davidPine, genevieveWarren }, Subject = GIT, Type = TypeTag.ARTICLE },
+                    new Resource { Id = 9, Name = "An Introduction to Object-Oriented Modeling", Link = "https://link.springer.com/content/pdf/10.1007%2F978-3-319-12742-2.pdf", Authors = new List<Author> { marionScholzChristianHuemer, martinaSeidl, gertiKappel }, Subject = UML, Type = TypeTag.PDF }
                 );
 
                 await context.SaveChangesAsync();
             }
-        }
-        private static async Task SeedResourceAsyncTwo(DataContext context, IAuthorRepository authorRepository, ISubjectTagRepository subjectTagRepository)
-        {
-            await context.Database.MigrateAsync();
-
-            if (!await context.Resources.AnyAsync())
-            {
-                context.Resources.Add(new Resource { Id = 1, Name = "Resource", Link = "https://docs.microsoft.com/en-us/dotnet/devops/github-actions-overview" });
-            }
-            await context.SaveChangesAsync();
         }
     }
 }

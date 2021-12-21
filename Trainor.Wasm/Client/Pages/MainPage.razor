@@ -16,6 +16,7 @@
 
 <!DOCTYPE html>
 <html>
+
 <body>
     <div class="container">
         <div class="filterDiv">
@@ -29,16 +30,20 @@
                     <p id="fTitle">TypeTag</p>
                     <div class="filterCheckBox">
 
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("Video"))" value="Filter">
-                        <label for="filterOne">Video</label><br><br> 
-                      
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("Document"))" value="Filter">
-                        <label for="filterOne">Document</label><br><br> 
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("Video"))"
+                            value="Filter">
+                        <label for="filterOne">Video</label><br><br>
 
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("Article"))" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("Document"))"
+                            value="Filter">
+                        <label for="filterOne">Document</label><br><br>
+
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("Article"))"
+                            value="Filter">
                         <label for="filterOne">Article</label><br><br>
 
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("PDF"))" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("PDF"))"
+                            value="Filter">
                         <label for="filterOne">PDF</label><br>
                     </div>
                 </div>
@@ -48,53 +53,59 @@
                     <div class="filterCheckBox">
                         @* Filter 2.1 *@
 
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("C#"))" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("C#"))"
+                            value="Filter">
                         <label for="filterOne"> C#</label><br><br>
 
                         @* Filter 2.2 *@
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("Java"))" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("Java"))"
+                            value="Filter">
                         <label for="filterOne">Java</label><br><br>
 
                         @* Filter 2.3 *@
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("GoLang"))" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("GoLang"))"
+                            value="Filter">
                         <label for="filterOne">GoLang</label><br><br>
 
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("SQL"))" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("SQL"))"
+                            value="Filter">
                         <label for="filterOne">SQL</label><br><br>
 
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("HTML"))" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("HTML"))"
+                            value="Filter">
                         <label for="filterOne">HTML</label><br><br>
 
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("CSS"))" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("CSS"))"
+                            value="Filter">
                         <label for="filterOne">CSS</label><br><br>
                     </div>
                 </div>
 
             </div>
             <div class="signOutDiv">
-                <input class ="imageSignOut" type = "image" src="images/signOutWhite.png" @onclick="BeginLogout"/>
-                <div class ="imageSignOutText">
-                    <button class ="imageSignOutButton" type="button">Sign out</button>                                
+                <input class="imageSignOut" type="image" src="images/signOutWhite.png" @onclick="BeginLogout" />
+                <div class="imageSignOutText">
+                    <button class="imageSignOutButton" type="button">Sign out</button>
                 </div>
             </div>
         </div>
-        
+
         <div class="resourceDiv">
             <div class="searchbarDiv">
-                <div class="inputField"> 
+                <div class="inputField">
                     <div class="magnifyingGlassDiv">
-                        <img class ="magnifyingGlass" src="images/magnifyingGlass.png" alt="Image is not showing"/>
+                        <img class="magnifyingGlass" src="images/magnifyingGlass.png" alt="Image is not showing" />
                     </div>
                     <div class="inputText">
                         <input class="input" type="text">
                     </div>
                 </div>
                 <div class="buttonDiv">
-                    <input class = "searchButton" type = "image" src = "images/searchButton.png">
+                    <input class="searchButton" type="image" src="images/searchButton.png">
                 </div>
             </div>
             <div class="allResources">
-                @if (_searchResults== null)
+                @if (_searchResults == null)
                 {
                     <p><em>Loading...</em></p>
                 }
@@ -102,23 +113,23 @@
                 {
                     <table class="table">
                         <thead>
-                        <tr>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                        </tr>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
                         </thead>
                         <tbody>
-                        @foreach (var resource in _searchResults)
-                        {
-                            <tr>
-                                <td>@resource.id</td>
-                                <td>@resource.link</td>
-                                 @* <h2>Resource name</h2>
-                                    <p>Resource description</p> *@
-                            </tr>
-                        }
+                            @foreach (var resource in _searchResults)
+                            {
+                                <tr>
+                                    <td>@resource.Id</td>
+                                    <td>@resource.Link</td>
+                                    @* <h2>Resource name</h2>
+                                        <p>Resource description</p> *@
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 }
@@ -127,10 +138,11 @@
         <div class="placeholderDiv"></div>
     </div>
 </body>
+
 </html>
 
 
-@code 
+@code
 {
     protected override async Task OnInitializedAsync()
 
@@ -146,7 +158,7 @@
     }
 }
 
-@code 
+@code
 {
     private List<string> filters = new List<string>();
     private IReadOnlyCollection<ResourceDto> _searchResults;
@@ -180,18 +192,18 @@
     }
 }
 
-@code {    
+@code {
     @* Making it possible to navigate to loginPage *@
     public void NavigateToLoginPage()
     {
         NavigationManager.NavigateTo("/");
     }
 
-@code{
-    private async Task BeginLogout(MouseEventArgs args)
-    {
-        await SignOutManager.SetSignOutState();
-        NavigationManager.NavigateTo("authentication/logout");
+    @code {
+        private async Task BeginLogout(MouseEventArgs args)
+        {
+            await SignOutManager.SetSignOutState();
+            NavigationManager.NavigateTo("authentication/logout");
+        }
     }
-}
 }
