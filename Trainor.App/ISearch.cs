@@ -9,9 +9,10 @@ namespace Trainor.App
 {
     public interface ISearch
     {
-        public Task<IReadOnlyCollection<ResourceDto>> SearchAll();
-        public Task<IReadOnlyCollection<ResourceDto>> SearchByFilter(string type);
-        public Task<IReadOnlyCollection<ResourceDto>> SearchByFilters(IEnumerable<string> type);
-        public Task<IReadOnlyCollection<ResourceDto>> SearchByYear(int year);
+        public Task<IReadOnlyCollection<ResourceDto>> SearchAllAsync();
+        public Task<IReadOnlyCollection<ResourceDto>> QueryRepoFilteredAsync(IEnumerable<string> filter);
+        public Task<IReadOnlyCollection<ResourceDto>> QueryRepoKeywordsAsync(IEnumerable<string> searchWords);
+
+
     }
 }
