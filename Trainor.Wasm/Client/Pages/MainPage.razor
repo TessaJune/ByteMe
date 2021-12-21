@@ -114,12 +114,28 @@
                         <tbody>
                         @foreach (var resource in SearchResults)
                         {
-                            <tr>
-                                <td>@resource.id</td>
-                                <td>@resource.link</td>
-                                 @* <h2>Resource name</h2>
-                                    <p>Resource description</p> *@
-                            </tr>
+                            <div class="resourcerContainer">
+                                <div class="tableDiv">
+                                    <div class="tableHeader">
+                                        <h1>@resource.name</h1>
+                                    </div>
+                                    <div class="arrowDown">
+                                        <input class ="imageArrow" alt = "picture is not showing" type = "image" src=@imagePath @onclick="changeImage"/>
+                                    </div>
+                                </div>
+
+                                <div class="resourceDescription">
+                                    <div id="Resource">
+                                        <p>Author(s): @resource.id</p>
+                                    </div>
+                                    <div id="Resource">
+                                        <p>Subject(s): @resource.id</p>
+                                    </div>
+                                    <div id="Resource">
+                                        <p>Type: @resource.id</p>
+                                    </div>
+                                </div>
+                            </div>
                         }
                         </tbody>
                     </table>
@@ -134,16 +150,18 @@
 
 @code 
 {
+    string imagePath;
     private List<string> _filters;
     private bool[] _filterBools;
     private IReadOnlyCollection<ResourceDto> _searchResults;
     public IReadOnlyCollection<ResourceDto> SearchResults;
     private string[] filtersArray;
     public string? Filters { get; set; }
-    
-    protected override async Task OnInitializedAsync()
 
+    protected override async Task OnInitializedAsync()
     {
+        imagePath = "images/sideArrow.png";
+
         try
         {
             _filters = new List<string>();
@@ -184,11 +202,21 @@
         SearchResults = null;
         SearchResults = resources;
     }
-      
+
     private async Task BeginLogout(MouseEventArgs args)
     {
         await SignOutManager.SetSignOutState();
         NavigationManager.NavigateTo("authentication/logout");
+    }
+
+    private void changeImage() {
+    
+
+        if (imagePath == "images/sideArrow.png") {
+            imagePath = "images/downArrow.png";
+        } else {
+            imagePath = "images/sideArrow.png";
+        }
     }
 }
 
