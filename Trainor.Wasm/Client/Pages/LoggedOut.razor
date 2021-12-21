@@ -1,0 +1,44 @@
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+
+@inject NavigationManager NavigationManager
+@inject SignOutSessionStateManager SignOutManager
+
+@page "/authentication/logged-out"
+
+<style>
+    @@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap');
+</style>
+
+<!DOCTYPE html>
+<html>
+<body>
+   <AuthorizeView>
+    <NotAuthorized>
+    <div class="container">
+        <div class="logoDiv">
+            <div id ="placeholder"></div>
+            <div class="image">
+                <img class = "LogoImage" src="images/Logo.png" alt="Image is not showing" width="150px"/>
+            </div> 
+            <div id ="placeholder"></div>
+        </div>
+        <div class="textDiv">
+            <h2>You are now logged out</h2>
+            <p class="pLink" @onclick="NavigateToLoginPage">Press <em>here</em> to return to the login page</p>
+        </div>
+    </div>
+    </NotAuthorized>
+    <Authorized>
+        <p>Dette skal ikke vises</p>
+    </Authorized>
+   </AuthorizeView>
+</body>
+</html>
+
+@code{
+    public void NavigateToLoginPage()
+    {
+        NavigationManager.NavigateTo("/");
+    }
+}
