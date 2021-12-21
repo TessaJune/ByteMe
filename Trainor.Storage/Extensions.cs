@@ -21,7 +21,29 @@ public static class Extensions
         }
         else
         {
-            output = input[0];
+            output = "&" + input[0];
+        }
+        return output;
+    }
+    
+    public static string ToKeywordQueryString(this string input)
+    {
+        if (!input.Contains(' '))
+        {
+            return input;
+        }
+        string[] delimiterArray = input.Split(" ");
+        string output = "";
+        for (int i = 0; i < delimiterArray.Length; i++)
+        {
+            if (delimiterArray[i] != "")
+            {
+                output +=  delimiterArray[i];
+                if (i != delimiterArray.Length - 1)
+                {
+                    output += "_";
+                }
+            }
         }
         return output;
     }
