@@ -1,4 +1,10 @@
-﻿@page "/"
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+
+@inject NavigationManager NavigationManager
+@inject SignOutSessionStateManager SignOutManager
+
+@page "/"
 
 <style>
     @@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap');
@@ -7,10 +13,12 @@
 <!DOCTYPE html>
 <html>
 <body>
-
+    
     @* A NEW INTERFACE SHOULD BE MADE. THIS SHOULD NOT BE THE FINAL *@
 
     @* The container div has a flex display and contains all divs shown below *@
+   <AuthorizeView>
+    <NotAuthorized>
     <div class ="container">
         @* The center / left side of the page *@
         <div class="loginDiv">
@@ -37,16 +45,34 @@
                     or login as guest user below.</p>
         </div>
     </div>
+    </NotAuthorized>
+    <Authorized>
+        <meta http-equiv = "refresh" content = "3; url = /mainpage" />
+    </Authorized>
+</AuthorizeView>
 </body>
 </html>
 
+
 @code {
-    [Inject]
-    public NavigationManager NavigationManager { get; set; }
-    
+
     @* Making it possible to navigate to searchPage *@
     public void NavigateToResultPage()
     {
         NavigationManager.NavigateTo("/mainpage");
+    }
+
+    [CascadingParameter] protected Task<AuthenticationState> AuthStat { get; set; }
+    public async Task OnInitializedAsync()
+    {
+        base.OnInitialized();
+        var user = (await AuthStat).User;
+        if(!user.Identity.IsAuthenticated)
+        {
+            NavigationManager.NavigateTo("/");
+            @* NavigationManager.NavigateTo($"authentication/login?returnUrl={Uri.EscapeDataString(NavigationManager.Uri)}"); *@
+        } else {
+            NavigationManager.NavigateTo("/mainpage");
+        }
     }
 }

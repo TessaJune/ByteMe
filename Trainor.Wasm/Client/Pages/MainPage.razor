@@ -5,6 +5,9 @@
 @inject SignOutSessionStateManager SignOutManager
 @inject HttpClient Http
 
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+
 @page "/mainpage"
 
 <style>
@@ -14,6 +17,8 @@
 <!DOCTYPE html>
 <html>
 <body>
+    <AuthorizeView>
+    <Autherized>
     <div class="container">
         <div class="filterDiv">
             <div class="filterCheckBoxesDiv">
@@ -123,6 +128,11 @@
         </div>
         <div class="placeholderDiv"></div>
     </div>
+    </Autherized>
+    <NotAuterized>
+        <p>Hey</p>
+    </NotAuterized>
+</AuthorizeView>
 </body>
 </html>
 
@@ -184,12 +194,18 @@
         NavigationManager.NavigateTo("/");
     }
 
+[CascadingParameter] protected Task<AuthenticationState> AuthStat { get; set; }
 @code{
     private async Task BeginLogout(MouseEventArgs args)
     {
         await SignOutManager.SetSignOutState();
-        NavigationManager.NavigateTo("/");
-        
+
+        base.OnInitialized();
+        var user = (await AuthStat).User;
+        if (!user.Identity.IsAuthenticated) 
+        {
+            NavigationManager.NavigateTo("/loggedout");
+        }
     }
 }
 }
