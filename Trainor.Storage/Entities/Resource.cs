@@ -8,19 +8,20 @@ namespace Trainor.Storage.Entities
     public class Resource
     {
         public int Id { get; set; }
-        [StringLength(50)]
+        [StringLength(200)]
         public string Name { get; set; }
 
+        private string _link;
         [Required]
         [Url]
         public string Link
         {
-            get => Link;
-            set => Link = Link ?? throw new NullReferenceException();
+            get => _link;
+            set => _link = value ?? throw new NullReferenceException();
         }
-        
-        public IEnumerable<Author> Authors { get; set; }
-        public IEnumerable<SubjectTag>? Subjects { get; set; }
+
+        public IEnumerable<Author> Authors { get; set; } = new List<Author>();
+        public IEnumerable<SubjectTag>? Subjects { get; set; } = new List<SubjectTag>();
         public TypeTag Type { get; set; }
         public DateTime Date { get; set; }
     }

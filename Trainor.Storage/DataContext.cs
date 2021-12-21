@@ -22,6 +22,16 @@ namespace Trainor.Storage
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder
+                .Entity<Resource>()
+                .HasMany(r => r.Authors)
+                .WithMany(a => a.Resources);
+
+            modelBuilder
+                .Entity<Resource>()
+                .HasMany(r => r.Subjects)
+                .WithMany(s => s.Resources);
+
+            modelBuilder
                 .Entity<User>()
                 .Property(u => u.GivenName)
                 .HasMaxLength(50);
@@ -44,7 +54,7 @@ namespace Trainor.Storage
             modelBuilder
                 .Entity<Resource>()
                 .Property(r => r.Name)
-                .HasMaxLength(50);
+                .HasMaxLength(200);
 
             modelBuilder
                 .Entity<Resource>()

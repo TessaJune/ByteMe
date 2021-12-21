@@ -6,13 +6,18 @@ services:
   db:
     image: postgres
     ports:
-      - '5433:5433'
+      - '5433:5432'
     environment:
       POSTGRES_USER: 'postgres'
       POSTGRES_PASSWORD_FILE: /run/secrets/db_password
       POSTGRES_DB: 'postgres'
     secrets:
       - db_password
+    networks:
+      trainor-network:
+        aliases:
+          - trainor-db
+
   blazor-server:
     image: blazor-server
     build:
@@ -33,6 +38,14 @@ services:
         target: ConnectionStrings__Trainor
     volumes:
       - ../aspnet/https:/https/
+    networks:
+      trainor-network:
+        aliases:
+          - trainor-web-server
+
+networks:
+  trainor-network:
+    driver: overlay
 
 secrets:
   connection_string:
