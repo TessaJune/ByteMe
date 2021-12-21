@@ -2,7 +2,11 @@
 @using Trainor.Storage.Entities
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @inject NavigationManager NavigationManager
+@inject SignOutSessionStateManager SignOutManager
 @inject HttpClient Http
+
+@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 
 @page "/mainpage"
 
@@ -69,9 +73,9 @@
 
             </div>
             <div class="signOutDiv">
-                <input class ="imageSignOut" type = "image" src="images/signOutWhite.png" @onclick="NavigateToLoginPage"/>
-                <div class ="imageSignOutText">                                
-                    <p>Sign out</p>
+                <input class ="imageSignOut" type = "image" src="images/signOutWhite.png" @onclick="BeginLogout"/>
+                <div class ="imageSignOutText">
+                    <button class ="imageSignOutButton" type="button">Sign out</button>                                
                 </div>
             </div>
             <button class="resetButton" @onclick="@(() => RefreshResources(_searchResults))">Filtered search</button>
@@ -180,7 +184,11 @@
         SearchResults = null;
         SearchResults = resources;
     }
+      
+    private async Task BeginLogout(MouseEventArgs args)
+    {
+        await SignOutManager.SetSignOutState();
+        NavigationManager.NavigateTo("authentication/logout");
+    }
 }
-
-
 

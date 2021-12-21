@@ -1,4 +1,10 @@
-﻿@page "/"
+﻿@using Microsoft.AspNetCore.Components.Authorization
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+
+@inject NavigationManager NavigationManager
+@inject SignOutSessionStateManager SignOutManager
+
+@page "/"
 
 <style>
     @@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans&display=swap');
@@ -7,24 +13,26 @@
 <!DOCTYPE html>
 <html>
 <body>
-
+    
     @* A NEW INTERFACE SHOULD BE MADE. THIS SHOULD NOT BE THE FINAL *@
 
     @* The container div has a flex display and contains all divs shown below *@
+   <AuthorizeView>
+    <NotAuthorized>
     <div class ="container">
         @* The center / left side of the page *@
         <div class="loginDiv">
             <div class ="loginHeader"> 
                 <img class = "LogoImage" src="images/Logo.png" alt="Image is not showing" width="300px" /> 
-                <p>Login with Microsoft</p>
+                <p>Log in with Microsoft</p>
             </div>
             <div class = "loginButton"> 
                 <LoginDisplay/>
             </div>
-            <div class="guestUser">
+            @* <div class="guestUser">
                 <p>Not interested in making a user? </p>
                 <button class="guestButton" @onclick="NavigateToResultPage">Login as Guest User</button>
-            </div>
+            </div> *@
         </div>
 
         @* This is the right side of the page *@
@@ -33,20 +41,38 @@
                 <p class = "WelcomeText">Trainor is a repository of high-quality software engineering resources, made for students that need access to tutorials and videos, 
                     that they can use to self-learn. Some of the content you can find here on Trainor is important 
                     emerging technologies such as programming frameworks, testing tools and deployment tools. </p>
-                <p class = "WelcomeText">Please login with your Microsoft account <br>
-                    or login as guest user below.</p>
+                <p class = "WelcomeText">Please log in with your Microsoft account. <br>
+                    @* or login as guest user below.*@</p> 
         </div>
     </div>
+    </NotAuthorized>
+    <Authorized>
+        <meta http-equiv = "refresh" content = "1; url = /mainpage" />
+    </Authorized>
+</AuthorizeView>
 </body>
 </html>
 
+
 @code {
-    [Inject]
-    public NavigationManager NavigationManager { get; set; }
-    
+
     @* Making it possible to navigate to searchPage *@
     public void NavigateToResultPage()
     {
         NavigationManager.NavigateTo("/mainpage");
+    }
+
+    [CascadingParameter] protected Task<AuthenticationState> AuthStat { get; set; }
+    public async Task OnInitializedAsync()
+    {
+        base.OnInitialized();
+        var user = (await AuthStat).User;
+        if(!user.Identity.IsAuthenticated)
+        {
+            NavigationManager.NavigateTo("/");
+            @* NavigationManager.NavigateTo($"authentication/login?returnUrl={Uri.EscapeDataString(NavigationManager.Uri)}"); *@
+        } else {
+            NavigationManager.NavigateTo("/mainpage");
+        }
     }
 }

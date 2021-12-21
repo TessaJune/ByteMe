@@ -60,11 +60,20 @@ body {
 }
 
 .imageSignOutText {
+	margin-top: 1%;
+}
+
+.imageSignOutButton {
     font-size: 18px;
     color: white;
     text-align: left;
-    line-height: 15%;
-    padding-left: 1%; 
+	border-color: transparent;
+	background-color: transparent;
+	cursor: pointer;	
+}
+
+.cursor {
+	cursor: pointer;
 }
 
 .resourceDiv {
@@ -114,8 +123,7 @@ body {
 }
 
 .allResources {
-	color: rgba(80, 77, 77, 1);
-	width: 100%;
+    color: rgba(80, 77, 77, 1);
 	height: 100%;
 	margin-left: 5%;
 	margin-right: 5%;
