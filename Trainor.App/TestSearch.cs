@@ -6,24 +6,19 @@ namespace Trainor.App
 {
     public class TestSearch : ISearch
     {
-        public Task<IReadOnlyCollection<ResourceDto>> SearchAll()
+        public Task<IReadOnlyCollection<ResourceDto>> SearchAllAsync()
         {
             return SeedSearch();
         }
 
-        public Task<IReadOnlyCollection<ResourceDto>> SearchByFilter(string filter)
-        {
-            return SeedSearch(filter);
-        }
-
-        public Task<IReadOnlyCollection<ResourceDto>> SearchByFilters(IEnumerable<string> filters)
+        public Task<IReadOnlyCollection<ResourceDto>> QueryRepoFilteredAsync(IEnumerable<string> filters)
         {
             return SeedSearch(filters);
         }
-
-        public Task<IReadOnlyCollection<ResourceDto>> SearchByYear(int year)
+        
+        public Task<IReadOnlyCollection<ResourceDto>> QueryRepoKeywordsAsync(IEnumerable<string> keywords)
         {
-            return SeedSearch();
+            return SeedSearch(keywords);
         }
 
         private async Task<IReadOnlyCollection<ResourceDto>> SeedSearch()

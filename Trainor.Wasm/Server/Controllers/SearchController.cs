@@ -34,18 +34,29 @@ namespace Trainor.Wasm.Server.Controllers
         
         [HttpGet]
         public async Task<IReadOnlyCollection<ResourceDto>> Get()
-            => await _search.SearchAll();
+            => await _search.SearchAllAsync();
 
         [ProducesResponseType((int)HttpStatusCode.NotFound)]
         [ProducesResponseType(typeof(IReadOnlyCollection<ResourceDto>), (int)HttpStatusCode.OK)]
-        [HttpGet("{filter}")]
-        public async Task<ActionResult<IReadOnlyCollection<ResourceDto>>> Get(string filter)
+        [HttpGet("{queryString}")]
+        public async Task<ActionResult<IReadOnlyCollection<ResourceDto>>> Get(string queryString)
         {
             List<ResourceDto> searchResult;
-            if (filter.Contains("&"))
+            if (queryString.Contains('&'))
             {
-                string[] filters = filter.Split("&");
-                searchResult = (List<ResourceDto>)await _search.SearchByFilters(filters);
+                string[] filters = queryString.Split("&");
+                searchResult = (List<ResourceDto>)await _search.QueryRepoFilteredAsync(filters);
+                if (searchResult.IsNullOrEmpty())
+                {
+                    return new NotFoundResult();
+                }
+                return searchResult;
+            }
+            if (queryString.Contains(' '))
+            {
+                string[] filters = queryString.Split(" ");
+
+                searchResult = (List<ResourceDto>)await _search.QueryRepoKeywordsAsync(filters);
                 if (searchResult.IsNullOrEmpty())
                 {
                     return new NotFoundResult();
@@ -53,11 +64,14 @@ namespace Trainor.Wasm.Server.Controllers
                 return searchResult;
             }
 
-            searchResult = (List<ResourceDto>)await _search.SearchByFilter(filter);
+            Console.WriteLine("I got here");
+            Console.WriteLine($"With querystring: {queryString}");
+            searchResult = (List<ResourceDto>)await _search.QueryRepoKeywordsAsync(new []{queryString});
             if (searchResult.IsNullOrEmpty())
             {
                 return new NotFoundResult();
             }
+            Console.WriteLine("I got here 2");
             return searchResult;
         }
     }

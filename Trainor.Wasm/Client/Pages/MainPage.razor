@@ -90,12 +90,13 @@
                         <img class="magnifyingGlass" src="images/magnifyingGlass.png" alt="Image is not showing" />
                     </div>
                     <div class="inputText">
-                        <input class="input" type="text">
+                        <input class="input" type="text" value="@_keywords" @oninput="(EventArgs) => SetKeywords(EventArgs.Value.ToString())"/>
                     </div>
                 </div>
                 <div class="buttonDiv">
-                    <input class="searchButton" type="image" src="images/searchButton.png">
+                    <input class = "searchButton" type = "image" src = "images/searchButton.png" @onclick="SearchByKeyword">
                 </div>
+                <p>@_keywords</p>
             </div>
             <div class="allResources">
                 @if (_searchResults == null)
@@ -160,6 +161,8 @@
     public IReadOnlyCollection<ResourceDto> SearchResults;
     private string[] filtersArray;
     public string? Filters { get; set; }
+    public string? Keywords { get; set; }
+    public string _keywords = "";
 
     protected override async Task OnInitializedAsync()
     {
@@ -167,6 +170,7 @@
 
         try
         {
+            _keywords = "";
             _filters = new List<string>();
             _filterBools = new bool[10];
             _searchResults = await Http.GetFromJsonAsync<IReadOnlyCollection<ResourceDto>>("Search");
@@ -190,6 +194,7 @@
         {
             _filters.Remove(filter);
         }
+        _keywords = "";
         filtersArray = _filters.ToArray();
         Filters = filtersArray.ToFilterQueryString();
         _searchResults = await Http.GetFromJsonAsync<List<ResourceDto>>($"Search/{Filters}");
@@ -213,6 +218,23 @@
         NavigationManager.NavigateTo("authentication/logout");
     }
 
+    private async Task SetKeywords(string value)
+    {
+        _keywords = value;
+        _searchResults = await Http.GetFromJsonAsync<List<ResourceDto>>($"Search/{_keywords}");
+    }
+
+    private async Task SearchByKeyword()
+    {
+        _keywords = "";
+        _filters = new List<string>();
+        _filterBools = new bool[10];
+        _searchResults = await Http.GetFromJsonAsync<List<ResourceDto>>($"Search/{_keywords}");
+        RefreshResources(_searchResults);
+    }
+
+
+
     private void changeImage() {
     
 
@@ -223,3 +245,4 @@
         }
     }
 }
+
