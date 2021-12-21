@@ -116,17 +116,6 @@
                                     <p>Resource description</p> *@
                             </tr>
                         }
-                        @foreach (var s in filtersArray)
-                        {
-                            <tr>
-                                <td>@s</td>
-                                 @* <h2>Resource name</h2>
-                                    <p>Resource description</p> *@
-                            </tr>
-                        }
-                            <tr>
-                                <td>@Filters</td>
-                            </tr>
                         </tbody>
                     </table>
                 }
@@ -162,7 +151,7 @@
 
 @code {
     private IReadOnlyCollection<ResourceDto> _searchResults;
-    private string[] filtersArray;
+    private string[] _filtersArray;
     public string? Filters { get; set; }
     private async void AddFilter(string filter)
     {
@@ -175,8 +164,8 @@
         {
             _filters.Remove(filter);
         }
-        filtersArray = _filters.ToArray();
-        Filters = filtersArray.ToFilterQueryString();
+        _filtersArray = _filters.ToArray();
+        Filters = _filtersArray.ToFilterQueryString();
         _searchResults = await Http.GetFromJsonAsync<List<ResourceDto>>($"Search/filtered?{Filters}");
     }
 }
