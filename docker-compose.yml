@@ -46,6 +46,7 @@ services:
 networks:
   trainor-network:
     driver: overlay
+    attachable: true
 
 secrets:
   connection_string:
