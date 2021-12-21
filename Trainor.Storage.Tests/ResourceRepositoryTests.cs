@@ -1,10 +1,10 @@
-using Xunit;
-using Trainor.Storage;
-using Trainor.Storage.Entities;
-using System.Threading.Tasks;
 using System;
+using System.Threading.Tasks;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using Trainor.Storage;
+using Trainor.Storage.Entities;
+using Xunit;
 
 namespace Trainor.Storage.Tests
 {
@@ -25,10 +25,6 @@ namespace Trainor.Storage.Tests
             dataContext.Authors.AddRange(
                 new Author { Id = 12, GivenName = "John", LastName = "Doe" },
                 new Author { Id = 15, GivenName = "Jane", LastName = "Doe" });
-            dataContext.SubjectTags.AddRange(
-                new SubjectTag { Id = 1, Title = "C#" },
-                new SubjectTag { Id = 2, Title = "HTML" },
-                new SubjectTag { Id = 3, Title = "CSS" });
             dataContext.SaveChanges();
 
             _context = dataContext;
@@ -36,25 +32,25 @@ namespace Trainor.Storage.Tests
         }
 
         [Fact]
-        public async Task CreateAsync_creates_new_resource_with_createResourceDto_returns_created() {}
+        public async Task CreateAsync_creates_new_resource_with_createResourceDto_returns_created() { }
 
         [Fact]
-        public async Task ReadAsync_reads_resource_with_existing_id_returns_ok() {}
+        public async Task ReadAsync_reads_resource_with_existing_id_returns_ok() { }
 
         [Fact]
-        public async Task ReadAsync_reads_resource_with_non_existing_id_returns_notFound() {}
+        public async Task ReadAsync_reads_resource_with_non_existing_id_returns_notFound() { }
 
         [Fact]
-        public async Task UpdateAsync_updates_resource_with_existing_id_returns_true() {}
+        public async Task UpdateAsync_updates_resource_with_existing_id_returns_true() { }
 
         [Fact]
-        public async Task UpdateAsync_updates_resource_with_non_existing_id_returns_notFound() {}
+        public async Task UpdateAsync_updates_resource_with_non_existing_id_returns_notFound() { }
 
         [Fact]
-        public async Task DeleteAsync_given_an_existing_resource_returns_Deleted() {}
+        public async Task DeleteAsync_given_an_existing_resource_returns_Deleted() { }
 
         [Fact]
-        public async Task DeleteAsync_given_non_existing_resource_returns_notFound() {}
+        public async Task DeleteAsync_given_non_existing_resource_returns_notFound() { }
 
         // DO NOT EDIT THIS. Code from Rasmus  
         private bool disposed;

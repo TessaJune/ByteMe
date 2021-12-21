@@ -13,4 +13,20 @@ namespace Trainor.Storage.Entities
         ARTICLE,
         PDF
     }
+
+    public enum SubjectTag
+    {
+        JAVA,
+        GOLANG,
+        CSHARP,
+        SQL,
+        HTML,
+        CSS,
+        DISTRIBUTED_SYSTEMS,
+        DATABASE_MANAGEMENT,
+        TESTING,
+        DOTNET,
+        GIT,
+        UML
+    }
 }

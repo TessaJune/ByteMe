@@ -7,14 +7,9 @@ using Trainor.Storage.Entities;
 
 namespace Trainor.App
 {
-    public class Search : ISearch
-    {
-        private IResourceRepository _repo;
-        
-        public Search(IResourceRepository repo)
-        {
-            _repo = repo;
-        }
+     public class Search : ISearch
+     {
+         private IResourceRepository _repo;
 
         public async Task<IReadOnlyCollection<ResourceDto>> SearchAllAsync()
         {

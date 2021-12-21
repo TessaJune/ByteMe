@@ -16,6 +16,7 @@
 
 <!DOCTYPE html>
 <html>
+
 <body>
     <div class="container">
         <div class="filterDiv">
@@ -29,6 +30,7 @@
                 <div id="filters">
                     <p id="fTitle">TypeTag</p>
                     <div class="filterCheckBox">
+
 
                         <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("Video"); })" @bind="@_filterBools[0]" value="Filter">
                         <label for="filterOne">Video</label><br><br> 
@@ -73,19 +75,19 @@
 
             </div>
             <div class="signOutDiv">
-                <input class ="imageSignOut" type = "image" src="images/signOutWhite.png" @onclick="BeginLogout"/>
-                <div class ="imageSignOutText">
-                    <button class ="imageSignOutButton" type="button">Sign out</button>                                
+                <input class="imageSignOut" type="image" src="images/signOutWhite.png" @onclick="BeginLogout" />
+                <div class="imageSignOutText">
+                    <button class="imageSignOutButton" type="button">Sign out</button>
                 </div>
             </div>
             <button class="resetButton" @onclick="@(() => RefreshResources(_searchResults))">Filtered search</button>
         </div>
-        
+
         <div class="resourceDiv">
             <div class="searchbarDiv">
-                <div class="inputField"> 
+                <div class="inputField">
                     <div class="magnifyingGlassDiv">
-                        <img class ="magnifyingGlass" src="images/magnifyingGlass.png" alt="Image is not showing"/>
+                        <img class="magnifyingGlass" src="images/magnifyingGlass.png" alt="Image is not showing" />
                     </div>
                     <div class="inputText">
                         <input class="input" type="text" value="@_keywords" @oninput="(EventArgs) => SetKeywords(EventArgs.Value.ToString())"/>
@@ -97,7 +99,7 @@
                 <p>@_keywords</p>
             </div>
             <div class="allResources">
-                @if (_searchResults== null)
+                @if (_searchResults == null)
                 {
                     <p><em>Loading...</em></p>
                 }
@@ -146,10 +148,11 @@
         <div class="placeholderDiv"></div>
     </div>
 </body>
+
 </html>
 
 
-@code 
+@code
 {
     string imagePath;
     private List<string> _filters;
@@ -196,7 +199,7 @@
         Filters = filtersArray.ToFilterQueryString();
         _searchResults = await Http.GetFromJsonAsync<List<ResourceDto>>($"Search/{Filters}");
     }
-    
+
     public void NavigateToLoginPage()
     {
         NavigationManager.NavigateTo("/");
@@ -207,6 +210,7 @@
         SearchResults = null;
         SearchResults = resources;
     }
+
 
     private async Task BeginLogout(MouseEventArgs args)
     {
@@ -241,3 +245,4 @@
         }
     }
 }
+
