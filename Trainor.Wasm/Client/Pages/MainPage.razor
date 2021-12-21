@@ -79,13 +79,13 @@
                             @bind="@_filterBools[9]" value="Filter">
                         <label for="filterOne">CSS</label><br><br>
                     </div>
-                    <div class="resetButtonDiv">
-                        <button class="resetButton" @onclick="@(() => RefreshResources(_searchResults))">Filtered
+                    <div class="filterButtonDiv">
+                        <button class="filterButton" @onclick="@(() => RefreshResources(_searchResults))">Filtered
                             search</button>
                     </div>
-                    <div class="resetButtonDiv">
+                    @* <div class="resetButtonDiv">
                         <button class="resetButton" @onclick="OnInitializedAsync">Reset search</button>
-                    </div>
+                    </div> *@
                 </div>
 
             </div>
@@ -111,6 +111,9 @@
                     <input class="searchButton" type="image" src="images/searchButton.png">
                 </div>
             </div>
+            <div class="resetButtonDiv">
+                <button class="resetButton" @onclick="OnInitializedAsync">Reset search</button>
+            </div>
             <div class="allResources">
                 @if (_searchResults == null)
                 {
@@ -131,13 +134,17 @@
                             @foreach (var resource in SearchResults)
                             {
                                 int i = 0;
-                                <div class="resourcerContainer">
+                                <div class="resourceContainer">
                                     <div class="tableDiv">
                                         <div class="tableHeader">
+                                            @if (resource.name == null)
+                                            {
+                                                <h1><em>Missing title</em></h1>        
+                                            }
                                             <h1>@resource.name</h1>
                                         </div>
                                         <div class="arrowDown">
-                                            <input class="imageArrow" alt="picture is not showing" type="image" src=@imagePath @onclick="@(() =>changeImage())" />
+                                            <input class="imageArrow" alt="picture is not showing" type="image" src=@imagePath @onclick="changeImage"/>
 
                                             @* <input class ="imageArrow" alt = "picture is not showing" type = "image"
                                                 src=@imagePath @onclick="@(() => { changeImage(resource); })"/> *@
@@ -257,18 +264,13 @@
         NavigationManager.NavigateTo("authentication/logout");
     }
 
-    public void changeImage(
-    @*ResourceDto resource*@
-    )
+    public void changeImage()
     {
         @* if (!ResourceDtos.Contains(resource))
             {
             ResourceDtos.Add(resource);
-            } else {
-            ResourceDtos.Remove(resource);
             } *@
-
-
+        
 
         if (imagePath == "images/sideArrow.png")
         {
