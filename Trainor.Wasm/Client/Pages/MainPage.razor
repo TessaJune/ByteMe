@@ -16,7 +16,7 @@
     <div class="container">
         <div class="filterDiv">
             <div class="filterCheckBoxesDiv">
-            <button class="resetButton" @onclick="OnInitializedAsync">Reset search</button>
+                <button class="resetButton" @onclick="OnInitializedAsync">Reset search</button>
                 <div class="filterTitle">
                     <p class="title">Filter through resources</p>
                 </div>
@@ -26,16 +26,16 @@
                     <p id="fTitle">TypeTag</p>
                     <div class="filterCheckBox">
 
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("Video"))" @bind="@_filterBools[0]" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("Video"); })" @bind="@_filterBools[0]" value="Filter">
                         <label for="filterOne">Video</label><br><br> 
                       
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("Document"))" @bind="@_filterBools[1]" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("Document"); })" @bind="@_filterBools[1]" value="Filter">
                         <label for="filterOne">Document</label><br><br> 
 
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("Article"))" @bind="@_filterBools[2]" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("Article"); })" @bind="@_filterBools[2]" value="Filter">
                         <label for="filterOne">Article</label><br><br>
 
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("PDF"))" @bind="@_filterBools[3]" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("PDF"); })" @bind="@_filterBools[3]" value="Filter">
                         <label for="filterOne">PDF</label><br>
                     </div>
                 </div>
@@ -45,24 +45,24 @@
                     <div class="filterCheckBox">
                         @* Filter 2.1 *@
 
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("C#"))" @bind="@_filterBools[4]" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("C#"); })" @bind="@_filterBools[4]" value="Filter">
                         <label for="filterOne"> C#</label><br><br>
 
                         @* Filter 2.2 *@
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("Java"))" @bind="@_filterBools[5]" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("Java"); })" @bind="@_filterBools[5]" value="Filter">
                         <label for="filterOne">Java</label><br><br>
 
                         @* Filter 2.3 *@
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("GoLang"))" @bind="@_filterBools[6]" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("GoLang"); })" @bind="@_filterBools[6]" value="Filter">
                         <label for="filterOne">GoLang</label><br><br>
 
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("SQL"))" @bind="@_filterBools[7]" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("SQL"); })" @bind="@_filterBools[7]" value="Filter">
                         <label for="filterOne">SQL</label><br><br>
 
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("HTML"))" @bind="@_filterBools[8]" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("HTML"); })" @bind="@_filterBools[8]" value="Filter">
                         <label for="filterOne">HTML</label><br><br>
 
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => AddFilter("CSS"))" @bind="@_filterBools[9]" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("CSS"); })" @bind="@_filterBools[9]" value="Filter">
                         <label for="filterOne">CSS</label><br><br>
                     </div>
                 </div>
@@ -74,6 +74,7 @@
                     <p>Sign out</p>
                 </div>
             </div>
+            <button class="resetButton" @onclick="@(() => RefreshResources(_searchResults))">Filtered search</button>
         </div>
         
         <div class="resourceDiv">
@@ -107,7 +108,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        @foreach (var resource in _searchResults)
+                        @foreach (var resource in SearchResults)
                         {
                             <tr>
                                 <td>@resource.id</td>
@@ -116,17 +117,6 @@
                                     <p>Resource description</p> *@
                             </tr>
                         }
-                        @foreach (var s in filtersArray)
-                        {
-                            <tr>
-                                <td>@s</td>
-                                 @* <h2>Resource name</h2>
-                                    <p>Resource description</p> *@
-                            </tr>
-                        }
-                            <tr>
-                                <td>@Filters</td>
-                            </tr>
                         </tbody>
                     </table>
                 }
@@ -142,6 +132,10 @@
 {
     private List<string> _filters;
     private bool[] _filterBools;
+    private IReadOnlyCollection<ResourceDto> _searchResults;
+    public IReadOnlyCollection<ResourceDto> SearchResults;
+    private string[] filtersArray;
+    public string? Filters { get; set; }
     
     protected override async Task OnInitializedAsync()
 
@@ -151,6 +145,7 @@
             _filters = new List<string>();
             _filterBools = new bool[10];
             _searchResults = await Http.GetFromJsonAsync<IReadOnlyCollection<ResourceDto>>("Search");
+            RefreshResources(_searchResults);
             AddFilter("");
         }
         catch (AccessTokenNotAvailableException exception)
@@ -158,12 +153,7 @@
             exception.Redirect();
         }
     }
-}
 
-@code {
-    private IReadOnlyCollection<ResourceDto> _searchResults;
-    private string[] filtersArray;
-    public string? Filters { get; set; }
     private async void AddFilter(string filter)
     {
         
@@ -177,16 +167,20 @@
         }
         filtersArray = _filters.ToArray();
         Filters = filtersArray.ToFilterQueryString();
-        _searchResults = await Http.GetFromJsonAsync<List<ResourceDto>>($"Search/filtered?{Filters}");
+        _searchResults = await Http.GetFromJsonAsync<List<ResourceDto>>($"Search/{Filters}");
     }
-}
-
-@code {    
-    @* Making it possible to navigate to loginPage *@
+    
     public void NavigateToLoginPage()
     {
         NavigationManager.NavigateTo("/");
     }
+    
+    public void RefreshResources(IReadOnlyCollection<ResourceDto> resources)
+    {
+        SearchResults = null;
+        SearchResults = resources;
+    }
 }
+
 
 

@@ -8,12 +8,12 @@ namespace Trainor.App
     {
         public Task<IReadOnlyCollection<ResourceDto>> SearchAll()
         {
-            return SeedSearch("all");
+            return SeedSearch();
         }
 
         public Task<IReadOnlyCollection<ResourceDto>> SearchByFilter(string filter)
         {
-            return SeedSearch("filter");
+            return SeedSearch(filter);
         }
 
         public Task<IReadOnlyCollection<ResourceDto>> SearchByFilters(IEnumerable<string> filters)
@@ -23,42 +23,30 @@ namespace Trainor.App
 
         public Task<IReadOnlyCollection<ResourceDto>> SearchByYear(int year)
         {
-            return SeedSearch("");
+            return SeedSearch();
         }
 
-        private async Task<IReadOnlyCollection<ResourceDto>> SeedSearch(string searchType)
+        private async Task<IReadOnlyCollection<ResourceDto>> SeedSearch()
         {
             List<ResourceDto> returnList = new List<ResourceDto>();
-            if (searchType == "all")
-            {
-                returnList.Add(new ResourceDto(0, null, "www.www.com", null, null, null, null));
-                returnList.Add(new ResourceDto(1, null, "www.www.com", null, null, null, null));
-                returnList.Add(new ResourceDto(2, null, "www.www.com", null, null, null, null));
-                returnList.Add(new ResourceDto(3, null, "www.www.com", null, null, null, null));
-                returnList.Add(new ResourceDto(4, null, "www.www.com", null, null, null, null));
-                returnList.Add(new ResourceDto(5, null, "www.www.com", null, null, null, null));
-            } 
-            else if (searchType == "filter")
-            {
-                returnList.Add(new ResourceDto(0, null, "www.www.filter", null, null, null, null));
-                returnList.Add(new ResourceDto(1, null, "www.www.filter", null, null, null, null));
-                returnList.Add(new ResourceDto(2, null, "www.www.filter", null, null, null, null));
-                returnList.Add(new ResourceDto(3, null, "www.www.filter", null, null, null, null));
-                returnList.Add(new ResourceDto(4, null, "www.www.filter", null, null, null, null));
-                returnList.Add(new ResourceDto(5, null, "www.www.filter", null, null, null, null));
-            }
-            else if (searchType == "filters")
-            {
-                returnList.Add(new ResourceDto(0, null, "www.www.filters", null, null, null, null));
-                returnList.Add(new ResourceDto(1, null, "www.www.filters", null, null, null, null));
-                returnList.Add(new ResourceDto(2, null, "www.www.filters", null, null, null, null));
-                returnList.Add(new ResourceDto(3, null, "www.www.filters", null, null, null, null));
-                returnList.Add(new ResourceDto(4, null, "www.www.filters", null, null, null, null));
-                returnList.Add(new ResourceDto(5, null, "www.www.filters", null, null, null, null));
-            }
+            returnList.Add(new ResourceDto(0, null, "www.www.com", null, null, null, null));
+            returnList.Add(new ResourceDto(1, null, "www.www.com", null, null, null, null));
+            returnList.Add(new ResourceDto(2, null, "www.www.com", null, null, null, null));
+            returnList.Add(new ResourceDto(3, null, "www.www.com", null, null, null, null));
+            returnList.Add(new ResourceDto(4, null, "www.www.com", null, null, null, null));
+            returnList.Add(new ResourceDto(5, null, "www.www.com", null, null, null, null));
             return returnList;
         }
 
+        private async Task<IReadOnlyCollection<ResourceDto>> SeedSearch(string filter)
+        {
+            List<ResourceDto> returnList = new List<ResourceDto>();
+            returnList.Add(new ResourceDto(0, null, "www.www.filters", null, null, null, null));
+            returnList.Add(new ResourceDto(returnList.Count, null, "www.www." + filter, null, null, null, null));
+            returnList.Add(new ResourceDto(returnList.Count, null, "www.www.filters", null, null, null, null));
+            return returnList;
+        }
+        
         private async Task<IReadOnlyCollection<ResourceDto>> SeedSearch(IEnumerable<string> filters)
         {
             List<ResourceDto> returnList = new List<ResourceDto>();
