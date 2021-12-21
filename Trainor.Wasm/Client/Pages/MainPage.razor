@@ -124,6 +124,11 @@
                                     </div>
                                 </div>
 
+                                @* Should have some kind of show / hide *@
+                                @if(ExtendDiv == true) {
+                                <div class="linkDiv">
+                                    <p>Link: @resource.link </p>
+                                </div>
                                 <div class="resourceDescription">
                                     <div id="Resource">
                                         <p>Author(s): @resource.id</p>
@@ -135,6 +140,19 @@
                                         <p>Type: @resource.id</p>
                                     </div>
                                 </div>
+                                } else {
+                                    <div class="resourceDescription">
+                                        <div id="Resource">
+                                            <p>Author(s): @resource.id</p>
+                                        </div>
+                                        <div id="Resource">
+                                            <p>Subject(s): @resource.id</p>
+                                        </div>
+                                        <div id="Resource">
+                                            <p>Type: @resource.id</p>
+                                        </div>
+                                    </div>
+                                }
                             </div>
                         }
                         </tbody>
@@ -151,6 +169,8 @@
 @code 
 {
     string imagePath;
+
+    private bool ExtendDiv;
     private List<string> _filters;
     private bool[] _filterBools;
     private IReadOnlyCollection<ResourceDto> _searchResults;
@@ -209,14 +229,22 @@
         NavigationManager.NavigateTo("authentication/logout");
     }
 
-    private void changeImage() {
-    
-
-        if (imagePath == "images/sideArrow.png") {
+    private void changeImage(object div) 
+    {
+        if (imagePath == "images/sideArrow.png") 
+        {
             imagePath = "images/downArrow.png";
         } else {
             imagePath = "images/sideArrow.png";
         }
+
+        if (ExtendDiv == false)
+        {
+            ExtendDiv = true;
+        } else {
+            ExtendDiv = false;
+        }
+
     }
 }
 
