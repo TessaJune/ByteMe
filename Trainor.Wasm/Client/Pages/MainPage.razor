@@ -1,8 +1,8 @@
 @using Trainor.Storage
 @using Trainor.Storage.Entities
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
-
 @page "/mainpage"
 
 <style>
@@ -124,13 +124,19 @@
 </body>
 </html>
 
-
 @code 
 {
     protected override async Task OnInitializedAsync()
 
     {
-        _searchResults = await Http.GetFromJsonAsync<IReadOnlyCollection<ResourceDto>>("Search");
+        try
+        {
+            _searchResults = await Http.GetFromJsonAsync<IReadOnlyCollection<ResourceDto>>("Search");
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
     }
 }
 
