@@ -15,6 +15,6 @@ namespace Trainor.Storage.Entities
         [StringLength(50)]
         public string LastName { get; set; }
 
-        public IEnumerable<Resource>? Resources { get; set; } = new List<Resource>();
+        public ICollection<Resource>? Resources { get; set; } = new HashSet<Resource>();
     }
 }

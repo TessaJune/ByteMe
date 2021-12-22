@@ -38,11 +38,10 @@ namespace Trainor.Wasm.Server
             {
                 options.UseNpgsql(Configuration.GetConnectionString("Trainor"));
             });
-            services.AddScoped<ISearch, TestSearch>();
+            services.AddScoped<ISearch, Search>();
             services.AddScoped<IDataContext, DataContext>();
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IAuthorRepository, AuthorRepository>();
-            services.AddScoped<ISubjectTagRepository, SubjectTagRepository>();
             services.AddScoped<IResourceRepository, ResourceRepository>();
             services.AddHttpsRedirection(options =>
             {

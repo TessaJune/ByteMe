@@ -45,35 +45,32 @@ namespace Trainor.Storage
             throw new NotImplementedException();
         }
 
-        public async Task<(CrudStatus, IReadOnlyCollection<ResourceDto>)> ReadAsync()
+        public async Task<(CrudStatus, IReadOnlyCollection<ResourceDto>?)> ReadAsync()
         {
-            /*var entities = (await _context.Resources
-                                          .Select(r => new ResourceDto(r.Name, r.Authors))
+            var entities = (await _context.Resources
+                                          .Select(r => new ResourceDto(r.Id, r.Name, r.Link, r.Authors.AsDto(), r.Subject, r.Type, r.Date))
                                           .ToListAsync())
                                           .AsReadOnly();
 
-            if (entities == null)
+            if (entities == null || entities.Count == 0)
                 return (NotFound, null);
 
-            return (Ok, entities);*/
-            throw new NotImplementedException();
+            return (Ok, entities);
         }
 
-        public async Task<(CrudStatus, ResourceDto)> ReadAsync(int resourceId)
+        public async Task<(CrudStatus, ResourceDto?)> ReadAsync(int resourceId)
         {
-            /*
             var entity = await _context.Resources
                                        .Where(r => r.Id == resourceId)
-                                       .Select(r => new ResourceDto(r.Id, r.Name, r.Link, r.Authors, r.Subjects, r.Type, r.Date))
+                                       .Select(r => new ResourceDto(r.Id, r.Name, r.Link, r.Authors.AsDto(), r.Subject, r.Type, r.Date))
                                        .FirstOrDefaultAsync();
 
             if (entity == null)
                 return (NotFound, null);
 
-            return (Ok, entity);*/
-            throw new NotImplementedException();
+            return (Ok, entity);
         }
-        
+
         public async Task<CrudStatus> UpdateAsync(ResourceUpdateDto resource)
         {
             /*var entity = await _context.Resources
@@ -97,90 +94,101 @@ namespace Trainor.Storage
 
         public async Task<CrudStatus> DeleteAsync(int resourceId)
         {
-           /* var entity = await _context.Resources
-                                       .FindAsync(resourceId);
-            if (entity == null)
-                return NotFound;
+            /* var entity = await _context.Resources
+                                        .FindAsync(resourceId);
+             if (entity == null)
+                 return NotFound;
 
-            _context.Resources.Remove(entity);
-            await _context.SaveChangesAsync();
+             _context.Resources.Remove(entity);
+             await _context.SaveChangesAsync();
 
-            return Deleted;*/
+             return Deleted;*/
             throw new NotImplementedException();
         }
 
-        public async Task<(CrudStatus, IReadOnlyCollection<ResourceDto>)> ReadFromKeyword(string keyword)
+        //Unsure if we can use anyResourceAttributeContainsAnyKeyword without asking db for all data
+        public async Task<(CrudStatus, IReadOnlyCollection<ResourceDto>?)> ReadFromKeywordsAsync(IEnumerable<string> keywords)
         {
-            /*
-            entities = (await _context.Resources
-                                        .Where(r => r.Name.Contains(keyword) || r.Link.Contains(keyword) || r.Authors.Name.Contains(keyword) ||
-                                         r.Type.ToString().Contains(keyword) || r.Subjects.ToString().Contains(keyword))
-                                        .Select(r => new ResourceDto(r.Id, r.Name, r.Link, r.Authors, r.Type, r.Subjects, r.Date))
-                                        .ToListAsync())
-                                        .AsReadOnly();
-            //Changed to DetailsDTO, remmeber to match on all parameters.
-            
-            if (entities == null)
-                return (NotFound, null);
-
-            return (Ok, entities);*/
-            throw new NotImplementedException();
-        }
-
-        private string GetAuthors(IEnumerable<Author> authors)
-        {
-            /*
-            var sb = new StringBuilder();
-            foreach (var author in authors)
+            Func<Resource, bool> anyResourceAttributeContainsAnyKeyword = r =>
             {
-                return author.GivenName;
-            }*/
-            throw new NotImplementedException();
-        }
+                var resourceAttributes = new List<string>();
+                resourceAttributes.AddRange(r.Authors.Select(a => a.GivenName));
+                resourceAttributes.AddRange(r.Authors.Select(a => a.LastName));
+                resourceAttributes.Add(r.Name);
+                resourceAttributes.Add(r.Link);
+                resourceAttributes.Add(r.Type.ToString());
+                resourceAttributes.Add(r.Subject.ToString());
 
-        public async Task<(CrudStatus, IReadOnlyCollection<ResourceDto>)> ReadFromFilters(TypeTag filterTags)
-        {
-            /*
+                foreach (var resource in resourceAttributes)
+                {
+                    foreach (var keyword in keywords)
+                    {
+                        var resourceLowerCase = resource.ToLower();
+                        var keywordLowerCase = keyword.ToLower();
+
+                        if (resourceLowerCase.Contains(keywordLowerCase))
+                        {
+                            return true;
+                        }
+                    }
+                }
+
+                return false;
+            };
+
             var entities = (await _context.Resources
-                                        .Where(r => r.Type == filterTags)
-                                        .Select(r => new ResourceDto(r.Id,r.Name,r.Link, r.Authors, r.Type, r.Subjects, r.Date))
-                                        .ToListAsync())
-                                        .AsReadOnly();
-            if (entities == null)
-                return (NotFound, null);
+                                .ToListAsync())
+                                .Where(anyResourceAttributeContainsAnyKeyword)
+                                .Select(r => new ResourceDto(r.Id, r.Name, r.Link, r.Authors.AsDto(), r.Subject, r.Type, r.Date))
+                                .ToList()
+                                .AsReadOnly();
 
-            return (Ok, entities); */
-            throw new NotImplementedException();
-        }
-
-        public async Task<(CrudStatus, IReadOnlyCollection<ResourceDto?>)> ReadFromFilters(IEnumerable<SubjectTag> filterTags)
-        {
-            /*
-            var entities = (await _context.Resources
-                                        .Where(r => r.Subjects == filterTags)
-                                        .Select(r => new ResourceDto(r.Id,r.Name,r.Link, r.Authors, r.Type, r.Subjects, r.Date))
-                                        .ToListAsync())
-                                        .AsReadOnly();
-            if (entities == null)
-                return (NotFound, null);
-
-            return (Ok, entities);*/
-            throw new NotImplementedException();
-        }
-
-        public async Task<(CrudStatus, IReadOnlyCollection<ResourceDto?>)> ReadFromFilters(TypeTag typeFilter, IEnumerable<SubjectTag> subjectFilter)
-        {
-            /*var entities = (await _context.Resources
-                                        .Where(r => r.Type == typeFilter && r.Subjects == subjectFilter)
-                                        .Select(r => new ResourceDto(r.Id,r.Name,r.Link, r.Authors, r.Type, r.Subjects, r.Date))
-                                        .ToListAsync())
-                                        .AsReadOnly();
-            if (entities == null)
+            if (entities == null || entities.Count == 0)
                 return (NotFound, null);
 
             return (Ok, entities);
-            //No search methods are fully implemented yet.*/
-            throw new NotImplementedException();
+        }
+
+        public async Task<(CrudStatus, IReadOnlyCollection<ResourceDto>?)> ReadFromFiltersAsync(IEnumerable<TypeTag> typeTags)
+        {
+            var entities = (await _context.Resources
+                            .Where(r => typeTags.Contains(r.Type))
+                            .Select(r => new ResourceDto(r.Id, r.Name, r.Link, r.Authors.AsDto(), r.Subject, r.Type, r.Date))
+                            .ToListAsync())
+                            .AsReadOnly();
+
+            if (entities == null || entities.Count == 0)
+                return (NotFound, null);
+
+            return (Ok, entities);
+        }
+
+        public async Task<(CrudStatus, IReadOnlyCollection<ResourceDto>?)> ReadFromFiltersAsync(IEnumerable<SubjectTag> subjectTags)
+        {
+            var entities = (await _context.Resources
+                            .Where(r => subjectTags.Contains(r.Subject))
+                            .Select(r => new ResourceDto(r.Id, r.Name, r.Link, r.Authors.AsDto(), r.Subject, r.Type, r.Date))
+                            .ToListAsync())
+                            .AsReadOnly();
+
+            if (entities == null || entities.Count == 0)
+                return (NotFound, null);
+
+            return (Ok, entities);
+        }
+
+        public async Task<(CrudStatus, IReadOnlyCollection<ResourceDto>?)> ReadFromFiltersAsync(IEnumerable<TypeTag> typeTags, IEnumerable<SubjectTag> subjectTags)
+        {
+            var entities = (await _context.Resources
+                            .Where(r => subjectTags.Contains(r.Subject) && typeTags.Contains(r.Type))
+                            .Select(r => new ResourceDto(r.Id, r.Name, r.Link, r.Authors.AsDto(), r.Subject, r.Type, r.Date))
+                            .ToListAsync())
+                            .AsReadOnly();
+
+            if (entities == null || entities.Count == 0)
+                return (NotFound, null);
+
+            return (Ok, entities);
         }
     }
 }

@@ -30,9 +30,8 @@
                     <p id="fTitle">TypeTag</p>
                     <div class="filterCheckBox">
 
-                        <input type="checkbox" id="filterbox" name="filterOne"
-                            @onclick="@(() => { AddFilter("Video"); })" @bind="@_filterBools[0]" value="Filter">
-                        <label for="filterOne">Video</label><br><br>
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("Video"); })" @bind="@_filterBools[0]" value="Filter">
+                        <label for="filterOne">Video</label><br><br> 
 
                         <input type="checkbox" id="filterbox" name="filterOne"
                             @onclick="@(() => { AddFilter("Document"); })" @bind="@_filterBools[1]" value="Filter">
@@ -52,8 +51,9 @@
                     <p id="fTitle">SubjectTag</p>
                     <div class="filterCheckBox">
 
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("C#"); })"
-                            @bind="@_filterBools[4]" value="Filter">
+
+
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("C#"); })" @bind="@_filterBools[4]" value="Filter">
                         <label for="filterOne"> C#</label><br><br>
 
                         <input type="checkbox" id="filterbox" name="filterOne"
@@ -72,8 +72,9 @@
                             @onclick="@(() => { AddFilter("HTML"); })" @bind="@_filterBools[8]" value="Filter">
                         <label for="filterOne">HTML</label><br><br>
 
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("CSS"); })"
-                            @bind="@_filterBools[9]" value="Filter">
+
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("CSS"); })" 
+                              @bind="@_filterBools[9]" value="Filter">
                         <label for="filterOne">CSS</label><br><br>
                     </div>
                     <div class="filterButtonDiv">
@@ -97,11 +98,13 @@
                         <img class="magnifyingGlass" src="images/magnifyingGlass.png" alt="Image is not showing" />
                     </div>
                     <div class="inputText">
-                        <input class="input" type="text">
+                        <input class="input" type="text" value="@_keywords" @oninput="(EventArgs) => SetKeywords(EventArgs.Value.ToString())"/>
                     </div>
                 </div>
                 <div class="buttonDiv">
-                    <input class="searchButton" type="image" src="images/searchButton.png">
+
+                    <input class = "searchButton" type = "image" src = "images/searchButton.png" @onclick="SearchByKeyword">
+
                 </div>
             </div>
             <div class="resetButtonDiv">
@@ -140,7 +143,6 @@
                                             <input class="imageArrow" alt="picture is not showing" type="image" src=@imagePath @onclick="ChangeImage"/>
                                         </div>
                                     </div>
-
                                     @if (ExtendDiv == true)
                                     {
                                         <div class="linkDiv">
@@ -226,16 +228,19 @@
     public IReadOnlyCollection<ResourceDto> SearchResults;
     private string[] filtersArray;
     public string? Filters { get; set; }
+    public string? Keywords { get; set; }
+    public string _keywords = "";
 
     protected override async Task OnInitializedAsync()
     {
         imagePath = "images/sideArrow.png";
-
+        
         try
         {
+            _keywords = "";
             _filters = new List<string>();
             _filterBools = new bool[10];
-            _searchResults = await Http.GetFromJsonAsync<IReadOnlyCollection<ResourceDto>>("Search");
+            _searchResults = await Http.GetFromJsonAsync<IReadOnlyCollection<ResourceDto>>("Search/micro");
             RefreshResources(_searchResults);
             AddFilter("");
         }
@@ -256,6 +261,7 @@
         {
             _filters.Remove(filter);
         }
+        _keywords = "";
         filtersArray = _filters.ToArray();
         Filters = filtersArray.ToFilterQueryString();
         _searchResults = await Http.GetFromJsonAsync<List<ResourceDto>>($"Search/{Filters}");
@@ -279,9 +285,25 @@
         NavigationManager.NavigateTo("authentication/logout");
     }
 
-    public void ChangeImage()
+    private async Task SetKeywords(string value)
     {
-        if (imagePath == "images/sideArrow.png")
+        _keywords = value;
+        _searchResults = await Http.GetFromJsonAsync<List<ResourceDto>>($"Search/{_keywords}");
+    }
+
+    private async Task SearchByKeyword()
+    {
+        _keywords = "";
+        _filters = new List<string>();
+        _filterBools = new bool[10];
+        _searchResults = await Http.GetFromJsonAsync<List<ResourceDto>>($"Search/{_keywords}");
+        RefreshResources(_searchResults);
+    }
+
+    private void changeImage(){
+    
+
+        if (imagePath == "images/sideArrow.png") 
         {
             imagePath = "images/downArrow.png";
         }
@@ -289,7 +311,6 @@
         {
             imagePath = "images/sideArrow.png";
         }
-
         ExtendDivider();
     }
 
@@ -305,7 +326,8 @@
         }
     }
 
-    public void NavigateToLink(string link) {
+    public void NavigateToLink(string link) 
+    {
         NavigationManager.NavigateTo(link);
     }
 }

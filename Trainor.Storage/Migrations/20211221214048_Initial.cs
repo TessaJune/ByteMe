@@ -32,25 +32,13 @@ namespace Trainor.Storage.Migrations
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Name = table.Column<string>(type: "character varying(200)", maxLength: 200, nullable: false),
                     Link = table.Column<string>(type: "text", nullable: false),
+                    Subject = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: false),
                     Type = table.Column<int>(type: "integer", nullable: false),
                     Date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Resources", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "SubjectTags",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Title = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_SubjectTags", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -92,48 +80,16 @@ namespace Trainor.Storage.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "ResourceSubjectTag",
-                columns: table => new
-                {
-                    ResourcesId = table.Column<int>(type: "integer", nullable: false),
-                    SubjectsId = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_ResourceSubjectTag", x => new { x.ResourcesId, x.SubjectsId });
-                    table.ForeignKey(
-                        name: "FK_ResourceSubjectTag_Resources_ResourcesId",
-                        column: x => x.ResourcesId,
-                        principalTable: "Resources",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_ResourceSubjectTag_SubjectTags_SubjectsId",
-                        column: x => x.SubjectsId,
-                        principalTable: "SubjectTags",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_AuthorResource_ResourcesId",
                 table: "AuthorResource",
                 column: "ResourcesId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_ResourceSubjectTag_SubjectsId",
-                table: "ResourceSubjectTag",
-                column: "SubjectsId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "AuthorResource");
-
-            migrationBuilder.DropTable(
-                name: "ResourceSubjectTag");
 
             migrationBuilder.DropTable(
                 name: "Users");
@@ -143,9 +99,6 @@ namespace Trainor.Storage.Migrations
 
             migrationBuilder.DropTable(
                 name: "Resources");
-
-            migrationBuilder.DropTable(
-                name: "SubjectTags");
         }
     }
 }

@@ -7,99 +7,69 @@ using Trainor.Storage.Entities;
 
 namespace Trainor.App
 {
-    public class Search : ISearch
-    {
-        private IResourceRepository _repo;
-        
-        public Search(IResourceRepository repo)
-        {
-            _repo = repo;
-        }
+     public class Search : ISearch
+     {
+         private IResourceRepository _repo;
 
-        public async Task<IReadOnlyCollection<ResourceDto>> SearchAll()
+         public Search(IResourceRepository repo)
+         {
+             _repo = repo;
+         }
+
+         public async Task<IReadOnlyCollection<ResourceDto>> SearchAllAsync()
         {
             var asyncResult = await _repo.ReadAsync();
             return asyncResult.Item2;
         }
 
-        public async Task<IReadOnlyCollection<ResourceDto>> SearchByFilter(string filter)
+        public async Task<IReadOnlyCollection<ResourceDto>> QueryRepoFilteredAsync(IEnumerable<string> filters)
         {
-            var subjectTags = Enum.GetValues(typeof(SubjectTag));
-            var typeTags = Enum.GetValues(typeof(TypeTag));
-            
-            foreach (TypeTag typeTag in typeTags)
-            {
-                if (filter.ToLower().Equals(typeTag.ToString().ToLower()))
-                {
-                    TypeTag searchFilter = typeTag;
-                    var asyncResult = await _repo.ReadFromFilters(searchFilter);
-                    return asyncResult.Item2;
-                }
-            }
-            foreach (SubjectTag subjectTag in subjectTags)
-            {
-                if (filter.ToLower().Equals(subjectTag.ToString().ToLower()))
-                {
-                    SubjectTag[] searchFilter = { subjectTag };
-                    var asyncResult = await _repo.ReadFromFilters(searchFilter);
-                    return asyncResult.Item2;
-                }
-            }
-            var keywordAsyncResult = await _repo.ReadFromKeyword(filter);
-            return keywordAsyncResult.Item2;
-        }
+            SubjectTag[] subjectTags = (SubjectTag[])Enum.GetValues(typeof(SubjectTag));
+            TypeTag[] typeTags = (TypeTag[])Enum.GetValues(typeof(TypeTag));
+            var subjectTagsSearchList = new List<SubjectTag>();
+            var typeTagsSearchList = new List<TypeTag>();
 
-        public async Task<IReadOnlyCollection<ResourceDto>> SearchByFilters(IEnumerable<string> filters)
-        {
-            var subjectTags = Enum.GetValues(typeof(SubjectTag));
-            var typeTags = Enum.GetValues(typeof(TypeTag));
-            foreach (var filter in filters) 
+            foreach (var filter in filters)
             {
                 foreach (TypeTag typeTag in typeTags)
                 {
                     if (filter.ToLower().Equals(typeTag.ToString().ToLower()))
                     {
-                        return await SearchByFilters(typeTag, filters);
+                        typeTagsSearchList.Add(typeTag);
+                    }
+                }
+
+                foreach (SubjectTag subjectTag in subjectTags)
+                {
+                    if (filter.ToLower().Equals(subjectTag.ToString().ToLower()))
+                    {
+                        subjectTagsSearchList.Add(subjectTag);
                     }
                 }
             }
 
-            List<SubjectTag> searchFilters = new List<SubjectTag>();
-            foreach (var filter in filters)
+            (CrudStatus, IReadOnlyCollection<ResourceDto>) asyncResult = (CrudStatus.Ok, null);
+
+            if (typeTagsSearchList.Count != 0 && subjectTagsSearchList.Count != 0)
             {
-                foreach (SubjectTag subjectTag in subjectTags)
-                {
-                    if (filter.ToLower().Equals(subjectTag.ToString().ToLower()))
-                    {
-                        searchFilters.Add(subjectTag);
-                    }
-                } 
+                asyncResult = await _repo.ReadFromFiltersAsync(typeTagsSearchList, subjectTagsSearchList);
             }
-            var asyncResult = await _repo.ReadFromFilters(searchFilters);
+            else if (subjectTags.Length != 0)
+            {
+                asyncResult = await _repo.ReadFromFiltersAsync(subjectTagsSearchList);
+            }
+            else if (typeTags.Length != 0)
+            {
+                asyncResult = await _repo.ReadFromFiltersAsync(typeTagsSearchList);
+            }
+            
             return asyncResult.Item2;
         }
         
-        public async Task<IReadOnlyCollection<ResourceDto>> SearchByFilters(TypeTag typeFilter, IEnumerable<string> filters)
-        { 
-            var subjectTags = Enum.GetValues(typeof(SubjectTag));
-            List<SubjectTag> searchFilters = new List<SubjectTag>();
-            foreach (var filter in filters)
-            {
-                foreach (SubjectTag subjectTag in subjectTags)
-                {
-                    if (filter.ToLower().Equals(subjectTag.ToString().ToLower()))
-                    {
-                        searchFilters.Add(subjectTag);
-                    }
-                } 
-            }
-            var asyncResult = await _repo.ReadFromFilters(typeFilter, searchFilters);
-            return asyncResult.Item2;
-        }
-
-        public async Task<IReadOnlyCollection<ResourceDto>> SearchByYear(int year)
+        public async Task<IReadOnlyCollection<ResourceDto>> QueryRepoKeywordsAsync(IEnumerable<string> keywords)
         {
-            throw new NotImplementedException();
+            var asyncResult = await _repo.ReadFromKeywordsAsync(keywords);
+            return asyncResult.Item2;
         }
     }
 }
