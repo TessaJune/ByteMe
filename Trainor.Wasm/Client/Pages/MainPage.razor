@@ -133,11 +133,11 @@
                                 <div class="resourceContainer">
                                     <div class="tableDiv">
                                         <div class="tableHeader">
-                                            @if (resource.name == null)
+                                            @if (resource.Name == null)
                                             {
                                                 <h2><em>Missing title</em></h2>        
                                             }
-                                            <h2>@resource.name</h2>
+                                            <h2>@resource.Name</h2>
                                         </div>
                                         <div class="arrowDown">
                                             <input class="imageArrow" alt="picture is not showing" type="image" src=@imagePath @onclick="ChangeImage"/>
@@ -146,31 +146,31 @@
                                     @if (ExtendDiv == true)
                                     {
                                         <div class="linkDiv">
-                                            <button class="buttonLink" type="button" @onclick="() => NavigateToLink(resource.link)">Link: @resource.link </button>
+                                            <button class="buttonLink" type="button" @onclick="() => NavigateToLink(resource.Link)">Link: @resource.Link </button>
                                         </div>
                                         <div class="resourceDescription">
                                         <div id="Resource">
-                                           @if (resource.authors == null)
+                                           @if (resource.Authors == null)
                                             {
                                                <p>Author(s): No authors</p>
                                             } else {
-                                                <p>Author(s): @resource.authors</p>
+                                                <p>Author(s): @resource.Authors</p>
                                             }
                                         </div>
                                         <div id="Resource">
-                                            @if (resource.subjects == null)
+                                            @if (resource.Subject == null)
                                             {
                                                <p>Subject(s): No subjects</p>
                                             } else {
-                                                <p>Subject(s): @resource.subjects</p>
+                                                <p>Subject(s): @resource.Subject</p>
                                             }
                                         </div>
                                         <div id="Resource">
-                                            @if (resource.types == null)
+                                            @if (resource.Type == null)
                                             {
                                                <p>Types(s): No types</p>
                                             } else {
-                                                <p>Types(s): @resource.types</p>
+                                                <p>Types(s): @resource.Type</p>
                                             }
                                         </div>
                                     </div>
@@ -179,27 +179,27 @@
                                     {
                                         <div class="resourceDescription">
                                             <div id="Resource">
-                                                @if (resource.authors == null)
+                                                @if (resource.Authors == null)
                                                 {
                                                 <p>Author(s): No authors</p>
                                                 } else {
-                                                    <p>Author(s): @resource.authors</p>
+                                                    <p>Author(s): @resource.Authors</p>
                                             }
                                             </div>
                                             <div id="Resource">
-                                                @if (resource.subjects == null)
+                                                @if (resource.Subject == null)
                                                 {   
                                                 <p>Subject(s): No subjects</p>
                                                 } else {
-                                                    <p>Subject(s): @resource.subjects</p>
+                                                    <p>Subject(s): @resource.Subject</p>
                                             }
                                             </div>
                                             <div id="Resource">
-                                            @if (resource.types == null)
+                                            @if (resource.Type == null)
                                             {
                                                <p>Types(s): No types</p>
                                             } else {
-                                                <p>Types(s): @resource.types</p>
+                                                <p>Types(s): @resource.Type</p>
                                             }
                                             </div>
                                         </div>
@@ -300,7 +300,7 @@
         RefreshResources(_searchResults);
     }
 
-    private void changeImage(){
+    private void ChangeImage(){
     
 
         if (imagePath == "images/sideArrow.png") 
