@@ -87,11 +87,6 @@ namespace Trainor.Storage.Tests
                  resource => Assert.True(resource.Id == 2 && resource.Link == "https://martinfowler.com/articles/microservices.html"),
                  resource => Assert.True(resource.Id == 7 && resource.Link == "https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test"),
                  resource => Assert.True(resource.Id == 8 && resource.Link == "https://docs.microsoft.com/en-us/dotnet/devops/github-actions-overview")
-
-            Assert.True(resources.Item1 == CrudStatus.Ok, "status not ok");
-            Assert.True(resources.Item2.Count == 1, "count not 1");
-            Assert.Collection(resources.Item2,
-                 resource => Assert.True(resource.Id == 2 && resource.Link == "https://martinfowler.com/articles/microservices.html")
             );
         }
 

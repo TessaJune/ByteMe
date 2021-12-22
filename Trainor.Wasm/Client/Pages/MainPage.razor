@@ -26,22 +26,26 @@
                     <p class="title">Filter through resources</p>
                 </div>
 
-                
+
                 <div id="filters">
                     <p id="fTitle">TypeTag</p>
                     <div class="filterCheckBox">
 
 
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("Video"); })" @bind="@_filterBools[0]" value="Filter">
-                        <label for="filterOne">Video</label><br><br> 
-                      
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("Document"); })" @bind="@_filterBools[1]" value="Filter">
-                        <label for="filterOne">Document</label><br><br> 
+                        <input type="checkbox" id="filterbox" name="filterOne"
+                            @onclick="@(() => { AddFilter("Video"); })" @bind="@_filterBools[0]" value="Filter">
+                        <label for="filterOne">Video</label><br><br>
 
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("Article"); })" @bind="@_filterBools[2]" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne"
+                            @onclick="@(() => { AddFilter("Document"); })" @bind="@_filterBools[1]" value="Filter">
+                        <label for="filterOne">Document</label><br><br>
+
+                        <input type="checkbox" id="filterbox" name="filterOne"
+                            @onclick="@(() => { AddFilter("Article"); })" @bind="@_filterBools[2]" value="Filter">
                         <label for="filterOne">Article</label><br><br>
 
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("PDF"); })" @bind="@_filterBools[3]" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("PDF"); })"
+                            @bind="@_filterBools[3]" value="Filter">
                         <label for="filterOne">PDF</label><br>
                     </div>
                 </div>
@@ -52,24 +56,30 @@
                         @* Filter 2.1 *@
 
 
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("C#"); })" @bind="@_filterBools[4]" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("C#"); })"
+                            @bind="@_filterBools[4]" value="Filter">
                         <label for="filterOne"> C#</label><br><br>
 
                         @* Filter 2.2 *@
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("Java"); })" @bind="@_filterBools[5]" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne"
+                            @onclick="@(() => { AddFilter("Java"); })" @bind="@_filterBools[5]" value="Filter">
                         <label for="filterOne">Java</label><br><br>
 
                         @* Filter 2.3 *@
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("GoLang"); })" @bind="@_filterBools[6]" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne"
+                            @onclick="@(() => { AddFilter("GoLang"); })" @bind="@_filterBools[6]" value="Filter">
                         <label for="filterOne">GoLang</label><br><br>
 
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("SQL"); })" @bind="@_filterBools[7]" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("SQL"); })"
+                            @bind="@_filterBools[7]" value="Filter">
                         <label for="filterOne">SQL</label><br><br>
 
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("HTML"); })" @bind="@_filterBools[8]" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne"
+                            @onclick="@(() => { AddFilter("HTML"); })" @bind="@_filterBools[8]" value="Filter">
                         <label for="filterOne">HTML</label><br><br>
 
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("CSS"); })" @bind="@_filterBools[9]" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("CSS"); })"
+                            @bind="@_filterBools[9]" value="Filter">
 
                         <label for="filterOne">CSS</label><br><br>
                     </div>
@@ -92,18 +102,19 @@
                         <img class="magnifyingGlass" src="images/magnifyingGlass.png" alt="Image is not showing" />
                     </div>
                     <div class="inputText">
-                        <input class="input" type="text" value="@_keywords" @oninput="(EventArgs) => SetKeywords(EventArgs.Value.ToString())"/>
+                        <input class="input" type="text" value="@_keywords"
+                            @oninput="(EventArgs) => SetKeywords(EventArgs.Value.ToString())" />
                     </div>
                 </div>
                 <div class="buttonDiv">
 
-                    <input class = "searchButton" type = "image" src = "images/searchButton.png" @onclick="SearchByKeyword">
+                    <input class="searchButton" type="image" src="images/searchButton.png" @onclick="SearchByKeyword">
 
                 </div>
                 <p>@_keywords</p>
             </div>
             <div class="allResources">
-                @if (_searchResults == null)
+                @if (resources == null)
                 {
                     <p><em>Loading...</em></p>
                 }
@@ -111,39 +122,40 @@
                 {
                     <table class="table">
                         <thead>
-                        <tr>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                        </tr>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
                         </thead>
                         <tbody>
-                        @foreach (var resource in SearchResults)
-                        {
-                            <div class="resourcerContainer">
-                                <div class="tableDiv">
-                                    <div class="tableHeader">
-                                        <h1>@resource.Name</h1>
+                            @foreach (var resource in resources)
+                            {
+                                <div class="resourcerContainer">
+                                    <div class="tableDiv">
+                                        <div class="tableHeader">
+                                            <h1>@resource.Name</h1>
+                                        </div>
+                                        <div class="arrowDown">
+                                            <input class="imageArrow" alt="picture is not showing" type="image" src=@imagePath
+                                        @onclick="changeImage" />
+                                        </div>
                                     </div>
-                                    <div class="arrowDown">
-                                        <input class ="imageArrow" alt = "picture is not showing" type = "image" src=@imagePath @onclick="changeImage"/>
-                                    </div>
-                                </div>
 
-                                <div class="resourceDescription">
-                                    <div id="Resource">
-                                        <p>Author(s): @resource.Id</p>
-                                    </div>
-                                    <div id="Resource">
-                                        <p>Subject(s): @resource.Id</p>
-                                    </div>
-                                    <div id="Resource">
-                                        <p>Type: @resource.Id</p>
+                                    <div class="resourceDescription">
+                                        <div id="Resource">
+                                            <p>Author(s): @resource.Id</p>
+                                        </div>
+                                        <div id="Resource">
+                                            <p>Subject(s): @resource.Id</p>
+                                        </div>
+                                        <div id="Resource">
+                                            <p>Type: @resource.Id</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        }
+                            }
                         </tbody>
                     </table>
                 }
@@ -158,95 +170,40 @@
 
 @code
 {
-    string imagePath;
-    private List<string> _filters;
-    private bool[] _filterBools;
-    private IReadOnlyCollection<ResourceDto> _searchResults;
-    public IReadOnlyCollection<ResourceDto> SearchResults;
-    private string[] filtersArray;
-    public string? Filters { get; set; }
-    public string? Keywords { get; set; }
-    public string _keywords = "";
-
-    protected override async Task OnInitializedAsync()
-    {
-        imagePath = "images/sideArrow.png";
-        
-        try
-        {
-            _keywords = "";
-            _filters = new List<string>();
-            _filterBools = new bool[10];
-            _searchResults = await Http.GetFromJsonAsync<IReadOnlyCollection<ResourceDto>>("Search/micro");
-            RefreshResources(_searchResults);
-            AddFilter("");
-        }
-        catch (AccessTokenNotAvailableException exception)
-        {
-            exception.Redirect();
-        }
-    }
-
-    private async void AddFilter(string filter)
-    {
-        
-        if (!_filters.Contains(filter))
-        {
-            _filters.Add(filter);
-        }
-        else
-        {
-            _filters.Remove(filter);
-        }
-        _keywords = "";
-        filtersArray = _filters.ToArray();
-        Filters = filtersArray.ToFilterQueryString();
-        _searchResults = await Http.GetFromJsonAsync<List<ResourceDto>>($"Search/{Filters}");
-    }
-
-
-    public void NavigateToLoginPage()
-    {
-        NavigationManager.NavigateTo("/");
-    }
-    
-    public void RefreshResources(IReadOnlyCollection<ResourceDto> resources)
-    {
-        SearchResults = null;
-        SearchResults = resources;
-    }
-
-
+    private string imagePath;
+    private IReadOnlyCollection<ResourceDto> resources;
     private async Task BeginLogout(MouseEventArgs args)
     {
         await SignOutManager.SetSignOutState();
         NavigationManager.NavigateTo("authentication/logout");
     }
-
-    private async Task SetKeywords(string value)
+    public void NavigateToLoginPage()
     {
-        _keywords = value;
-        _searchResults = await Http.GetFromJsonAsync<List<ResourceDto>>($"Search/{_keywords}");
+        NavigationManager.NavigateTo("/");
     }
 
-    private async Task SearchByKeyword()
+    private void changeImage()
     {
-        _keywords = "";
-        _filters = new List<string>();
-        _filterBools = new bool[10];
-        _searchResults = await Http.GetFromJsonAsync<List<ResourceDto>>($"Search/{_keywords}");
-        RefreshResources(_searchResults);
-    }
-
-
-
-    private void changeImage() {
-    
-
-        if (imagePath == "images/sideArrow.png") {
+        if (imagePath == "images/sideArrow.png")
+        {
             imagePath = "images/downArrow.png";
-        } else {
+        }
+        else
+        {
             imagePath = "images/sideArrow.png";
+        }
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        imagePath = "images/sideArrow.png";
+
+        try
+        {
+            var resources = await Http.GetFromJsonAsync<IReadOnlyCollection<ResourceDto>>("Search");
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
         }
     }
 }

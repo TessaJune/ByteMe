@@ -7,16 +7,16 @@ using Trainor.Storage.Entities;
 
 namespace Trainor.App
 {
-     public class Search : ISearch
-     {
-         private IResourceRepository _repo;
+    public class Search : ISearch
+    {
+        private IResourceRepository _repo;
 
-         public Search(IResourceRepository repo)
-         {
-             _repo = repo;
-         }
+        public Search(IResourceRepository repo)
+        {
+            _repo = repo;
+        }
 
-         public async Task<IReadOnlyCollection<ResourceDto>> SearchAllAsync()
+        public async Task<IReadOnlyCollection<ResourceDto>> SearchAllAsync()
         {
             var asyncResult = await _repo.ReadAsync();
             return asyncResult.Item2;
@@ -24,8 +24,8 @@ namespace Trainor.App
 
         public async Task<IReadOnlyCollection<ResourceDto>> QueryRepoFilteredAsync(IEnumerable<string> filters)
         {
-            SubjectTag[] subjectTags = (SubjectTag[])Enum.GetValues(typeof(SubjectTag));
-            TypeTag[] typeTags = (TypeTag[])Enum.GetValues(typeof(TypeTag));
+            SubjectTag[] subjectTags = (SubjectTag[]) Enum.GetValues(typeof(SubjectTag));
+            TypeTag[] typeTags = (TypeTag[]) Enum.GetValues(typeof(TypeTag));
             var subjectTagsSearchList = new List<SubjectTag>();
             var typeTagsSearchList = new List<TypeTag>();
 
@@ -62,10 +62,10 @@ namespace Trainor.App
             {
                 asyncResult = await _repo.ReadFromFiltersAsync(typeTagsSearchList);
             }
-            
+
             return asyncResult.Item2;
         }
-        
+
         public async Task<IReadOnlyCollection<ResourceDto>> QueryRepoKeywordsAsync(IEnumerable<string> keywords)
         {
             var asyncResult = await _repo.ReadFromKeywordsAsync(keywords);
