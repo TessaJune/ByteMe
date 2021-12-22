@@ -137,15 +137,14 @@
                                             <h2>@resource.name</h2>
                                         </div>
                                         <div class="arrowDown">
-                                            <input class="imageArrow" alt="picture is not showing" type="image" src=@imagePath @onclick="changeImage"/>
+                                            <input class="imageArrow" alt="picture is not showing" type="image" src=@imagePath @onclick="ChangeImage"/>
                                         </div>
                                     </div>
 
-                                    @* Should have some kind of show / hide *@
                                     @if (ExtendDiv == true)
                                     {
                                         <div class="linkDiv">
-                                            <button class="buttonLink" type="button" @onclick="() => navigateToLink(resource.link)">Link: @resource.link </button>
+                                            <button class="buttonLink" type="button" @onclick="() => NavigateToLink(resource.link)">Link: @resource.link </button>
                                         </div>
                                         <div class="resourceDescription">
                                         <div id="Resource">
@@ -220,14 +219,11 @@
 @code
 {
     string imagePath;
-    ResourceDto _resource;
     private bool ExtendDiv;
     private List<string> _filters;
     private bool[] _filterBools;
-    private List<ResourceDto> _extendableBools;
     private IReadOnlyCollection<ResourceDto> _searchResults;
     public IReadOnlyCollection<ResourceDto> SearchResults;
-    public List<ResourceDto> ResourceDtos;
     private string[] filtersArray;
     public string? Filters { get; set; }
 
@@ -239,7 +235,6 @@
         {
             _filters = new List<string>();
             _filterBools = new bool[10];
-            _extendableBools = new List<ResourceDto>();
             _searchResults = await Http.GetFromJsonAsync<IReadOnlyCollection<ResourceDto>>("Search");
             RefreshResources(_searchResults);
             AddFilter("");
@@ -284,7 +279,7 @@
         NavigationManager.NavigateTo("authentication/logout");
     }
 
-    public void changeImage()
+    public void ChangeImage()
     {
         if (imagePath == "images/sideArrow.png")
         {
@@ -310,7 +305,7 @@
         }
     }
 
-    public void navigateToLink(string link) {
+    public void NavigateToLink(string link) {
         NavigationManager.NavigateTo(link);
     }
 }
