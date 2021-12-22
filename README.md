@@ -13,3 +13,6 @@ To authorize and authenticate oneself in the program only the e-mail addresses a
 Known errors:
 The mainpage search funtion only works on first page load, and then an exception is thrown.
 As a result, the mainpage is not currently functional. 
+
+## Running after cloning from GitHub
+If cloning from GitHub, the client will need to generate a database password, connection string, and https certificate. Text-files with the connection string and database password must be placed next to the source code directory that Git creates. The https certifacate must be located at the relative path /aspnet/https/Trainor.Wasm.Server.pfx from here. For the 'correct' connection string and database password format see the included src zip file supplied with the exam handin
