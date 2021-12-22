@@ -52,7 +52,7 @@ namespace Trainor.Storage
                                           .ToListAsync())
                                           .AsReadOnly();
 
-            if (entities == null)
+            if (entities == null || entities.Count == 0)
                 return (NotFound, null);
 
             return (Ok, entities);
@@ -143,7 +143,7 @@ namespace Trainor.Storage
                                 .ToList()
                                 .AsReadOnly();
 
-            if (entities == null)
+            if (entities == null || entities.Count == 0)
                 return (NotFound, null);
 
             return (Ok, entities);
@@ -157,7 +157,7 @@ namespace Trainor.Storage
                             .ToListAsync())
                             .AsReadOnly();
 
-            if (entities == null)
+            if (entities == null || entities.Count == 0)
                 return (NotFound, null);
 
             return (Ok, entities);
@@ -171,7 +171,7 @@ namespace Trainor.Storage
                             .ToListAsync())
                             .AsReadOnly();
 
-            if (entities == null)
+            if (entities == null || entities.Count == 0)
                 return (NotFound, null);
 
             return (Ok, entities);
@@ -185,8 +185,7 @@ namespace Trainor.Storage
                             .ToListAsync())
                             .AsReadOnly();
 
-
-            if (entities == null)
+            if (entities == null || entities.Count == 0)
                 return (NotFound, null);
 
             return (Ok, entities);

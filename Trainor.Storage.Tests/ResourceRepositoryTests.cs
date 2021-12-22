@@ -7,6 +7,7 @@ using Trainor.Storage;
 using Trainor.Storage.Entities;
 using Xunit;
 using static Trainor.Storage.Entities.SubjectTag;
+using static Trainor.Storage.Entities.TypeTag;
 
 namespace Trainor.Storage.Tests
 {
@@ -86,6 +87,11 @@ namespace Trainor.Storage.Tests
                  resource => Assert.True(resource.Id == 2 && resource.Link == "https://martinfowler.com/articles/microservices.html"),
                  resource => Assert.True(resource.Id == 7 && resource.Link == "https://docs.microsoft.com/en-us/dotnet/core/testing/unit-testing-with-dotnet-test"),
                  resource => Assert.True(resource.Id == 8 && resource.Link == "https://docs.microsoft.com/en-us/dotnet/devops/github-actions-overview")
+
+            Assert.True(resources.Item1 == CrudStatus.Ok, "status not ok");
+            Assert.True(resources.Item2.Count == 1, "count not 1");
+            Assert.Collection(resources.Item2,
+                 resource => Assert.True(resource.Id == 2 && resource.Link == "https://martinfowler.com/articles/microservices.html")
             );
         }
 
@@ -103,7 +109,16 @@ namespace Trainor.Storage.Tests
         }
 
         [Fact]
-        public async Task ReadFromFiltersAsync_given_GOLANG_has_microservices_and_raft()
+        public async Task ReadFromKeywordsAsync_given_gibberish_has_no_resources()
+        {
+            var resources = await _repository.ReadFromKeywordsAsync(new[] { "godsjjigodsfsaiofoaig" });
+
+            Assert.True(resources.Item1 == CrudStatus.NotFound, "status not notfound");
+            Assert.True(resources.Item2 == null, "result not null");
+        }
+
+        [Fact]
+        public async Task ReadFromFiltersAsync_given_subjectTag_GOLANG_has_microservices_and_raft()
         {
             var resources = await _repository.ReadFromFiltersAsync(new[] { GOLANG });
 
@@ -113,6 +128,61 @@ namespace Trainor.Storage.Tests
                 resource => Assert.True(resource.Id == 1 && resource.Link == "https://raft.github.io/"),
                 resource => Assert.True(resource.Id == 2 && resource.Link == "https://martinfowler.com/articles/microservices.html")
             );
+        }
+
+        [Fact]
+        public async Task ReadFromFiltersAsync_given_SubjectTag_CSHARP_has_no_resources()
+        {
+            var resources = await _repository.ReadFromFiltersAsync(new[] { CSHARP });
+
+            Assert.True(resources.Item1 == CrudStatus.NotFound, "status not notfound");
+            Assert.True(resources.Item2 == null);
+        }
+
+        [Fact]
+        public async Task ReadFromFiltersAsync_given_TypeTag_PDF_has_5_resources()
+        {
+            var resources = await _repository.ReadFromFiltersAsync(new[] { PDF });
+
+            Assert.True(resources.Item1 == CrudStatus.Ok, "status not ok");
+            Assert.True(resources.Item2.Count == 5, "count not 5");
+            Assert.Collection(resources.Item2,
+                resource => Assert.True(resource.Id == 3 && resource.Link == "https://www.cs.utexas.edu/users/lorenzo/corsi/cs380d/papers/Cristian.pdf"),
+                resource => Assert.True(resource.Id == 4 && resource.Link == "https://learnit.itu.dk/pluginfile.php/270772/course/section/132582/introduction.pdf"),
+                resource => Assert.True(resource.Id == 5 && resource.Link == "https://learnit.itu.dk/pluginfile.php/270772/course/section/132585/fntdb07-architecture.pdf"),
+                resource => Assert.True(resource.Id == 6 && resource.Link == "https://learnit.itu.dk/pluginfile.php/270772/course/section/132586/abadi.pacelc.computer2012.pdf"),
+                resource => Assert.True(resource.Id == 9 && resource.Link == "https://link.springer.com/content/pdf/10.1007%2F978-3-319-12742-2.pdf")
+            );
+        }
+
+        [Fact]
+        public async Task ReadFromFiltersAsync_given_TypeTag_VIDEO_has_no_resources()
+        {
+            var resources = await _repository.ReadFromFiltersAsync(new[] { VIDEO });
+
+            Assert.True(resources.Item1 == CrudStatus.NotFound, "status not notfound");
+            Assert.True(resources.Item2 == null);
+        }
+
+        [Fact]
+        public async Task ReadFromFiltersAsync_given_TypeTag_PDF_and_SubjectTag_UML_has_introtoood()
+        {
+            var resources = await _repository.ReadFromFiltersAsync(new[] { PDF }, new[] { UML });
+
+            Assert.True(resources.Item1 == CrudStatus.Ok, "status not ok");
+            Assert.True(resources.Item2.Count == 1, "count not 1");
+            Assert.Collection(resources.Item2,
+                resource => Assert.True(resource.Id == 9 && resource.Link == "https://link.springer.com/content/pdf/10.1007%2F978-3-319-12742-2.pdf")
+            );
+        }
+
+        [Fact]
+        public async Task ReadFromFiltersAsync_given_TypeTag_VIDEO_and_SubjectTag_UML_has_no_resources()
+        {
+            var resources = await _repository.ReadFromFiltersAsync(new[] { VIDEO }, new[] { UML });
+
+            Assert.True(resources.Item1 == CrudStatus.NotFound, "status not notfound");
+            Assert.True(resources.Item2 == null);
         }
 
         // DO NOT EDIT THIS. Code from Rasmus  
