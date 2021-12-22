@@ -58,7 +58,7 @@ body {
 }
 
 .resourceContainer {
-	width: 300%;
+	width: 200%;
 }
 
 .tableDiv {
@@ -93,6 +93,7 @@ body {
 	border-color: transparent;
 	color: rgba(80, 77, 77, 1);
 	cursor: pointer;
+	padding-left: 0px;
 }
 
 .resourceDescription {
@@ -100,7 +101,6 @@ body {
 	justify-content: center;
 	height: 100%;
     width: 100%;
-	margin-left: 1%;
 }
 
 #Resource {

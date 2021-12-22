@@ -132,9 +132,9 @@
                                         <div class="tableHeader">
                                             @if (resource.name == null)
                                             {
-                                                <h1><em>Missing title</em></h1>        
+                                                <h2><em>Missing title</em></h2>        
                                             }
-                                            <h1>@resource.name</h1>
+                                            <h2>@resource.name</h2>
                                         </div>
                                         <div class="arrowDown">
                                             <input class="imageArrow" alt="picture is not showing" type="image" src=@imagePath @onclick="changeImage"/>
@@ -149,13 +149,28 @@
                                         </div>
                                         <div class="resourceDescription">
                                         <div id="Resource">
-                                            <p>Author(s): @resource.id</p>
+                                           @if (resource.authors == null)
+                                            {
+                                               <p>Author(s): No authors</p>
+                                            } else {
+                                                <p>Author(s): @resource.authors</p>
+                                            }
                                         </div>
                                         <div id="Resource">
-                                            <p>Subject(s): @resource.id</p>
+                                            @if (resource.subjects == null)
+                                            {
+                                               <p>Subject(s): No subjects</p>
+                                            } else {
+                                                <p>Subject(s): @resource.subjects</p>
+                                            }
                                         </div>
                                         <div id="Resource">
-                                            <p>Type: @resource.id</p>
+                                            @if (resource.types == null)
+                                            {
+                                               <p>Types(s): No types</p>
+                                            } else {
+                                                <p>Types(s): @resource.types</p>
+                                            }
                                         </div>
                                     </div>
                                     }
@@ -163,13 +178,28 @@
                                     {
                                         <div class="resourceDescription">
                                             <div id="Resource">
-                                                <p>Author(s): @resource.id</p>
+                                                @if (resource.authors == null)
+                                                {
+                                                <p>Author(s): No authors</p>
+                                                } else {
+                                                    <p>Author(s): @resource.authors</p>
+                                            }
                                             </div>
                                             <div id="Resource">
-                                                <p>Subject(s): @resource.id</p>
+                                                @if (resource.subjects == null)
+                                                {   
+                                                <p>Subject(s): No subjects</p>
+                                                } else {
+                                                    <p>Subject(s): @resource.subjects</p>
+                                            }
                                             </div>
                                             <div id="Resource">
-                                                <p>Type: @resource.id</p>
+                                            @if (resource.types == null)
+                                            {
+                                               <p>Types(s): No types</p>
+                                            } else {
+                                                <p>Types(s): @resource.types</p>
+                                            }
                                             </div>
                                         </div>
                                     }
