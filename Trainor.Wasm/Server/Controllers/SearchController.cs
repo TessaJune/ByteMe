@@ -65,14 +65,11 @@ namespace Trainor.Wasm.Server.Controllers
                 return searchResult;
             }
 
-            Console.WriteLine("I got here");
-            Console.WriteLine($"With querystring: {queryString}");
             searchResult = (ReadOnlyCollection<ResourceDto>)await _search.QueryRepoKeywordsAsync(new []{queryString});
             if (searchResult.IsNullOrEmpty())
             {
                 return new NotFoundResult();
             }
-            Console.WriteLine("I got here 2");
             return searchResult;
         }
     }
