@@ -30,18 +30,7 @@ body {
     width: 100%;
 }
 
-/* .placeholderone {
-    background-color: black;
-    flex: 1;
-}
-
-.placeholdertwo {
-    background-color: blue;
-    flex: 1;
-} */
-
 .textDiv {
-    /* color: aqua; */
     height: 100%;
     color: rgba(80, 77, 77, 1);
     font-family: garamond;

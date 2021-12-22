@@ -21,27 +21,28 @@
     <div class="container">
         <div class="filterDiv">
             <div class="filterCheckBoxesDiv">
-                <button class="resetButton" @onclick="OnInitializedAsync">Reset search</button>
                 <div class="filterTitle">
                     <p class="title">Filter through resources</p>
                 </div>
 
-                
+
                 <div id="filters">
                     <p id="fTitle">TypeTag</p>
                     <div class="filterCheckBox">
 
-
                         <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("Video"); })" @bind="@_filterBools[0]" value="Filter">
                         <label for="filterOne">Video</label><br><br> 
-                      
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("Document"); })" @bind="@_filterBools[1]" value="Filter">
-                        <label for="filterOne">Document</label><br><br> 
 
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("Article"); })" @bind="@_filterBools[2]" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne"
+                            @onclick="@(() => { AddFilter("Document"); })" @bind="@_filterBools[1]" value="Filter">
+                        <label for="filterOne">Document</label><br><br>
+
+                        <input type="checkbox" id="filterbox" name="filterOne"
+                            @onclick="@(() => { AddFilter("Article"); })" @bind="@_filterBools[2]" value="Filter">
                         <label for="filterOne">Article</label><br><br>
 
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("PDF"); })" @bind="@_filterBools[3]" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("PDF"); })"
+                            @bind="@_filterBools[3]" value="Filter">
                         <label for="filterOne">PDF</label><br>
                     </div>
                 </div>
@@ -49,40 +50,45 @@
                 <div id="filters">
                     <p id="fTitle">SubjectTag</p>
                     <div class="filterCheckBox">
-                        @* Filter 2.1 *@
+
 
 
                         <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("C#"); })" @bind="@_filterBools[4]" value="Filter">
                         <label for="filterOne"> C#</label><br><br>
 
-                        @* Filter 2.2 *@
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("Java"); })" @bind="@_filterBools[5]" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne"
+                            @onclick="@(() => { AddFilter("Java"); })" @bind="@_filterBools[5]" value="Filter">
                         <label for="filterOne">Java</label><br><br>
 
-                        @* Filter 2.3 *@
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("GoLang"); })" @bind="@_filterBools[6]" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne"
+                            @onclick="@(() => { AddFilter("GoLang"); })" @bind="@_filterBools[6]" value="Filter">
                         <label for="filterOne">GoLang</label><br><br>
 
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("SQL"); })" @bind="@_filterBools[7]" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("SQL"); })"
+                            @bind="@_filterBools[7]" value="Filter">
                         <label for="filterOne">SQL</label><br><br>
 
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("HTML"); })" @bind="@_filterBools[8]" value="Filter">
+                        <input type="checkbox" id="filterbox" name="filterOne"
+                            @onclick="@(() => { AddFilter("HTML"); })" @bind="@_filterBools[8]" value="Filter">
                         <label for="filterOne">HTML</label><br><br>
 
-                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("CSS"); })" @bind="@_filterBools[9]" value="Filter">
 
+                        <input type="checkbox" id="filterbox" name="filterOne" @onclick="@(() => { AddFilter("CSS"); })" 
+                              @bind="@_filterBools[9]" value="Filter">
                         <label for="filterOne">CSS</label><br><br>
                     </div>
+                    <div class="filterButtonDiv">
+                        <button class="filterButton" @onclick="@(() => RefreshResources(_searchResults))">Filtered
+                            search</button>
+                    </div>
                 </div>
-
             </div>
-            <div class="signOutDiv">
+            <div class="signOutDiv">    
                 <input class="imageSignOut" type="image" src="images/signOutWhite.png" @onclick="BeginLogout" />
                 <div class="imageSignOutText">
-                    <button class="imageSignOutButton" type="button">Sign out</button>
+                    <button class="imageSignOutButton" type="button" @onclick="BeginLogout">Sign out</button>
                 </div>
             </div>
-            <button class="resetButton" @onclick="@(() => RefreshResources(_searchResults))">Filtered search</button>
         </div>
 
         <div class="resourceDiv">
@@ -100,7 +106,9 @@
                     <input class = "searchButton" type = "image" src = "images/searchButton.png" @onclick="SearchByKeyword">
 
                 </div>
-                <p>@_keywords</p>
+            </div>
+            <div class="resetButtonDiv">
+                <button class="resetButton" @onclick="OnInitializedAsync">Reset search</button>
             </div>
             <div class="allResources">
                 @if (_searchResults == null)
@@ -111,39 +119,93 @@
                 {
                     <table class="table">
                         <thead>
-                        <tr>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                            <th></th>
-                        </tr>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                                <th></th>
+                            </tr>
                         </thead>
                         <tbody>
-                        @foreach (var resource in SearchResults)
-                        {
-                            <div class="resourcerContainer">
-                                <div class="tableDiv">
-                                    <div class="tableHeader">
-                                        <h1>@resource.Name</h1>
+                            @foreach (var resource in SearchResults)
+                            {
+                                int i = 0;
+                                <div class="resourceContainer">
+                                    <div class="tableDiv">
+                                        <div class="tableHeader">
+                                            @if (resource.name == null)
+                                            {
+                                                <h2><em>Missing title</em></h2>        
+                                            }
+                                            <h2>@resource.name</h2>
+                                        </div>
+                                        <div class="arrowDown">
+                                            <input class="imageArrow" alt="picture is not showing" type="image" src=@imagePath @onclick="ChangeImage"/>
+                                        </div>
                                     </div>
-                                    <div class="arrowDown">
-                                        <input class ="imageArrow" alt = "picture is not showing" type = "image" src=@imagePath @onclick="changeImage"/>
+                                    @if (ExtendDiv == true)
+                                    {
+                                        <div class="linkDiv">
+                                            <button class="buttonLink" type="button" @onclick="() => NavigateToLink(resource.link)">Link: @resource.link </button>
+                                        </div>
+                                        <div class="resourceDescription">
+                                        <div id="Resource">
+                                           @if (resource.authors == null)
+                                            {
+                                               <p>Author(s): No authors</p>
+                                            } else {
+                                                <p>Author(s): @resource.authors</p>
+                                            }
+                                        </div>
+                                        <div id="Resource">
+                                            @if (resource.subjects == null)
+                                            {
+                                               <p>Subject(s): No subjects</p>
+                                            } else {
+                                                <p>Subject(s): @resource.subjects</p>
+                                            }
+                                        </div>
+                                        <div id="Resource">
+                                            @if (resource.types == null)
+                                            {
+                                               <p>Types(s): No types</p>
+                                            } else {
+                                                <p>Types(s): @resource.types</p>
+                                            }
+                                        </div>
                                     </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="resourceDescription">
+                                            <div id="Resource">
+                                                @if (resource.authors == null)
+                                                {
+                                                <p>Author(s): No authors</p>
+                                                } else {
+                                                    <p>Author(s): @resource.authors</p>
+                                            }
+                                            </div>
+                                            <div id="Resource">
+                                                @if (resource.subjects == null)
+                                                {   
+                                                <p>Subject(s): No subjects</p>
+                                                } else {
+                                                    <p>Subject(s): @resource.subjects</p>
+                                            }
+                                            </div>
+                                            <div id="Resource">
+                                            @if (resource.types == null)
+                                            {
+                                               <p>Types(s): No types</p>
+                                            } else {
+                                                <p>Types(s): @resource.types</p>
+                                            }
+                                            </div>
+                                        </div>
+                                    }
                                 </div>
-
-                                <div class="resourceDescription">
-                                    <div id="Resource">
-                                        <p>Author(s): @resource.Id</p>
-                                    </div>
-                                    <div id="Resource">
-                                        <p>Subject(s): @resource.Id</p>
-                                    </div>
-                                    <div id="Resource">
-                                        <p>Type: @resource.Id</p>
-                                    </div>
-                                </div>
-                            </div>
-                        }
+                            }
                         </tbody>
                     </table>
                 }
@@ -159,6 +221,7 @@
 @code
 {
     string imagePath;
+    private bool ExtendDiv;
     private List<string> _filters;
     private bool[] _filterBools;
     private IReadOnlyCollection<ResourceDto> _searchResults;
@@ -189,7 +252,7 @@
 
     private async void AddFilter(string filter)
     {
-        
+
         if (!_filters.Contains(filter))
         {
             _filters.Add(filter);
@@ -204,18 +267,17 @@
         _searchResults = await Http.GetFromJsonAsync<List<ResourceDto>>($"Search/{Filters}");
     }
 
-
     public void NavigateToLoginPage()
     {
         NavigationManager.NavigateTo("/");
     }
-    
+
     public void RefreshResources(IReadOnlyCollection<ResourceDto> resources)
     {
         SearchResults = null;
+
         SearchResults = resources;
     }
-
 
     private async Task BeginLogout(MouseEventArgs args)
     {
@@ -238,15 +300,34 @@
         RefreshResources(_searchResults);
     }
 
-
-
-    private void changeImage() {
+    private void changeImage(){
     
 
-        if (imagePath == "images/sideArrow.png") {
+        if (imagePath == "images/sideArrow.png") 
+        {
             imagePath = "images/downArrow.png";
-        } else {
+        }
+        else
+        {
             imagePath = "images/sideArrow.png";
         }
+        ExtendDivider();
+    }
+
+    public void ExtendDivider()
+    {
+        if (ExtendDiv == false)
+        {
+            ExtendDiv = true;
+        }
+        else
+        {
+            ExtendDiv = false;
+        }
+    }
+
+    public void NavigateToLink(string link) 
+    {
+        NavigationManager.NavigateTo(link);
     }
 }

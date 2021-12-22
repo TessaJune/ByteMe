@@ -22,7 +22,7 @@ namespace Trainor.Wasm.Server
             var env = host.Services.GetService<IWebHostEnvironment>();
             if (!env.IsEnvironment("Integration"))
             {
-                await host.SeedAsync();
+                //await host.SeedAsync();
             }
             host.Run();
         }
