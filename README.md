@@ -9,3 +9,7 @@ This will first build all the necessary binaries to run the main application, an
 Afterward, a user may use the program by opening a web browser and navigating to either localhost:7208 or localhost:7207. The port 7208 maps to http, while 7207 maps to https. The program allows only https connections from the end user, and as such visiting localhost:7208 will redirect to localhost:7207. Additionally, if a user specifies the wrong protocol in the URL, eg. by visiting https://localhost:7208 will not work.
 
 To authorize and authenticate oneself in the program only the e-mail addresses at ITU of the group's members as well as that of the course supervisors are valid.
+
+Known errors:
+The mainpage search funtion only works on first page load, and then an exception is thrown.
+As a result, the mainpage is not currently functional. 
